@@ -1,12 +1,63 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Bring Your Own Bike</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <main class="home">
+      <span class="corner corner-tl" aria-hidden="true">B</span>
+      <span class="corner corner-tr" aria-hidden="true">Y</span>
+      <span class="corner corner-bl" aria-hidden="true">O</span>
+      <span class="corner corner-br" aria-hidden="true">B</span>
+
+      <nav class="menu menu-tl" aria-label="Left navigation">
+        <a class="menu-link" href="#">ABOUT</a>
+        <a class="menu-link menu-link--indent" href="#">CONTACT</a>
+      </nav>
+
+      <nav class="menu menu-tr" aria-label="Right navigation">
+        <a class="menu-link" href="#">RIDES</a>
+        <a class="menu-link menu-link--indent" href="#">GEAR</a>
+      </nav>
+
+      <nav class="menu menu-ml" aria-label="Language">
+        <a class="menu-link" href="#">ENG</a>
+      </nav>
+
+      <nav class="menu menu-mr" aria-label="Language">
+        <a class="menu-link menu-link--plain" href="#">한국어</a>
+      </nav>
+
+      <h1 class="title-top">BRING YOUR OWN BIKE</h1>
+
+      <div class="wheel-wrap">
+        <div class="wheel">
+          <video
+            class="wheel-video"
+            src="assets/home-video-01.MP4"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+          <div class="wheel-spokes" id="wheel">
+            <svg viewBox="0 0 937 937" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="468" cy="468" r="28" fill="#000" />
+              <line x1="140.536" y1="143.464" x2="802.536" y2="805.464" stroke="#000" stroke-width="10" />
+              <line x1="802.536" y1="140.535" x2="140.536" y2="802.535" stroke="#000" stroke-width="10" />
+              <line x1="936.209" y1="473" x2="0.000121633" y2="473" stroke="#000" stroke-width="10" />
+              <line x1="468" y1="936.209" x2="468" y2="-0.000121852" stroke="#000" stroke-width="10" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <p class="title-bottom">COLLECTIVE CYCLING PERFORMANCE SERIES</p>
+    </main>
+
     <script src="script.js"></script>
   </body>
 </html>
