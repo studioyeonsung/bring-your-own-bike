@@ -7,21 +7,8 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>BRING YOUR OWN BIKE | Studio Yeon Sung</title>
-    <meta name="description" content="BYOB (Bring Your Own Bike) is a participatory performance series exploring polluted weather through collective cycling. Cycling the unknown, together we weather." />
-    <meta name="keywords" content="yeon sung, Yeon Sung, Studio Yeon Sung, 연성, Yeon Sung artist, Yeon Sung BYOB, Bring Your Own Bike, BYOB, bring your own bike, byob.bike, participatory performance, participatory art, cycling performance, bike performance, polluted weather, weathering, weathering performance, collective embodiment, performance art, environmental performance, Sonic Acts, Sonic Acts Festival, U-Spectrum, Wasteland Festival, Cycle Up Residency, Varia, cycling the unknown, together we weather" />
-    <meta name="author" content="Studio Yeon Sung" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <link rel="alternate" hreflang="en" href="https://byob.bike/" />
-    <link rel="alternate" hreflang="ko" href="https://byob.bike/ko/" />
-    <link rel="alternate" hreflang="x-default" href="https://byob.bike/" />
-    <meta property="og:site_name" content="Bring Your Own Bike" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="ko_KR" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="BRING YOUR OWN BIKE | Studio Yeon Sung" />
-    <meta name="twitter:description" content="BYOB (Bring Your Own Bike) is a participatory performance series exploring polluted weather through collective cycling. Cycling the unknown, together we weather." />
-    <meta name="twitter:image" content="https://byob.bike/assets/home-vimeo-poster.jpg" />
+    <meta name="description" content="BYOB (Bring Your Own Bike) is a participatory cycling performance series exploring polluted weather through collective cycling. Cycling the unknown, together we weather." />
+    <meta name="keywords" content="yeon sung, Yeon Sung, Studio Yeon Sung, 연성, Bring Your Own Bike, BYOB, bring your own bike, participatory performance, cycling performance, polluted weather, weathering, performance art, Sonic Acts, U-Spectrum, Wasteland Festival, Cycle Up Residency, cycling the unknown" />
     <link rel="canonical" href="https://byob.bike/" />
     <meta property="og:title" content="BRING YOUR OWN BIKE | Studio Yeon Sung" />
     <meta property="og:description" content="BYOB (Bring Your Own Bike) is a participatory performance series exploring polluted weather through collective cycling. Cycling the unknown, together we weather." />
@@ -29,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://byob.bike/assets/home-vimeo-poster.jpg" />
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"WebSite","name":"Bring Your Own Bike","alternateName":["BYOB","BRING YOUR OWN BIKE","브링 유어 온 바이크"],"url":"https://byob.bike/","description":"BYOB (Bring Your Own Bike) is a participatory performance series exploring polluted weather through collective cycling.","inLanguage":["en","ko"],"publisher":{"@type":"Organization","name":"Studio Yeon Sung","alternateName":["Yeon Sung","yeon sung","연성"],"url":"https://byob.bike/"}}
+    {"@context":"https://schema.org","@type":"WebSite","name":"Bring Your Own Bike","alternateName":["BYOB","BRING YOUR OWN BIKE","브링 유어 온 바이크"],"url":"https://byob.bike/","publisher":{"@type":"Organization","name":"Studio Yeon Sung","alternateName":["Yeon Sung","yeon sung","연성"]}}
     </script>
     <script>
       (function (d) {
@@ -95,7 +82,7 @@
     </script>
   </head>
   <body>
-    <main class="home">
+    <main class="home home--index">
       <img class="corner corner-tl" src="/assets/title-B.svg" alt="" />
       <img class="corner corner-tr" src="/assets/title-Y.svg" alt="" />
       <img class="corner corner-bl" src="/assets/title-O.svg" alt="" />
@@ -176,7 +163,41 @@
         <a class="menu-link menu-link--plain" href="#">한국어</a>
       </nav>
 
-      <h1 class="title-top"><a href="/">BRING YOUR OWN BIKE</a></h1>
+      <button
+        type="button"
+        class="home-menu-toggle"
+        aria-expanded="false"
+        aria-controls="home-site-menu"
+        aria-label="Open menu"
+      >
+        <img src="/rides/assets/icon-menu.svg" alt="" />
+      </button>
+
+      <nav
+        class="home-site-menu"
+        id="home-site-menu"
+        aria-label="Site navigation"
+        hidden
+      >
+        <a class="home-site-menu-link" href="/">HOME</a>
+        <a class="home-site-menu-link" href="/about/">ABOUT</a>
+        <a class="home-site-menu-link" href="/rides/">RIDES</a>
+        <a class="home-site-menu-link" href="/gear/">GEAR</a>
+        <a class="home-site-menu-link" href="/contact/">CONTACT</a>
+      </nav>
+
+      <a class="home-lang-toggle" href="#" aria-label="Switch to Korean">
+        <img src="/assets/mobile-en.svg" alt="EN / KR" width="90" height="38" />
+      </a>
+
+      <h1 class="title-top">
+        <a href="/"
+          >BRING<br class="title-br" aria-hidden="true" />YOUR<br
+            class="title-br"
+            aria-hidden="true"
+          />OWN BIKE</a
+        >
+      </h1>
 
       <div class="wheel-wrap">
         <div class="wheel" id="wheel-stage">
@@ -212,8 +233,13 @@
         </div>
       </div>
 
-      <p class="title-bottom">CYCLING THE UNKNOWN, TOGETHER WE WEATHER</p>
+      <p class="title-bottom">
+        CYCLING THE UNKNOWN,<br class="title-br" aria-hidden="true" />TOGETHER
+        WE WEATHER
+      </p>
     </main>
+
+    <div class="home-menu-backdrop" hidden aria-hidden="true"></div>
 
     <div class="copyright">© 2026 STUDIO YEON SUNG</div>
 

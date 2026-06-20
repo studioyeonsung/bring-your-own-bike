@@ -6,8 +6,16 @@
 
 :root {
   --page-bg: #48afde;
-  --wheel-size: min(92vw, 86vh);
+  --corner-scale: 0.9;
+  --deco-scale: 0.731;
+  --wheel-size: min(92vw, 86vh, var(--wheel-max, 100vw));
+  --wheel-max: 760px;
   --wheel-ring: clamp(5px, 0.8vw, 10px);
+  --title-top-size: clamp(1.5rem, 2.5vw, 2.65rem);
+  --title-bottom-size: clamp(1.35rem, 1.75vw, 2.1rem);
+  --corner-width: clamp(calc(5.5rem * var(--corner-scale)), calc(17vw * var(--corner-scale)), calc(19.5rem * var(--corner-scale)));
+  --corner-bl-width: clamp(calc(6.6rem * var(--corner-scale)), calc(20vw * var(--corner-scale)), calc(23.5rem * var(--corner-scale)));
+  --menu-side-offset: clamp(16%, 19vw, 23%);
 
   --font-dunkel-medium: "dunkel-sans-medium", sans-serif;
   --font-dunkel-condensed: "dunkel-sans-condensed", sans-serif;
@@ -96,7 +104,7 @@ body {
 .corner {
   position: absolute;
   display: block;
-  width: clamp(6.24rem, 27.46vw, 17.47rem);
+  width: var(--corner-width);
   height: auto;
   user-select: none;
   pointer-events: none;
@@ -115,7 +123,7 @@ body {
 .corner-bl {
   bottom: clamp(0.5rem, 2vh, 1.5rem);
   left: clamp(0.75rem, 2.5vw, 2rem);
-  width: clamp(7.49rem, 32.95vw, 20.96rem);
+  width: var(--corner-bl-width);
 }
 
 .corner-br {
@@ -142,19 +150,19 @@ body {
 .deco-sun {
   top: clamp(31%, 35vh, 39%);
   left: clamp(12.5%, 15.5vw, 18.5%);
-  width: clamp(4.35rem, 8.7vw, 6.55rem);
+  width: clamp(calc(4.35rem * var(--deco-scale)), calc(8.7vw * var(--deco-scale)), calc(6.55rem * var(--deco-scale)));
 }
 
 .deco-spark-tl {
   top: clamp(16%, 18vh, 20%);
   left: clamp(17%, 20vw, 23%);
-  width: clamp(1.75rem, 3.2vw, 2.75rem);
+  width: clamp(calc(1.75rem * var(--deco-scale)), calc(3.2vw * var(--deco-scale)), calc(2.75rem * var(--deco-scale)));
 }
 
 .deco-snow3 {
   top: clamp(13%, 15vh, 17%);
   left: clamp(15%, 18vw, 21%);
-  width: clamp(1.25rem, 2.4vw, 1.9rem);
+  width: clamp(calc(1.25rem * var(--deco-scale)), calc(2.4vw * var(--deco-scale)), calc(1.9rem * var(--deco-scale)));
 }
 
 /* top-right */
@@ -162,21 +170,21 @@ body {
 .deco-bubble-2 {
   top: clamp(15%, 19vh, 22%);
   right: clamp(12%, 15vw, 18%);
-  width: clamp(1.25rem, 2.4vw, 1.9rem);
+  width: clamp(calc(1.25rem * var(--deco-scale)), calc(2.4vw * var(--deco-scale)), calc(1.9rem * var(--deco-scale)));
 }
 
 .deco-spark-tr {
   bottom: clamp(36%, 40vh, 44%);
   right: clamp(5%, 8vw, 11%);
-  width: clamp(2.5rem, 5vw, 4rem);
+  width: clamp(calc(2.5rem * var(--deco-scale)), calc(5vw * var(--deco-scale)), calc(4rem * var(--deco-scale)));
 }
 
 /* wind1 — below GEAR (2× prior size) */
 .deco-wind-bl {
-  --wind1-drift: clamp(0.65rem, 1.8vw, 1.35rem);
+  --wind1-drift: clamp(calc(0.65rem * var(--deco-scale)), calc(1.8vw * var(--deco-scale)), calc(1.35rem * var(--deco-scale)));
   top: clamp(18%, 22vh, 26%);
   right: clamp(8%, 12vw, 16%);
-  width: clamp(10.23rem, 23.5vw, 16.5rem);
+  width: clamp(calc(10.23rem * var(--deco-scale)), calc(23.5vw * var(--deco-scale)), calc(16.5rem * var(--deco-scale)));
   animation: wind1-drift 5.6s ease-in-out infinite;
 }
 
@@ -194,13 +202,13 @@ body {
 
 /* wind2 — above O */
 .deco-wind-tr {
-  --wind2-drift: clamp(0.65rem, 1.8vw, 1.35rem);
+  --wind2-drift: clamp(calc(0.65rem * var(--deco-scale)), calc(1.8vw * var(--deco-scale)), calc(1.35rem * var(--deco-scale)));
   bottom: calc(
     clamp(0.5rem, 2vh, 1.5rem) + clamp(7.49rem, 32.95vw, 20.96rem) -
       clamp(0.75rem, 2vh, 1.5rem) + clamp(0.75rem, 2vh, 1.25rem)
   );
   left: calc(clamp(0.75rem, 2.5vw, 2rem) + clamp(2rem, 9vw, 7rem));
-  width: clamp(11.5rem, 25.65vw, 18.25rem);
+  width: clamp(calc(11.5rem * var(--deco-scale)), calc(25.65vw * var(--deco-scale)), calc(18.25rem * var(--deco-scale)));
   animation: wind2-drift 5.6s ease-in-out infinite;
 }
 
@@ -220,17 +228,17 @@ body {
 .deco-thunder {
   bottom: clamp(26%, 30vh, 34%);
   left: clamp(1.5%, 3.5vw, 5%);
-  width: clamp(4.55rem, 10.5vw, 7.35rem);
+  width: clamp(calc(4.55rem * var(--deco-scale)), calc(10.5vw * var(--deco-scale)), calc(7.35rem * var(--deco-scale)));
 }
 
 .deco-cloud-bl {
-  --cloud-drift: clamp(0.5rem, 1.2vh, 0.85rem);
+  --cloud-drift: clamp(calc(0.5rem * var(--deco-scale)), calc(1.2vh * var(--deco-scale)), calc(0.85rem * var(--deco-scale)));
   bottom: calc(
     clamp(0.5rem, 1.5vh, 1rem) + clamp(1.69rem, 2.68vw, 2.24rem) +
       clamp(0.75rem, 2vh, 1.25rem)
   );
   left: calc(50% - clamp(16.5rem, 36vw, 25rem) - clamp(1.1rem, 2.5vw, 1.75rem));
-  width: clamp(4.95rem, 10.8vw, 7.65rem);
+  width: clamp(calc(4.95rem * var(--deco-scale)), calc(10.8vw * var(--deco-scale)), calc(7.65rem * var(--deco-scale)));
   animation: cloud-float 3.2s ease-in-out infinite;
 }
 
@@ -246,9 +254,13 @@ body {
 }
 
 .deco-sunglasses {
-  bottom: clamp(7rem, 20vh, 12.5rem);
-  left: clamp(3.75rem, 14vw, 10.5rem);
-  width: clamp(2.75rem, 9vw, 5.5rem);
+  bottom: calc(
+    clamp(0.5rem, 2vh, 1.5rem) + var(--corner-bl-width) * 0.48 - 0.35rem
+  );
+  left: calc(
+    clamp(0.75rem, 2.5vw, 2rem) + var(--corner-bl-width) * 0.46 - 1.5rem
+  );
+  width: clamp(calc(2.75rem * var(--deco-scale)), calc(9vw * var(--deco-scale)), calc(5.5rem * var(--deco-scale)));
   z-index: 3;
 }
 
@@ -256,13 +268,13 @@ body {
 .deco-rain {
   bottom: clamp(33%, 37vh, 41%);
   right: clamp(14%, 17vw, 20%);
-  width: clamp(4.55rem, 10.7vw, 7.45rem);
+  width: clamp(calc(4.55rem * var(--deco-scale)), calc(10.7vw * var(--deco-scale)), calc(7.45rem * var(--deco-scale)));
 }
 
 .deco-water-2 {
   bottom: clamp(18%, 22vh, 26%);
   right: clamp(18%, 22vw, 26%);
-  width: clamp(2.5rem, 4.8vw, 3.8rem);
+  width: clamp(calc(2.5rem * var(--deco-scale)), calc(4.8vw * var(--deco-scale)), calc(3.8rem * var(--deco-scale)));
 }
 
 .illustration {
@@ -489,7 +501,7 @@ body {
   align-self: end;
   padding-bottom: 0;
   font-family: var(--font-dunkel-expanded-glatt);
-  font-size: clamp(1.9rem, 3.1vw, 2.65rem);
+  font-size: var(--title-top-size);
   font-weight: 900;
   font-style: normal;
   letter-spacing: -0.015em;
@@ -501,11 +513,19 @@ body {
   cursor: pointer;
 }
 
+.title-top-page {
+  display: none;
+}
+
+.title-br {
+  display: none;
+}
+
 .title-bottom {
   align-self: start;
   padding-top: 0;
   font-family: var(--font-dunkel-condensed-glatt);
-  font-size: clamp(1.69rem, 2.68vw, 2.24rem);
+  font-size: var(--title-bottom-size);
   font-weight: 900;
   font-style: normal;
 }
@@ -589,12 +609,12 @@ body {
 
 .menu-tl {
   top: clamp(2%, 4.5vh, 6%);
-  left: clamp(16%, 19vw, 23%);
+  left: var(--menu-side-offset);
 }
 
 .menu-tr {
   top: clamp(2%, 4.5vh, 6%);
-  right: clamp(16%, 19vw, 23%);
+  right: var(--menu-side-offset);
 }
 
 .menu-ml {
@@ -1496,28 +1516,6 @@ body.is-rides-lightbox-open .menu {
   transform: rotate(90deg);
 }
 
-@media (max-width: 720px) {
-  .rides-lightbox-figure {
-    max-width: min(96vw, 100%);
-  }
-
-  .rides-lightbox-photo {
-    max-height: min(69.6vh, 38.4rem);
-  }
-
-  .rides-lightbox-shape {
-    width: min(78vw, 78vh);
-  }
-
-  .rides-lightbox-shape--left {
-    transform: translateX(calc(-1 * min(22vw, 16vh)));
-  }
-
-  .rides-lightbox-shape--right {
-    transform: translateX(min(22vw, 16vh));
-  }
-}
-
 @keyframes rides-duo-change {
   0%,
   100% {
@@ -1532,16 +1530,6 @@ body.is-rides-lightbox-open .menu {
 @container rides-text (max-width: 22rem) {
   .rides-circle--text {
     --rides-detail-font: clamp(0.58rem, 3.85cqi, 1.72rem);
-  }
-}
-
-@media (max-width: 720px) {
-  .rides-duo {
-    --rides-overlap: calc(var(--rides-circle) * 0.06);
-  }
-
-  .rides-weather--wide {
-    max-width: 11rem;
   }
 }
 
@@ -1643,7 +1631,35 @@ body.is-rides-lightbox-open .menu {
   pointer-events: none;
 }
 
+/* ------------------------------------------------------------------
+   Responsive — mobile-first fluid + desktop tiers
+   Mobile:     max 768px (fluid clamp, no sub-breakpoints)
+   Desktop:    769px+ (fluid wheel / Mac tiers for menu)
+   ------------------------------------------------------------------ */
+
 @media (max-width: 768px) {
+  :root {
+    --wheel-max: 100vw;
+    --wheel-size: min(
+      calc(94vw + (768px - 100vw) / 448px * 4vw),
+      calc(72vh - (768px - 100vw) / 448px * 8vh),
+      var(--wheel-max)
+    );
+    --title-top-size: clamp(1rem, 4.2vw, 1.5rem);
+    --title-bottom-size: clamp(0.95rem, 3.4vw, 1.35rem);
+    --corner-width: clamp(calc(4.1rem * var(--corner-scale)), calc(22vw * var(--corner-scale)), calc(14rem * var(--corner-scale)));
+    --corner-bl-width: clamp(calc(4.9rem * var(--corner-scale)), calc(26.5vw * var(--corner-scale)), calc(16.75rem * var(--corner-scale)));
+    --menu-side-offset: clamp(8%, 15vw, 18%);
+  }
+
+  .home {
+    padding-inline: clamp(0.5rem, 3vw, 2rem);
+  }
+
+  .menu-link--indent {
+    margin-left: clamp(1.75rem, 5.5vw, 3.5rem);
+  }
+
   .copyright {
     right: auto;
     left: 50%;
@@ -1652,6 +1668,566 @@ body.is-rides-lightbox-open .menu {
     transform-origin: center bottom;
     text-align: center;
     font-size: 12px;
+  }
+
+  .rides-duo {
+    --rides-overlap: calc(var(--rides-circle) * 0.06);
+  }
+
+  .rides-weather--wide {
+    max-width: 11rem;
+  }
+
+  .rides-lightbox-figure {
+    max-width: min(96vw, 100%);
+  }
+
+  .rides-lightbox-photo {
+    max-height: min(69.6vh, 38.4rem);
+  }
+
+  .rides-lightbox-shape {
+    width: min(78vw, 78vh);
+  }
+
+  .rides-lightbox-shape--left {
+    transform: translateX(calc(-1 * min(22vw, 16vh)));
+  }
+
+  .rides-lightbox-shape--right {
+    transform: translateX(min(22vw, 16vh));
+  }
+
+  /* Home index — mobile layout */
+  .home--index {
+    --home-mobile-navy: #0c1a33;
+    --home-mobile-corner-scale: 1.331;
+    --home-mobile-wheel-scale: 1.38;
+    --home-mobile-header-h: clamp(5rem, 14vw, 6.2rem);
+    --home-mobile-footer-h: clamp(6.5rem, 19vw, 7.75rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(0.35rem, 1.2vh, 0.65rem);
+    padding:
+      calc(var(--home-mobile-header-h) + clamp(0.15rem, 0.6vh, 0.35rem))
+      clamp(0.65rem, 3.5vw, 1.25rem)
+      calc(var(--home-mobile-footer-h) + env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+    transition: background-color 0.45s ease;
+  }
+
+  .home--index.is-menu-open {
+    background: var(--page-bg);
+  }
+
+  .home--index.is-menu-open::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--home-mobile-header-h);
+    background: var(--page-bg);
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  .home--index .menu-tl,
+  .home--index .menu-tr,
+  .home--index .menu-ml,
+  .home--index .menu-mr {
+    display: none;
+  }
+
+  .home--index .illustration-riding {
+    display: block;
+    z-index: 999;
+    opacity: 1;
+  }
+
+  .home--index .corner {
+    width: clamp(
+      calc(3.6rem * var(--corner-scale) * var(--home-mobile-corner-scale)),
+      calc(19vw * var(--corner-scale) * var(--home-mobile-corner-scale)),
+      calc(5.5rem * var(--corner-scale) * var(--home-mobile-corner-scale))
+    );
+    z-index: 4;
+  }
+
+  .home--index .corner-bl {
+    width: clamp(
+      calc(4.3rem * var(--corner-scale) * var(--home-mobile-corner-scale)),
+      calc(22.5vw * var(--corner-scale) * var(--home-mobile-corner-scale)),
+      calc(6.5rem * var(--corner-scale) * var(--home-mobile-corner-scale))
+    );
+  }
+
+  .home--index .corner-tl {
+    top: max(env(safe-area-inset-top, 0px), clamp(0.35rem, 1.2vh, 0.75rem));
+    left: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .home--index .corner-tr {
+    top: max(env(safe-area-inset-top, 0px), clamp(0.35rem, 1.2vh, 0.75rem));
+    right: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .home--index .corner-bl {
+    bottom: max(env(safe-area-inset-bottom, 0px), clamp(0.35rem, 1.2vh, 0.75rem));
+    left: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .home--index .corner-br {
+    bottom: max(env(safe-area-inset-bottom, 0px), clamp(0.35rem, 1.2vh, 0.75rem));
+    right: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .home--index .home-menu-toggle {
+    position: absolute;
+    top: max(env(safe-area-inset-top, 0px), clamp(0.45rem, 1.4vh, 0.9rem));
+    left: 50%;
+    z-index: 7;
+    display: grid;
+    place-items: center;
+    padding: clamp(0.4rem, 1.4vh, 0.65rem) 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transform: translateX(-50%);
+  }
+
+  .home--index .home-menu-toggle img {
+    display: block;
+    width: clamp(2.86rem, 9.15vw, 3.8rem);
+    height: auto;
+  }
+
+  .home--index .home-site-menu {
+    position: absolute;
+    top: var(--home-mobile-header-h);
+    left: 0;
+    right: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    background: #000;
+    pointer-events: none;
+    transition:
+      max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.45s ease;
+  }
+
+  .home--index .home-site-menu[hidden] {
+    display: flex;
+  }
+
+  .home--index.is-menu-open .home-site-menu {
+    max-height: 18rem;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .home--index .home-site-menu-link {
+    display: block;
+    padding: clamp(0.7rem, 2.2vh, 1rem) clamp(1rem, 4vw, 1.5rem);
+    border-bottom: 1px solid rgba(72, 175, 222, 0.35);
+    font-family: var(--font-dunkel-medium);
+    font-size: clamp(1.485rem, 5.72vw, 1.925rem);
+    font-weight: 900;
+    font-style: normal;
+    line-height: 1.05;
+    color: var(--page-bg);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .home--index .home-site-menu-link:last-child {
+    border-bottom: 0;
+  }
+
+  .home--index .home-site-menu-link:active {
+    opacity: 0.85;
+  }
+
+  .home--index .home-lang-toggle {
+    position: absolute;
+    left: 50%;
+    bottom: max(
+      env(safe-area-inset-bottom, 0px),
+      calc(clamp(0.35rem, 1.1vh, 0.65rem) + clamp(0.95rem, 2.6vh, 1.15rem) + clamp(0.4rem, 1.1vh, 0.6rem))
+    );
+    z-index: 4;
+    display: block;
+    background: transparent;
+    transform: translateX(-50%);
+    line-height: 0;
+  }
+
+  .home--index .home-lang-toggle img {
+    display: block;
+    width: clamp(4.5rem, 24vw, 5.65rem);
+    height: auto;
+    background: transparent;
+  }
+
+  .home--index .title-top {
+    order: 1;
+    align-self: center;
+    margin: 0;
+    padding: clamp(2rem, 6.2vh, 3rem) 0 0;
+    font-size: clamp(1.755rem, 8.23vw, 2.42rem);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    max-width: none;
+    white-space: normal;
+  }
+
+  .home--index .title-top .title-br {
+    display: inline;
+  }
+
+  .home--index.home--about .title-top {
+    font-family: var(--font-dunkel-medium);
+    font-size: clamp(2.97rem, 11.44vw, 3.85rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    padding-top: clamp(2rem, 6.2vh, 3rem);
+    margin-top: 0;
+    min-height: calc(
+      clamp(2rem, 6.2vh, 3rem) +
+        clamp(1.755rem, 8.23vw, 2.42rem) * 0.92 * 3
+    );
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .home--index.home--about .title-top-page {
+    display: block;
+  }
+
+  .home--index.home--about .title-top-home {
+    display: none;
+  }
+
+  .home--index.home--about .wheel-about-body {
+    padding-inline: clamp(0.85rem, 2.2vw, 1.45rem);
+  }
+
+  .home--index.home--about .wheel-about-scroll {
+    width: clamp(72%, 78cqw, 82%);
+    max-width: clamp(72%, 78cqw, 82%);
+  }
+
+  .home--index.home--about .wheel::before {
+    inset: calc(var(--wheel-ring) * 0.637 * -1);
+    border-width: calc(var(--wheel-ring) * 1.274);
+  }
+
+  .home--index .wheel-wrap {
+    order: 2;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+    margin-top: clamp(0.1rem, 0.5vh, 0.3rem);
+    margin-bottom: clamp(5.5rem, 20vw, 7.5rem);
+  }
+
+  .home--index .wheel {
+    width: min(
+      calc((100vw - 2.5rem) * var(--home-mobile-wheel-scale)),
+      calc((72vh - 12rem) * var(--home-mobile-wheel-scale)),
+      calc(100vw - 0.5rem)
+    );
+    max-width: 31.05rem;
+    transition:
+      border-radius 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .home--index .wheel::before {
+    inset: calc(var(--wheel-ring) * -0.975);
+    border-width: calc(var(--wheel-ring) * 1.95);
+    transition: border-radius 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .home--index.is-menu-open .wheel,
+  .home--index.is-menu-open .wheel::before,
+  .home--index.is-menu-open .wheel-photo,
+  .home--index.is-menu-open .wheel-spokes {
+    border-radius: 50%;
+  }
+
+  .home--index .title-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--home-mobile-footer-h) + clamp(2.5rem, 9vw, 3.6rem));
+    order: 3;
+    align-self: center;
+    margin: 0;
+    padding: 0 clamp(0.5rem, 3vw, 1rem);
+    font-size: clamp(1.265rem, 5.72vw, 1.705rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    max-width: none;
+    z-index: 3;
+    text-align: center;
+  }
+
+  .home--index .title-bottom .title-br {
+    display: inline;
+  }
+
+  .home--index ~ .copyright {
+    display: block;
+    position: fixed;
+    left: 50%;
+    right: auto;
+    bottom: max(env(safe-area-inset-bottom, 0px), clamp(0.35rem, 1.1vh, 0.65rem));
+    transform: translateX(-50%);
+    transform-origin: center bottom;
+    text-align: center;
+    font-size: clamp(10px, 2.6vw, 12px);
+    white-space: nowrap;
+    z-index: 4;
+  }
+
+  .home--index .home-deco .deco-sun,
+  .home--index .home-deco .deco-thunder,
+  .home--index .home-deco .deco-sunglasses,
+  .home--index .home-deco .deco-water-2 {
+    display: none;
+  }
+
+  .home--index .deco-wind-tr {
+    top: calc(var(--home-mobile-header-h) + clamp(5rem, 15vw, 6.6rem));
+    left: clamp(-2.2rem, -9vw, 0.5rem);
+    right: auto;
+    bottom: auto;
+    width: clamp(calc(10.24rem * var(--deco-scale)), calc(51.2vw * var(--deco-scale)), calc(15.2rem * var(--deco-scale)));
+    animation: wind2-drift 5.6s ease-in-out infinite;
+  }
+
+  .home--index .deco-spark-tl {
+    top: clamp(38%, 42vh, 46%);
+    left: clamp(6%, 9vw, 12%);
+    width: clamp(calc(1.35rem * var(--deco-scale)), calc(6.5vw * var(--deco-scale)), calc(2rem * var(--deco-scale)));
+  }
+
+  .home--index .deco-snow3 {
+    top: auto;
+    left: auto;
+    right: clamp(22%, 28vw, 34%);
+    bottom: calc(var(--home-mobile-footer-h) + clamp(-0.95rem, -2.5vw, -0.2rem));
+    width: clamp(calc(2.43rem * var(--deco-scale)), calc(11.7vw * var(--deco-scale)), calc(3.6rem * var(--deco-scale)));
+  }
+
+  .home--index .deco-spark-tr {
+    top: calc(var(--home-mobile-header-h) + clamp(11.9rem, 36vw, 15.9rem));
+    left: clamp(2rem, 8vw, 3.9rem);
+    right: auto;
+    bottom: auto;
+    width: clamp(calc(3rem * var(--deco-scale)), calc(13.2vw * var(--deco-scale)), calc(4.5rem * var(--deco-scale)));
+  }
+
+  .home--index .deco-wind-bl {
+    top: auto;
+    left: auto;
+    right: clamp(-10%, -5vw, -1%);
+    bottom: calc(var(--home-mobile-footer-h) + clamp(5.3rem, 18.5vw, 7.2rem));
+    width: clamp(calc(8.64rem * var(--deco-scale)), calc(43.2vw * var(--deco-scale)), calc(12.96rem * var(--deco-scale)));
+    animation: wind1-drift 5.6s ease-in-out infinite;
+  }
+
+  .home--index .deco-bubble-2 {
+    top: calc(var(--home-mobile-header-h) + clamp(0.45rem, 1.6vw, 0.8rem));
+    left: clamp(22%, 28vw, 34%);
+    right: auto;
+    width: clamp(calc(2.25rem * var(--deco-scale)), calc(10.08vw * var(--deco-scale)), calc(3.42rem * var(--deco-scale)));
+  }
+
+  .home--index .home-deco .deco-water-2 {
+    top: calc(var(--home-mobile-header-h) + clamp(4.2rem, 13.5vw, 5.7rem));
+    left: clamp(62%, 68vw, 74%);
+    right: auto;
+    bottom: auto;
+    width: clamp(calc(1.92375rem * var(--deco-scale)), calc(8.6184vw * var(--deco-scale)), calc(2.9241rem * var(--deco-scale)));
+    display: block;
+  }
+
+  .home--index .deco-rain {
+    top: clamp(20%, 24vh, 28%);
+    right: clamp(8%, 13vw, 19%);
+    bottom: auto;
+    width: clamp(calc(4.8rem * var(--deco-scale)), calc(24vw * var(--deco-scale)), calc(7rem * var(--deco-scale)));
+  }
+
+  .home--index .deco-cloud-bl {
+    left: clamp(5%, 8vw, 11%);
+    bottom: calc(var(--home-mobile-footer-h) + clamp(5.8rem, 21vw, 8.4rem));
+    width: clamp(calc(4.4rem * var(--deco-scale)), calc(22vw * var(--deco-scale)), calc(6.5rem * var(--deco-scale)));
+    animation: cloud-float 3.2s ease-in-out infinite;
+  }
+
+  .home--index .home-deco::after {
+    display: none;
+  }
+
+  .home--index .home-deco::before {
+    display: none;
+  }
+
+  .home-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    background: rgba(0, 0, 0, 0.61);
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    pointer-events: none;
+    transition:
+      opacity 0.45s ease,
+      visibility 0.45s ease;
+  }
+
+  .home--index.is-menu-open ~ .home-menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .home-menu-backdrop[hidden] {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home--index .home-site-menu,
+  .home--index,
+  .home--index .wheel,
+  .home--index .wheel::before,
+  .home-menu-backdrop {
+    transition: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .home--index .home-menu-toggle,
+  .home--index .home-site-menu,
+  .home--index .home-lang-toggle,
+  .home-menu-backdrop {
+    display: none;
+  }
+}
+
+/* Desktop — fluid wheel, corners, decos scale with viewport width */
+@media (min-width: 769px) {
+  :root {
+    --corner-width: clamp(calc(5.5rem * var(--corner-scale)), calc(17vw * var(--corner-scale)), calc(19.5rem * var(--corner-scale)));
+    --corner-bl-width: clamp(calc(6.6rem * var(--corner-scale)), calc(20vw * var(--corner-scale)), calc(23.5rem * var(--corner-scale)));
+    --wheel-max: clamp(
+      640px,
+      calc(
+        640px + (100vw - 769px) / 959px * 200px +
+          max(0px, (100vw - 1728px) / 832px * 80px)
+      ),
+      920px
+    );
+    --wheel-size: min(
+      calc(88vw + (100vw - 769px) / 959px * 5vw - max(0px, (100vw - 1728px) / 832px * 8vw)),
+      calc(80vh + (100vw - 769px) / 959px * 8vh + max(0px, (100vw - 1728px) / 832px * 2vh)),
+      var(--wheel-max)
+    );
+  }
+
+  /* Home decos — vw-driven widths with wider caps so icons scale with browser resize */
+  .deco-sun {
+    width: clamp(calc(3.9rem * var(--deco-scale)), calc(8.7vw * var(--deco-scale)), calc(9.5rem * var(--deco-scale)));
+  }
+
+  .deco-spark-tl {
+    width: clamp(calc(1.5rem * var(--deco-scale)), calc(3.2vw * var(--deco-scale)), calc(4rem * var(--deco-scale)));
+  }
+
+  .deco-snow3,
+  .deco-bubble-2 {
+    width: clamp(calc(1.1rem * var(--deco-scale)), calc(2.4vw * var(--deco-scale)), calc(2.75rem * var(--deco-scale)));
+  }
+
+  .deco-spark-tr {
+    width: clamp(calc(2.2rem * var(--deco-scale)), calc(5vw * var(--deco-scale)), calc(5.75rem * var(--deco-scale)));
+  }
+
+  .deco-wind-bl {
+    --wind1-drift: clamp(calc(0.55rem * var(--deco-scale)), calc(1.8vw * var(--deco-scale)), calc(2rem * var(--deco-scale)));
+    width: clamp(calc(9rem * var(--deco-scale)), calc(23.5vw * var(--deco-scale)), calc(24rem * var(--deco-scale)));
+  }
+
+  .deco-wind-tr {
+    --wind2-drift: clamp(calc(0.55rem * var(--deco-scale)), calc(1.8vw * var(--deco-scale)), calc(2rem * var(--deco-scale)));
+    bottom: calc(
+      clamp(0.5rem, 2vh, 1.5rem) + var(--corner-bl-width) -
+        clamp(0.75rem, 2vh, 1.5rem) + clamp(0.75rem, 2vh, 1.25rem)
+    );
+    width: clamp(calc(10rem * var(--deco-scale)), calc(25.65vw * var(--deco-scale)), calc(26.5rem * var(--deco-scale)));
+  }
+
+  .deco-thunder {
+    width: clamp(calc(4rem * var(--deco-scale)), calc(10.5vw * var(--deco-scale)), calc(10.5rem * var(--deco-scale)));
+  }
+
+  .deco-cloud-bl {
+    --cloud-drift: clamp(calc(0.45rem * var(--deco-scale)), calc(1.2vh * var(--deco-scale)), calc(1.1rem * var(--deco-scale)));
+    width: clamp(calc(4.35rem * var(--deco-scale)), calc(10.8vw * var(--deco-scale)), calc(11rem * var(--deco-scale)));
+  }
+
+  .deco-sunglasses {
+    width: clamp(calc(2.4rem * var(--deco-scale)), calc(9vw * var(--deco-scale)), calc(8rem * var(--deco-scale)));
+  }
+
+  .deco-rain {
+    width: clamp(calc(4rem * var(--deco-scale)), calc(10.7vw * var(--deco-scale)), calc(10.5rem * var(--deco-scale)));
+  }
+
+  .deco-water-2 {
+    width: clamp(calc(2.2rem * var(--deco-scale)), calc(4.8vw * var(--deco-scale)), calc(5.5rem * var(--deco-scale)));
+  }
+}
+
+/* 13" laptop — 769px–1440px (MacBook Air/Pro 13) */
+@media (min-width: 769px) and (max-width: 1440px) {
+  :root {
+    --menu-side-offset: clamp(14%, 17vw, 20%);
+  }
+}
+
+/* 16" laptop — 1441px–1728px (MacBook Pro 16) */
+@media (min-width: 1441px) and (max-width: 1728px) {
+  :root {
+    --menu-side-offset: clamp(16%, 18vw, 22%);
+  }
+}
+
+/* iMac / large desktop — 1729px+ (iMac 24, external displays) */
+@media (min-width: 1729px) {
+  :root {
+    --menu-side-offset: clamp(17%, 16vw, 21%);
   }
 }
 

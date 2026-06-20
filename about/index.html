@@ -63,7 +63,7 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="home">
+    <main class="home home--index home--about">
       <img class="corner corner-tl" src="/assets/title-B.svg" alt="" />
       <img class="corner corner-tr" src="/assets/title-Y.svg" alt="" />
       <img class="corner corner-bl" src="/assets/title-O.svg" alt="" />
@@ -144,7 +144,37 @@
         <a class="menu-link menu-link--plain" href="#">한국어</a>
       </nav>
 
-      <h1 class="title-top"><a href="/">BRING YOUR OWN BIKE</a></h1>
+      <button
+        type="button"
+        class="home-menu-toggle"
+        aria-expanded="false"
+        aria-controls="home-site-menu"
+        aria-label="Open menu"
+      >
+        <img src="/rides/assets/icon-menu.svg" alt="" />
+      </button>
+
+      <nav
+        class="home-site-menu"
+        id="home-site-menu"
+        aria-label="Site navigation"
+        hidden
+      >
+        <a class="home-site-menu-link" href="/">HOME</a>
+        <a class="home-site-menu-link" href="/about/">ABOUT</a>
+        <a class="home-site-menu-link" href="/rides/">RIDES</a>
+        <a class="home-site-menu-link" href="/gear/">GEAR</a>
+        <a class="home-site-menu-link" href="/contact/">CONTACT</a>
+      </nav>
+
+      <a class="home-lang-toggle" href="#" aria-label="Switch to Korean">
+        <img src="/assets/mobile-en.svg" alt="EN / KR" width="90" height="38" />
+      </a>
+
+      <h1 class="title-top">
+        <span class="title-top-page">ABOUT</span>
+        <a class="title-top-home" href="/">BRING YOUR OWN BIKE</a>
+      </h1>
 
       <div class="wheel-wrap">
         <div class="wheel wheel-page">
@@ -205,8 +235,13 @@
         </div>
       </div>
 
-      <p class="title-bottom">CYCLING THE UNKNOWN, TOGETHER WE WEATHER</p>
+      <p class="title-bottom">
+        CYCLING THE UNKNOWN,<br class="title-br" aria-hidden="true" />TOGETHER
+        WE WEATHER
+      </p>
     </main>
+
+    <div class="home-menu-backdrop" hidden aria-hidden="true"></div>
 
     <div class="copyright">© 2026 STUDIO YEON SUNG</div>
 
