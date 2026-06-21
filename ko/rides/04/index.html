@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
     />
     <title>RIDE 04 | BRING YOUR OWN BIKE | Studio Yeon Sung</title>
     <meta name="description" content="브링 유어 온 바이크(BYOB) 라이드 04." />
@@ -63,11 +63,11 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="home home--rides">
-      <img class="corner corner-tl" src="/assets/title-B.svg" alt="" />
-      <img class="corner corner-tr" src="/assets/title-Y.svg" alt="" />
-      <img class="corner corner-bl" src="/assets/title-O.svg" alt="" />
-      <img class="corner corner-br" src="/assets/title-B.svg" alt="" />
+    <main class="home home--index home--wheel-page home--rides home--rides-detail">
+      <a class="corner corner-tl" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
+      <a class="corner corner-tr" href="/ko/" aria-label="Home"><img src="/assets/title-Y.svg" alt="" /></a>
+      <a class="corner corner-bl" href="/ko/" aria-label="Home"><img src="/assets/title-O.svg" alt="" /></a>
+      <a class="corner corner-br" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
 
       <img
         class="illustration illustration-riding"
@@ -144,6 +144,39 @@
         <a class="menu-link menu-link--plain" href="#">한국어</a>
       </nav>
 
+
+      <button
+        type="button"
+        class="home-menu-toggle"
+        aria-expanded="false"
+        aria-controls="home-site-menu"
+        aria-label="Open menu"
+      >
+        <img src="/rides/assets/icon-menu.svg" alt="" />
+      </button>
+
+      <nav
+        class="home-site-menu"
+        id="home-site-menu"
+        aria-label="Site navigation"
+        hidden
+      >
+        <a class="home-site-menu-link" href="/ko/">HOME</a>
+        <a class="home-site-menu-link" href="/ko/about/">ABOUT</a>
+        <a class="home-site-menu-link" href="/ko/rides/">RIDES</a>
+        <a class="home-site-menu-link" href="/ko/gear/">GEAR</a>
+        <a class="home-site-menu-link" href="/ko/contact/">CONTACT</a>
+      </nav>
+
+      <a class="home-lang-toggle" href="#" aria-label="Switch to English">
+        <img src="/assets/mobile-kr.svg" alt="EN / KR" width="90" height="38" />
+      </a>
+
+      <h1 class="title-top">
+        <span class="title-top-page">RIDES</span>
+        <a class="title-top-home" href="/ko/">BRING YOUR OWN BIKE</a>
+      </h1>
+
       <div class="rides-site-nav">
         <div class="rides-site-nav-bar">
           <button
@@ -170,7 +203,7 @@
         </nav>
       </div>
 
-      <div class="wheel-wrap wheel-wrap--rides">
+      <div class="wheel-wrap wheel-wrap--rides is-detail">
         <div class="wheel wheel-page rides-preview">
           <button
             type="button"
@@ -193,7 +226,7 @@
           </button>
         </div>
 
-        <div class="rides-duo" hidden aria-live="polite">
+        <div class="rides-duo is-open" aria-live="polite">
           <article class="rides-circle rides-circle--text">
             <div class="rides-circle-content">
               <p class="rides-number rides-number--text">04</p>
@@ -304,8 +337,15 @@
         </div>
       </div>
 
-      <p class="title-bottom">CYCLING THE UNKNOWN, TOGETHER WE WEATHER</p>
+      <p class="title-bottom">
+        CYCLING THE UNKNOWN,<br class="title-br" aria-hidden="true" />TOGETHER
+        WE WEATHER
+      </p>
     </main>
+
+    <div class="home-mobile-scroll-spacer" aria-hidden="true"></div>
+
+    <div class="home-menu-backdrop" hidden aria-hidden="true"></div>
 
     <div class="rides-menu-backdrop" hidden aria-hidden="true"></div>
 

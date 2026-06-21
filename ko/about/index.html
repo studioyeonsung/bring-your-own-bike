@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
     />
     <title>ABOUT | BRING YOUR OWN BIKE | Studio Yeon Sung</title>
     <meta name="description" content="BYOB(브링 유어 온 바이크)는 오염된 날씨를 집단적 몸의 현상으로 탐구하는 참여형 퍼포먼스 시리즈입니다." />
@@ -63,11 +63,11 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="home home--index home--about">
-      <img class="corner corner-tl" src="/assets/title-B.svg" alt="" />
-      <img class="corner corner-tr" src="/assets/title-Y.svg" alt="" />
-      <img class="corner corner-bl" src="/assets/title-O.svg" alt="" />
-      <img class="corner corner-br" src="/assets/title-B.svg" alt="" />
+    <main class="home home--index home--wheel-page home--about">
+      <a class="corner corner-tl" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
+      <a class="corner corner-tr" href="/ko/" aria-label="Home"><img src="/assets/title-Y.svg" alt="" /></a>
+      <a class="corner corner-bl" href="/ko/" aria-label="Home"><img src="/assets/title-O.svg" alt="" /></a>
+      <a class="corner corner-br" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
 
       <img
         class="illustration illustration-riding"
@@ -180,12 +180,12 @@
         <div class="wheel wheel-page">
           <div class="wheel-panel wheel-about">
             <div class="wheel-about-body">
-              <img
-                class="wheel-about-logo"
-                src="/about/assests/logo.png"
-                alt="Bring Your Own Bike"
-              />
               <div class="wheel-about-scroll">
+                <img
+                  class="wheel-about-logo"
+                  src="/about/assests/logo.png"
+                  alt="Bring Your Own Bike"
+                />
                 <p class="wheel-panel-text">BYOB(Bring Your Own Bike) is a participatory performance series that explores polluted weather as a collective embodied phenomenon. In this cycling experience, participants are invited to pedal through the polluted area with their own bikes, collectively &lsquo;weathering&rsquo; under the guidance of the artist. A bike is not merely a medium here; it is a speculative tool that fosters the collective embodiment of the weather. By prompting reflection on how our bodies can serve as sensing technology, the participants engage in a communal artistic practice that intersects with the environment, socio-political climates, and the human body.</p>
 
                 <div class="wheel-about-credits">
@@ -240,6 +240,8 @@
         WE WEATHER
       </p>
     </main>
+
+    <div class="home-mobile-scroll-spacer" aria-hidden="true"></div>
 
     <div class="home-menu-backdrop" hidden aria-hidden="true"></div>
 

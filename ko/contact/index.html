@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
     />
     <title>CONTACT | BRING YOUR OWN BIKE | Studio Yeon Sung</title>
     <meta name="description" content="브링 유어 온 바이크(BYOB) 협업 및 문의를 위한 Studio Yeon Sung 연락처." />
@@ -63,11 +63,11 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="home">
-      <img class="corner corner-tl" src="/assets/title-B.svg" alt="" />
-      <img class="corner corner-tr" src="/assets/title-Y.svg" alt="" />
-      <img class="corner corner-bl" src="/assets/title-O.svg" alt="" />
-      <img class="corner corner-br" src="/assets/title-B.svg" alt="" />
+    <main class="home home--index home--wheel-page home--contact">
+      <a class="corner corner-tl" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
+      <a class="corner corner-tr" href="/ko/" aria-label="Home"><img src="/assets/title-Y.svg" alt="" /></a>
+      <a class="corner corner-bl" href="/ko/" aria-label="Home"><img src="/assets/title-O.svg" alt="" /></a>
+      <a class="corner corner-br" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
 
       <img
         class="illustration illustration-riding"
@@ -146,36 +146,77 @@
         <a class="menu-link menu-link--plain" href="#">한국어</a>
       </nav>
 
-      <h1 class="title-top"><a href="/ko/">BRING YOUR OWN BIKE</a></h1>
+      <button
+        type="button"
+        class="home-menu-toggle"
+        aria-expanded="false"
+        aria-controls="home-site-menu"
+        aria-label="Open menu"
+      >
+        <img src="/rides/assets/icon-menu.svg" alt="" />
+      </button>
+
+      <nav
+        class="home-site-menu"
+        id="home-site-menu"
+        aria-label="Site navigation"
+        hidden
+      >
+        <a class="home-site-menu-link" href="/ko/">HOME</a>
+        <a class="home-site-menu-link" href="/ko/about/">ABOUT</a>
+        <a class="home-site-menu-link" href="/ko/rides/">RIDES</a>
+        <a class="home-site-menu-link" href="/ko/gear/">GEAR</a>
+        <a class="home-site-menu-link" href="/ko/contact/">CONTACT</a>
+      </nav>
+
+      <a class="home-lang-toggle" href="#" aria-label="Switch to English">
+        <img src="/assets/mobile-kr.svg" alt="EN / KR" width="90" height="38" />
+      </a>
+
+      <h1 class="title-top">
+        <span class="title-top-page">CONTACT</span>
+        <a class="title-top-home" href="/ko/">BRING YOUR OWN BIKE</a>
+      </h1>
 
       <div class="wheel-wrap">
         <div class="wheel wheel-page">
           <div class="wheel-panel wheel-contact">
-            <div class="wheel-contact-body">
-              <p class="wheel-panel-text wheel-contact-intro">
-                Want to ride with us<br />
-                or bring BYOB to your city?
-              </p>
-              <p class="wheel-panel-text wheel-contact-lead">Get in touch.</p>
-              <div class="wheel-contact-links">
-                <a class="wheel-contact-link" href="mailto:info@archiveofmatters.com"
-                  >Write us</a
-                >
-                <a
-                  class="wheel-contact-link"
-                  href="https://www.instagram.com/bring.your.own.bike/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >Follow the ride</a
-                >
+            <div class="wheel-about-body">
+              <div class="wheel-about-scroll">
+                <div class="wheel-contact-body">
+                  <p class="wheel-panel-text wheel-contact-intro">
+                    Want to ride with us<br />
+                    or bring BYOB to your city?
+                  </p>
+                  <p class="wheel-panel-text wheel-contact-lead">Get in touch.</p>
+                  <div class="wheel-contact-links">
+                    <a class="wheel-contact-link" href="mailto:info@archiveofmatters.com"
+                      >Write us</a
+                    >
+                    <a
+                      class="wheel-contact-link"
+                      href="https://www.instagram.com/bring.your.own.bike/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Follow the ride</a
+                    >
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <p class="title-bottom">CYCLING THE UNKNOWN, TOGETHER WE WEATHER</p>
+      <p class="title-bottom">
+        CYCLING THE UNKNOWN,<br class="title-br" aria-hidden="true" />TOGETHER
+        WE WEATHER
+      </p>
     </main>
+
+    <div class="home-mobile-scroll-spacer" aria-hidden="true"></div>
+
+    <div class="home-menu-backdrop" hidden aria-hidden="true"></div>
 
     <div class="copyright">© 2026 STUDIO YEON SUNG</div>
 

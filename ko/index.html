@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
     />
     <title>BRING YOUR OWN BIKE | Studio Yeon Sung</title>
     <meta name="description" content="BYOB(브링 유어 온 바이크)는 오염된 날씨를 집단적 몸의 현상으로 탐구하는 참여형 자전거 퍼포먼스 시리즈입니다." />
@@ -96,10 +96,10 @@
   </head>
   <body>
     <main class="home home--index">
-      <img class="corner corner-tl" src="/assets/title-B.svg" alt="" />
-      <img class="corner corner-tr" src="/assets/title-Y.svg" alt="" />
-      <img class="corner corner-bl" src="/assets/title-O.svg" alt="" />
-      <img class="corner corner-br" src="/assets/title-B.svg" alt="" />
+      <a class="corner corner-tl" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
+      <a class="corner corner-tr" href="/ko/" aria-label="Home"><img src="/assets/title-Y.svg" alt="" /></a>
+      <a class="corner corner-bl" href="/ko/" aria-label="Home"><img src="/assets/title-O.svg" alt="" /></a>
+      <a class="corner corner-br" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
 
       <img
         class="illustration illustration-riding"
@@ -205,10 +205,10 @@
 
       <h1 class="title-top">
         <a href="/ko/"
-          >BRING<br class="title-br" aria-hidden="true" />YOUR<br
+          >BRING<br class="title-br" aria-hidden="true" /> YOUR<br
             class="title-br"
             aria-hidden="true"
-          />OWN BIKE</a
+          /> OWN BIKE</a
         >
       </h1>
 
@@ -251,6 +251,13 @@
         WE WEATHER
       </p>
     </main>
+
+    <div class="home-scroll-hint" hidden aria-hidden="true">
+      <p class="home-scroll-hint__text">Swipe up</p>
+      <span class="home-scroll-hint__arrow" aria-hidden="true">↓</span>
+    </div>
+
+    <div class="home-mobile-scroll-spacer" aria-hidden="true"></div>
 
     <div class="home-menu-backdrop" hidden aria-hidden="true"></div>
 

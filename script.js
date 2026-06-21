@@ -31,6 +31,10 @@ const ridesNameLines = document.querySelectorAll(".rides-detail-names-line");
 const ridesStoryBlock = document.querySelector(".rides-detail-block--story");
 const ridesStoryParagraphs = document.querySelectorAll(".rides-detail-paragraph");
 const ridesHome = document.querySelector(".home--rides");
+const homeIndex = document.querySelector(".home--index");
+const homeMenuToggle = document.querySelector(".home-menu-toggle");
+const homeSiteMenu = document.getElementById("home-site-menu");
+const homeMenuBackdrop = document.querySelector(".home-menu-backdrop");
 const ridesMenuToggle = document.querySelector(".rides-menu-toggle");
 const ridesSiteMenu = document.getElementById("rides-site-menu");
 const ridesMenuBackdrop = document.querySelector(".rides-menu-backdrop");
@@ -104,6 +108,10 @@ function syncLanguageLinks() {
       img.src = isKo ? "/assets/mobile-kr.svg" : "/assets/mobile-en.svg";
     }
   }
+
+  document.querySelectorAll("a.corner").forEach((link) => {
+    link.href = getSiteHomeUrl();
+  });
 }
 
 const rideDetailTextEn = {
@@ -333,6 +341,10 @@ function syncRidesHeaderMode({ animate = true, direction = "out" } = {}) {
   if (!ridesHome) return;
 
   if (ridesDetailOpen) {
+    if (homeIndex?.classList.contains("is-menu-open")) {
+      setHomeMenuOpen(false);
+    }
+
     if (ridesHome.classList.contains("home--rides-detail")) return;
 
     if (!animate) {
@@ -582,7 +594,7 @@ function renderRide(index) {
   }
 }
 
-function openRideDetail({ pushHistory = true, animateHeader = true } = {}) {
+function openRideDetail({ pushHistory = true, animateHeader = true, immediate = false } = {}) {
   if (!ridesStage || !ridesDuo || ridesDetailOpen) return;
 
   galleryIndex = 0;
@@ -592,9 +604,16 @@ function openRideDetail({ pushHistory = true, animateHeader = true } = {}) {
 
   const revealDetailUI = () => {
     ridesDuo.hidden = false;
+    ridesStage.classList.add("is-detail");
+
+    if (immediate) {
+      ridesDuo.classList.remove("is-closing", "is-opening", "is-changing");
+      ridesDuo.classList.add("is-open");
+      return;
+    }
+
     ridesDuo.classList.remove("is-closing", "is-open");
     ridesDuo.classList.add("is-opening");
-    ridesStage.classList.add("is-detail");
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -603,7 +622,7 @@ function openRideDetail({ pushHistory = true, animateHeader = true } = {}) {
     });
   };
 
-  if (animateHeader) {
+  if (animateHeader && !immediate) {
     window.setTimeout(revealDetailUI, RIDES_CORNER_MENU_WIPE_MS);
   } else {
     revealDetailUI();
@@ -884,26 +903,29 @@ window.addEventListener("popstate", (event) => {
   syncRidesAutoAdvance();
 });
 
-if (ridesStage) {
-  const route = getRidesRouteFromLocation();
-  rideIndex = route.rideIndex;
-  renderRide(rideIndex);
-
-  if (route.detail) {
-    openRideDetail({ pushHistory: false, animateHeader: false });
-    syncRidesHistory("detail", rideIndex);
-  } else {
-    syncRidesHistory("list", rideIndex);
-    syncRidesHeaderMode({ animate: false });
-  }
-
-  syncRidesAutoAdvance();
-}
-
 window.addEventListener(
   "wheel",
   (event) => {
-    const pageScroll = aboutScroll || panel;
+    if (
+      aboutScroll &&
+      document.documentElement.classList.contains("home-mobile-scroll") &&
+      HOME_MOBILE_MQ.matches
+    ) {
+      event.preventDefault();
+
+      if (isHomeChromeExpanded()) {
+        commitHomeChromeHideScroll();
+      } else {
+        applyAboutInnerScrollDelta(event.deltaY);
+      }
+
+      return;
+    }
+
+    let pageScroll = panel;
+    if (aboutScroll && !isAboutMobileScrollControl() && panel?.classList.contains("wheel-about")) {
+      pageScroll = aboutScroll;
+    }
     if (pageScroll) {
       pageScroll.scrollTop += event.deltaY;
       event.preventDefault();
@@ -950,6 +972,8 @@ window.addEventListener(
     }
 
     if (!wheel) return;
+
+    if (document.documentElement.classList.contains("home-mobile-scroll")) return;
 
     event.preventDefault();
     rotation += event.deltaY * 0.12;
@@ -1007,12 +1031,541 @@ function initHomeHeroVideo() {
 
 initHomeHeroVideo();
 
-const homeIndex = document.querySelector(".home--index");
-const homeMenuToggle = document.querySelector(".home-menu-toggle");
-const homeSiteMenu = document.getElementById("home-site-menu");
-const homeMenuBackdrop = document.querySelector(".home-menu-backdrop");
+const copyrightEl = document.querySelector(".copyright");
 const HOME_MENU_ANIM_MS = 550;
 let homeMenuAnimating = false;
+const HOME_MOBILE_MQ = window.matchMedia("(max-width: 768px)");
+const homeWheelSpokes = document.getElementById("wheel");
+const homeScrollHint = document.querySelector(".home-scroll-hint");
+const homeScrollHintText = document.querySelector(".home-scroll-hint__text");
+const HOME_CHROME_HIDE_SCROLL_Y = 100;
+const HOME_TOUCH_SKIP =
+  ".home-menu-toggle, .home-site-menu, .home-site-menu-link, .home-lang-toggle, a, button";
+let homeTouchStartY = 0;
+let homeTouchLastY = 0;
+let homeTouchAccum = 0;
+let homeTouchActive = false;
+let homeTouchOnAboutWheel = false;
+let homeTouchOnRidesTextArea = false;
+let aboutScrollTrack = null;
+let aboutContentOffset = 0;
+let homeExpandedViewportHeight = null;
+let homeCollapsedViewportHeight = null;
+let homeScrollSnapTimer = null;
+const isMobileHomeWheelPage = Boolean(
+  homeIndex?.classList.contains("home--wheel-page")
+);
+const isMainMobileHome = Boolean(
+  homeIndex && homeWheelSpokes && !isMobileHomeWheelPage
+);
+const isMobileHomeScrollPage = Boolean(
+  homeIndex && (isMainMobileHome || isMobileHomeWheelPage)
+);
+
+function getPageScrollTop() {
+  return window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+}
+
+function setPageScrollTop(value) {
+  const top = Math.max(0, Math.round(value));
+  const root = document.scrollingElement || document.documentElement;
+  root.scrollTop = top;
+  window.scrollTo(0, top);
+}
+
+function syncHomeWheelRotationFromScroll() {
+  if (!homeWheelSpokes || !isMainMobileHome || !HOME_MOBILE_MQ.matches) return;
+  if (homeIndex.classList.contains("is-menu-open")) return;
+
+  rotation = window.scrollY * 0.45;
+  homeWheelSpokes.style.transform = `rotate(${rotation}deg)`;
+}
+
+function getVisualViewportHeight() {
+  return window.visualViewport?.height ?? window.innerHeight;
+}
+
+function isHomeChromeExpanded() {
+  return getPageScrollTop() < HOME_CHROME_HIDE_SCROLL_Y * 0.5;
+}
+
+function resetHomeViewportHeightCache() {
+  homeExpandedViewportHeight = null;
+  homeCollapsedViewportHeight = null;
+}
+
+function captureHomeViewportHeights() {
+  const viewportHeight = getVisualViewportHeight();
+
+  if (isHomeChromeExpanded()) {
+    homeExpandedViewportHeight =
+      homeExpandedViewportHeight === null
+        ? viewportHeight
+        : Math.min(homeExpandedViewportHeight, viewportHeight);
+    return;
+  }
+
+  homeCollapsedViewportHeight =
+    homeCollapsedViewportHeight === null
+      ? viewportHeight
+      : Math.max(homeCollapsedViewportHeight, viewportHeight);
+}
+
+function syncMobileHomeViewportHeight() {
+  if (!isMobileHomeScrollPage || !HOME_MOBILE_MQ.matches) return;
+
+  if (!document.documentElement.classList.contains("home-mobile-scroll")) {
+    homeIndex.style.removeProperty("--home-mobile-vh");
+    document.documentElement.style.removeProperty("--home-mobile-vh");
+    homeIndex.style.removeProperty("height");
+    homeIndex.style.removeProperty("min-height");
+    homeIndex.classList.remove("is-browser-chrome-visible");
+    resetHomeViewportHeightCache();
+    return;
+  }
+
+  captureHomeViewportHeights();
+
+  const height = isHomeChromeExpanded()
+    ? (homeExpandedViewportHeight ?? getVisualViewportHeight())
+    : (homeCollapsedViewportHeight ?? getVisualViewportHeight());
+
+  homeIndex.style.setProperty("--home-mobile-vh", `${height}px`);
+  document.documentElement.style.setProperty("--home-mobile-vh", `${height}px`);
+  homeIndex.style.height = `${height}px`;
+  homeIndex.style.minHeight = `${height}px`;
+}
+
+function syncMobileHomeChromeState() {
+  if (!isMobileHomeScrollPage || !HOME_MOBILE_MQ.matches) return;
+  if (!document.documentElement.classList.contains("home-mobile-scroll")) return;
+
+  homeIndex.classList.toggle("is-browser-chrome-visible", isHomeChromeExpanded());
+}
+
+function syncHomeMobileScrollState() {
+  syncMobileHomeViewportHeight();
+  syncMobileHomeChromeState();
+  syncHomeScrollHint();
+  syncHomeWheelRotationFromScroll();
+}
+
+function snapHomeMobileScroll() {
+  if (!document.documentElement.classList.contains("home-mobile-scroll")) return;
+  if (homeIndex.classList.contains("is-menu-open")) return;
+
+  const scrollTop = getPageScrollTop();
+
+  if (scrollTop <= 1) {
+    if (scrollTop !== 0) {
+      setPageScrollTop(0);
+      syncHomeMobileScrollState();
+    }
+    return;
+  }
+
+  const target =
+    scrollTop >= HOME_CHROME_HIDE_SCROLL_Y * 0.5 ? HOME_CHROME_HIDE_SCROLL_Y : 0;
+
+  if (Math.abs(scrollTop - target) <= 2) return;
+
+  setPageScrollTop(target);
+  window.requestAnimationFrame(syncHomeMobileScrollState);
+}
+
+function isHomeMobileScrollInteractionActive() {
+  return (
+    isMobileHomeScrollPage &&
+    HOME_MOBILE_MQ.matches &&
+    document.documentElement.classList.contains("home-mobile-scroll") &&
+    !homeIndex.classList.contains("is-menu-open")
+  );
+}
+
+function commitHomeChromeHideScroll() {
+  setPageScrollTop(HOME_CHROME_HIDE_SCROLL_Y);
+  window.requestAnimationFrame(syncHomeMobileScrollState);
+}
+
+function commitHomeChromeOpenScroll() {
+  setPageScrollTop(0);
+  window.requestAnimationFrame(syncHomeMobileScrollState);
+}
+
+function isAboutMobileScrollControl() {
+  return (
+    isMobileHomeWheelPage &&
+    HOME_MOBILE_MQ.matches &&
+    document.documentElement.classList.contains("home-mobile-scroll") &&
+    aboutScrollTrack
+  );
+}
+
+function ensureAboutScrollTrack() {
+  if (!aboutScroll) return null;
+
+  let track = aboutScroll.querySelector(".wheel-about-scroll-track");
+  if (!track) {
+    track = document.createElement("div");
+    track.className = "wheel-about-scroll-track";
+    while (aboutScroll.firstChild) {
+      track.appendChild(aboutScroll.firstChild);
+    }
+    aboutScroll.appendChild(track);
+  }
+
+  aboutScrollTrack = track;
+  return track;
+}
+
+function syncAboutScrollTrackTransform() {
+  if (!aboutScrollTrack) return;
+  aboutScrollTrack.style.transform = `translate3d(0, ${-aboutContentOffset}px, 0)`;
+}
+
+function getAboutContentMaxScroll() {
+  if (!aboutScroll || !aboutScrollTrack) return 0;
+  return Math.max(0, aboutScrollTrack.scrollHeight - aboutScroll.clientHeight);
+}
+
+function initAboutMobileScrollControl() {
+  if (!isMobileHomeWheelPage || !aboutScroll) return;
+
+  if (!HOME_MOBILE_MQ.matches) {
+    const track = aboutScroll.querySelector(".wheel-about-scroll-track");
+    if (track) {
+      track.style.removeProperty("transform");
+    }
+    aboutScrollTrack = null;
+    aboutContentOffset = 0;
+    return;
+  }
+
+  ensureAboutScrollTrack();
+  aboutScroll.scrollTop = 0;
+  aboutContentOffset = Math.min(aboutContentOffset, getAboutContentMaxScroll());
+  syncAboutScrollTrackTransform();
+}
+
+function applyAboutInnerScrollDelta(delta) {
+  if (!delta || !aboutScroll || !isAboutMobileScrollControl()) return;
+
+  if (delta > 0) {
+    const innerRoom = Math.max(0, getAboutContentMaxScroll() - aboutContentOffset);
+    aboutContentOffset += Math.min(delta, innerRoom);
+  } else {
+    aboutContentOffset = Math.max(0, aboutContentOffset + delta);
+  }
+
+  syncAboutScrollTrackTransform();
+}
+
+function applyAboutScrollWheelDelta(delta, syncState = false) {
+  if (!delta || !aboutScroll) return;
+
+  if (isAboutMobileScrollControl()) {
+    applyAboutInnerScrollDelta(delta);
+    if (syncState) syncHomeMobileScrollState();
+    return;
+  }
+
+  aboutScroll.scrollTop += delta;
+  if (syncState) syncHomeMobileScrollState();
+}
+
+function isRidesMobileScrollControl() {
+  return Boolean(
+    isMobileHomeWheelPage &&
+    HOME_MOBILE_MQ.matches &&
+    document.documentElement.classList.contains("home-mobile-scroll") &&
+    ridesDetailsScroll &&
+    ridesDetailOpen
+  );
+}
+
+function isRidesTextAreaTouch(event) {
+  return Boolean(
+    event.target.closest(".rides-circle--text, .rides-details-scroll, .rides-circle-content")
+  );
+}
+
+function applyRidesInnerScrollDelta(delta) {
+  if (!delta || !ridesDetailsScroll || !isRidesMobileScrollControl()) return;
+
+  const maxScroll = Math.max(0, ridesDetailsScroll.scrollHeight - ridesDetailsScroll.clientHeight);
+  ridesDetailsScroll.scrollTop = Math.max(0, Math.min(maxScroll, ridesDetailsScroll.scrollTop + delta));
+}
+
+function shouldSkipHomeMobileTouch(event) {
+  if (
+    event.target.closest(
+      ".rides-text-nav-btn, .home-menu-toggle, .home-lang-toggle, .home-site-menu, .home-site-menu-link, .corner"
+    )
+  ) {
+    return true;
+  }
+
+  if (
+    event.target.closest(
+      ".wheel-wrap--rides .rides-preview-hit, .wheel-wrap--rides .rides-preview, .wheel-wrap--rides .rides-duo, .wheel-wrap--rides .rides-circle, .wheel-wrap--rides .rides-photo"
+    )
+  ) {
+    return false;
+  }
+
+  return Boolean(event.target.closest(HOME_TOUCH_SKIP));
+}
+
+function isHomeWheelPageTouch(event) {
+  return Boolean(isMobileHomeWheelPage && event.target.closest(".wheel-wrap"));
+}
+
+function onHomeMobileTouchStart(event) {
+  if (!isHomeMobileScrollInteractionActive()) return;
+  if (shouldSkipHomeMobileTouch(event)) return;
+  if (event.touches.length !== 1) return;
+
+  homeTouchStartY = event.touches[0].clientY;
+  homeTouchLastY = homeTouchStartY;
+  homeTouchAccum = 0;
+  homeTouchActive = true;
+  homeTouchOnAboutWheel = isHomeWheelPageTouch(event);
+  homeTouchOnRidesTextArea = isRidesTextAreaTouch(event);
+}
+
+function onHomeMobileTouchMove(event) {
+  if (!homeTouchActive || !isHomeMobileScrollInteractionActive()) return;
+  if (event.touches.length !== 1) return;
+
+  const y = event.touches[0].clientY;
+  const delta = homeTouchLastY - y;
+  homeTouchLastY = y;
+  if (!delta) return;
+
+  homeTouchAccum += delta;
+
+  if (homeTouchOnAboutWheel) {
+    event.preventDefault();
+
+    if (!isHomeChromeExpanded()) {
+      if (isAboutMobileScrollControl()) {
+        applyAboutInnerScrollDelta(delta);
+      } else if (isRidesMobileScrollControl() && homeTouchOnRidesTextArea) {
+        applyRidesInnerScrollDelta(delta);
+      }
+    }
+  }
+}
+
+function onHomeMobileTouchEnd(event) {
+  if (!homeTouchActive) return;
+  homeTouchActive = false;
+
+  const accum = homeTouchAccum;
+  homeTouchAccum = 0;
+  const fromAboutWheel = homeTouchOnAboutWheel;
+  const fromRidesTextArea = homeTouchOnRidesTextArea;
+  homeTouchOnAboutWheel = false;
+  homeTouchOnRidesTextArea = false;
+
+  if (accum > 18) {
+    commitHomeChromeHideScroll();
+
+    if (fromAboutWheel && isAboutMobileScrollControl()) {
+      const innerExtra = Math.max(0, accum - HOME_CHROME_HIDE_SCROLL_Y);
+      if (innerExtra > 0) {
+        applyAboutInnerScrollDelta(innerExtra);
+      }
+    } else if (fromAboutWheel && isRidesMobileScrollControl() && fromRidesTextArea) {
+      const innerExtra = Math.max(0, accum - HOME_CHROME_HIDE_SCROLL_Y);
+      if (innerExtra > 0) {
+        applyRidesInnerScrollDelta(innerExtra);
+      }
+    }
+  } else if (accum < -18) {
+    if (fromAboutWheel && isAboutMobileScrollControl() && aboutContentOffset > 0) {
+      applyAboutInnerScrollDelta(accum);
+    } else if (
+      fromAboutWheel &&
+      isRidesMobileScrollControl() &&
+      fromRidesTextArea &&
+      ridesDetailsScroll.scrollTop > 0
+    ) {
+      applyRidesInnerScrollDelta(accum);
+    } else {
+      commitHomeChromeOpenScroll();
+    }
+  } else {
+    snapHomeMobileScroll();
+  }
+
+  syncHomeMobileScrollState();
+}
+
+function hideHomeScrollHintImmediately() {
+  if (!homeScrollHint) return;
+
+  homeScrollHint.classList.remove("is-hiding");
+  homeScrollHint.hidden = true;
+  homeScrollHint.setAttribute("aria-hidden", "true");
+}
+
+function dismissHomeScrollHint() {
+  if (!homeScrollHint || homeScrollHint.hidden) return;
+
+  homeScrollHint.classList.add("is-hiding");
+
+  window.setTimeout(() => {
+    homeScrollHint.hidden = true;
+    homeScrollHint.setAttribute("aria-hidden", "true");
+    homeScrollHint.classList.remove("is-hiding");
+  }, 380);
+}
+
+function syncHomeScrollHint() {
+  if (!homeScrollHint || !isMainMobileHome || !HOME_MOBILE_MQ.matches) {
+    if (homeScrollHint) {
+      homeScrollHint.hidden = true;
+      homeScrollHint.setAttribute("aria-hidden", "true");
+    }
+    return;
+  }
+
+  if (!document.documentElement.classList.contains("home-mobile-scroll")) {
+    homeScrollHint.hidden = true;
+    homeScrollHint.setAttribute("aria-hidden", "true");
+    return;
+  }
+
+  if (homeScrollHintText) {
+    homeScrollHintText.textContent =
+      getSiteLang() === "ko" ? "위로 스와이프" : "Swipe up";
+  }
+
+  if (homeIndex.classList.contains("is-menu-open")) {
+    hideHomeScrollHintImmediately();
+    return;
+  }
+
+  const shouldShow = window.scrollY <= 1;
+
+  if (shouldShow) {
+    homeScrollHint.classList.remove("is-hiding");
+    homeScrollHint.hidden = false;
+    homeScrollHint.setAttribute("aria-hidden", "false");
+    return;
+  }
+
+  if (!homeScrollHint.hidden) {
+    dismissHomeScrollHint();
+  }
+}
+
+function getMobileCopyrightAnchor() {
+  return homeIndex || document.querySelector(".home--rides");
+}
+
+function syncMobileCopyrightPlacement() {
+  if (!copyrightEl) return;
+
+  const anchor = getMobileCopyrightAnchor();
+  const placeInMain = Boolean(HOME_MOBILE_MQ.matches && anchor);
+
+  if (placeInMain) {
+    if (copyrightEl.parentElement !== anchor) {
+      anchor.appendChild(copyrightEl);
+    }
+    return;
+  }
+
+  if (copyrightEl.parentElement !== document.body) {
+    document.body.appendChild(copyrightEl);
+  }
+}
+
+function syncMobileHomeScrollMode() {
+  const root = document.documentElement;
+  const enabled = Boolean(isMobileHomeScrollPage && HOME_MOBILE_MQ.matches);
+
+  root.classList.toggle("home-mobile-scroll", enabled);
+
+  if (!enabled) {
+    root.classList.remove("is-menu-scroll-locked");
+    initAboutMobileScrollControl();
+    syncMobileHomeViewportHeight();
+    syncHomeScrollHint();
+    syncMobileCopyrightPlacement();
+    return;
+  }
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  initAboutMobileScrollControl();
+  syncHomeMobileScrollState();
+  syncMobileCopyrightPlacement();
+}
+
+function onMobileHomeScrollOrViewportChange() {
+  syncHomeMobileScrollState();
+
+  window.clearTimeout(homeScrollSnapTimer);
+  homeScrollSnapTimer = window.setTimeout(snapHomeMobileScroll, 140);
+}
+
+function syncMobileHomeScrollLock() {
+  if (!isMobileHomeScrollPage || !HOME_MOBILE_MQ.matches) return;
+
+  const locked = homeIndex.classList.contains("is-menu-open");
+  document.documentElement.classList.toggle("is-menu-scroll-locked", locked);
+
+  if (locked) {
+    window.scrollTo(0, 0);
+  }
+
+  syncHomeMobileScrollState();
+}
+
+function onHomeMobileOrientationChange() {
+  resetHomeViewportHeightCache();
+  syncHomeMobileScrollState();
+  snapHomeMobileScroll();
+}
+
+syncMobileCopyrightPlacement();
+HOME_MOBILE_MQ.addEventListener("change", syncMobileCopyrightPlacement);
+window.addEventListener("resize", syncMobileCopyrightPlacement);
+
+if (isMobileHomeScrollPage) {
+  syncMobileHomeScrollMode();
+  window.addEventListener("scroll", onMobileHomeScrollOrViewportChange, {
+    passive: true,
+  });
+  homeIndex.addEventListener("touchstart", onHomeMobileTouchStart, {
+    passive: true,
+  });
+  homeIndex.addEventListener("touchmove", onHomeMobileTouchMove, {
+    passive: false,
+  });
+  homeIndex.addEventListener("touchend", onHomeMobileTouchEnd, {
+    passive: true,
+  });
+  homeIndex.addEventListener("touchcancel", onHomeMobileTouchEnd, {
+    passive: true,
+  });
+  window.addEventListener("resize", syncMobileHomeViewportHeight);
+  window.addEventListener("orientationchange", onHomeMobileOrientationChange);
+  window.visualViewport?.addEventListener("resize", onMobileHomeScrollOrViewportChange);
+  window.visualViewport?.addEventListener("scroll", onMobileHomeScrollOrViewportChange);
+  HOME_MOBILE_MQ.addEventListener("change", syncMobileHomeScrollMode);
+}
+
+if (isMobileHomeWheelPage && aboutScroll) {
+  initAboutMobileScrollControl();
+  HOME_MOBILE_MQ.addEventListener("change", initAboutMobileScrollControl);
+  window.addEventListener("resize", initAboutMobileScrollControl);
+}
 
 function setHomeMenuOpen(open) {
   if (!homeIndex || homeMenuAnimating) return;
@@ -1024,21 +1577,28 @@ function setHomeMenuOpen(open) {
   }
 
   if (open) {
+    hideHomeScrollHintImmediately();
+
     if (homeSiteMenu) homeSiteMenu.hidden = false;
     if (homeMenuBackdrop) {
       homeMenuBackdrop.hidden = false;
       homeMenuBackdrop.setAttribute("aria-hidden", "false");
     }
 
+    syncMobileHomeScrollLock();
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         homeIndex.classList.add("is-menu-open");
+        syncHomeScrollHint();
       });
     });
     return;
   }
 
   homeIndex.classList.remove("is-menu-open");
+  syncMobileHomeScrollLock();
+  syncHomeScrollHint();
   homeMenuAnimating = true;
 
   window.setTimeout(() => {
@@ -1060,6 +1620,33 @@ if (homeMenuToggle) {
   });
 }
 
+if (homeIndex) {
+  homeIndex.addEventListener("click", (event) => {
+    if (!homeIndex.classList.contains("is-menu-open")) return;
+    if (!document.documentElement.classList.contains("home-mobile-scroll")) return;
+    if (event.target.closest(".home-site-menu, .home-menu-toggle, .home-lang-toggle")) {
+      return;
+    }
+    setHomeMenuOpen(false);
+  });
+}
+
 if (homeMenuBackdrop) {
   homeMenuBackdrop.addEventListener("click", () => setHomeMenuOpen(false));
+}
+
+if (ridesStage) {
+  const route = getRidesRouteFromLocation();
+  rideIndex = route.rideIndex;
+  renderRide(rideIndex);
+
+  if (route.detail) {
+    openRideDetail({ pushHistory: false, animateHeader: false, immediate: true });
+    syncRidesHistory("detail", rideIndex);
+  } else {
+    syncRidesHistory("list", rideIndex);
+    syncRidesHeaderMode({ animate: false });
+  }
+
+  syncRidesAutoAdvance();
 }
