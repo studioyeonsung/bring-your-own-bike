@@ -617,6 +617,37 @@ body {
   margin-left: clamp(2.75rem, 7vw, 5.5rem);
 }
 
+@media (min-width: 769px) {
+  .menu-link.is-active:not(.menu-link--plain) {
+    color: var(--page-bg);
+  }
+
+  .menu-link.is-active:not(.menu-link--plain)::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: calc(-1 * clamp(0.16rem, 0.45em, 0.34rem));
+    top: -0.06em;
+    bottom: -0.06em;
+    width: calc(100% + var(--menu-underline-extra) + clamp(0.16rem, 0.45em, 0.34rem));
+    background: #000;
+  }
+
+  .menu-link.is-active:not(.menu-link--plain)::after,
+  .menu-link.is-active:not(.menu-link--plain):hover::after {
+    content: none;
+    animation: none;
+  }
+
+  .menu-tr .menu-link[href*="gear"] {
+    transform: translateX(calc(-1 * clamp(0.55rem, 1.6vw, 1.35rem)));
+  }
+
+  .menu-tr .menu-link[href*="rides"] {
+    transform: translateX(calc(-1 * clamp(0.55rem, 1.6vw, 1.35rem)));
+  }
+}
+
 .menu-tl {
   top: clamp(2%, 4.5vh, 6%);
   left: var(--menu-side-offset);
@@ -2694,6 +2725,12 @@ body.is-rides-lightbox-open .menu {
 
     .home--index.home--wheel-page.home--contact .title-top {
       font-size: clamp(2.376rem, 9.152vw, 3.08rem);
+    }
+  }
+
+  @media (min-width: 391px) {
+    .home--index.home--wheel-page.home--contact .title-top {
+      font-size: clamp(2.673rem, 10.296vw, 3.465rem);
     }
   }
 
