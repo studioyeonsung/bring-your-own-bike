@@ -24,6 +24,9 @@
   --font-dunkel-glatt: "dunkel-sans-glatt", sans-serif;
   --font-dunkel-expanded-glatt: "dunkel-sans-expanded-glatt", sans-serif;
   --font-dunkel-serif-display-medium: "dunkel-serif-display-medium", sans-serif;
+  --font-dunkel-standard-cond: "dunkel-sans-standard-cond", sans-serif;
+  --font-dunkel-standard: "dunkel-sans-standard", sans-serif;
+  --font-dunkel-standard-exp: "dunkel-sans-standard-exp", sans-serif;
   --font-sloop-script-one: "sloop-script-one", sans-serif;
 }
 
@@ -685,6 +688,14 @@ html[lang="ko"] .menu-mr .menu-link:not(.menu-link--plain):hover::after {
   bottom: -0.28em;
 }
 
+html[lang="ko"] .menu,
+html[lang="ko"] .home-site-menu-link,
+html[lang="ko"] .rides-site-menu-link {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
+}
+
 .wheel-wrap {
   position: relative;
   display: flex;
@@ -926,6 +937,41 @@ html[lang="ko"] .menu-mr .menu-link:not(.menu-link--plain):hover::after {
 .wheel-about-scroll > .wheel-panel-text {
   margin: 0;
   max-width: none;
+}
+
+.wheel-about-scroll > .wheel-panel-text + .wheel-panel-text {
+  margin-top: clamp(1rem, 2.5vh, 1.75rem);
+}
+
+html[lang="ko"] .home--about .wheel-about-scroll > .wheel-panel-text {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
+}
+
+html[lang="ko"] .home--about .wheel-about-credit-title {
+  font-family: var(--font-dunkel-standard-cond);
+  font-weight: 900;
+  font-style: normal;
+}
+
+html[lang="ko"] .home--about .wheel-about-credit-name {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
+}
+
+html[lang="ko"] .home--contact .wheel-contact-body .wheel-panel-text,
+html[lang="ko"] .home--contact .wheel-contact-link {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
+}
+
+html[lang="ko"] .home--gear .wheel-about-scroll > .wheel-panel-text {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
 }
 
 @media (min-width: 769px) {
@@ -1319,6 +1365,10 @@ html[lang="ko"] .menu-mr .menu-link:not(.menu-link--plain):hover::after {
   display: none;
 }
 
+.rides-detail-subtitle.is-italic {
+  font-style: italic;
+}
+
 .rides-detail-title,
 .rides-detail-subtitle,
 .rides-detail-date,
@@ -1410,6 +1460,7 @@ html[lang="ko"] .menu-mr .menu-link:not(.menu-link--plain):hover::after {
 }
 
 .rides-weather.is-hidden,
+.rides-detail-city.is-hidden,
 .rides-detail-names-line.is-hidden,
 .rides-detail-paragraph.is-hidden {
   display: none;
@@ -1435,7 +1486,7 @@ html[lang="ko"] .menu-mr .menu-link:not(.menu-link--plain):hover::after {
 }
 
 .rides-detail-block--story {
-  gap: clamp(0.5rem, 1.2vh, 0.85rem);
+  gap: clamp(1.15rem, 2.875vh, 2.0125rem);
 }
 
 .rides-photo {
@@ -1794,7 +1845,7 @@ body.is-rides-lightbox-open .menu {
     --rides-circle: calc(
       min(
         calc((100vw - 2.5rem) * var(--home-mobile-wheel-scale)),
-        calc((var(--home-mobile-vh, 100dvh) * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
+        calc(max(0px, 100dvh * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
         calc(100vw - 0.5rem),
         31.05rem
       ) - var(--wheel-ring)
@@ -2389,10 +2440,13 @@ body.is-rides-lightbox-open .menu {
   }
 
   .home--index .wheel {
-    width: min(
-      calc((100vw - 2.5rem) * var(--home-mobile-wheel-scale)),
-      calc((var(--home-mobile-vh, 100dvh) * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
-      calc(100vw - 0.5rem)
+    width: max(
+      12rem,
+      min(
+        calc((100vw - 2.5rem) * var(--home-mobile-wheel-scale)),
+        calc(max(0px, 100dvh * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
+        calc(100vw - 0.5rem)
+      )
     );
     max-width: 31.05rem;
     transition:

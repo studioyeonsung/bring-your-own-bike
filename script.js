@@ -30,6 +30,7 @@ const ridesParticipantsCount = document.querySelector(".rides-detail-participant
 const ridesNameLines = document.querySelectorAll(".rides-detail-names-line");
 const ridesStoryBlock = document.querySelector(".rides-detail-block--story");
 const ridesStoryParagraphs = document.querySelectorAll(".rides-detail-paragraph");
+const ridesCreditsContainer = document.querySelector(".wheel-about-credits");
 const ridesHome = document.querySelector(".home--rides");
 const homeIndex = document.querySelector(".home--index");
 const homeMenuToggle = document.querySelector(".home-menu-toggle");
@@ -79,6 +80,54 @@ function localizedPath(lang) {
   return withoutKo === "/" ? "/" : `${withoutKo}/`;
 }
 
+const MENU_LABELS = {
+  en: {
+    home: "HOME",
+    about: "ABOUT",
+    contact: "CONTACT",
+    rides: "RIDES",
+    gear: "GEAR",
+  },
+  ko: {
+    home: "홈",
+    about: "소개",
+    contact: "문의하기",
+    rides: "라이딩",
+    gear: "장비들",
+  },
+};
+
+function getMenuLabelKey(path) {
+  const normalized = (path || "").split("?")[0].split("#")[0].replace(/\/$/, "") || "/";
+
+  if (normalized === "/" || normalized === "/ko") return "home";
+  if (/\/about$/.test(normalized)) return "about";
+  if (/\/contact$/.test(normalized)) return "contact";
+  if (/\/rides(\/\d+)?$/.test(normalized)) return "rides";
+  if (/\/gear$/.test(normalized)) return "gear";
+
+  return null;
+}
+
+function syncMenuLabels() {
+  const labels = MENU_LABELS[getSiteLang()] || MENU_LABELS.en;
+
+  document
+    .querySelectorAll(
+      ".menu-tl .menu-link[href], .menu-tr .menu-link[href], .home-site-menu-link[href], .rides-site-menu-link[href]"
+    )
+    .forEach((link) => {
+      const key = getMenuLabelKey(link.getAttribute("href"));
+      if (key) link.textContent = labels[key];
+    });
+
+  const titlePage = document.querySelector(".title-top-page");
+  if (titlePage) {
+    const key = getMenuLabelKey(window.location.pathname);
+    if (key && key !== "home") titlePage.textContent = labels[key];
+  }
+}
+
 function syncLanguageLinks() {
   const engLink = document.querySelector(".menu-ml .menu-link");
   const koLink = document.querySelector(".menu-mr .menu-link");
@@ -112,6 +161,8 @@ function syncLanguageLinks() {
   document.querySelectorAll("a.corner").forEach((link) => {
     link.href = getSiteHomeUrl();
   });
+
+  syncMenuLabels();
 }
 
 const rideDetailTextEn = {
@@ -143,6 +194,230 @@ const rideDetailTextEn = {
   story: [
     "On a rainy March afternoon, ten cyclists gathered at De Ceuvel — a former shipyard turned cultural hub on the waterfront of Amsterdam Noord. Under light rain and a northwest wind, participants rode 6km through the post-industrial landscape, their bodies absorbing the damp air and the quiet hum of the city.",
     "The ride lasted three hours, moving slowly enough to sense the weather as material — not obstacle, but medium. With fair air quality and limited visibility, the group navigated the landscape together, each body becoming a sensor, each breath a small act of collective weathering.",
+  ],
+  credits: [
+    { title: "Concept & Production", name: "Yeon Sung" },
+    {
+      title: "Presented at",
+      name: "Sonic Acts Festival, Varia, Cycle Up Residency, Wasteland Festival, U-Spectrum",
+    },
+    { title: "Illustration", name: "Heejung Kim" },
+    { title: "Web Design", name: "Studio165" },
+    { title: "Web Development", name: "Studio165 with Cursor" },
+  ],
+};
+
+const ride01DetailTextEn = {
+  title: "Edition 05",
+  subtitle: "Still Running",
+  subtitleItalic: true,
+  date: "25 October 2025, Saturday",
+  previewDate: "25 Oct 2025",
+  previewVenue: "Taehwa River",
+  previewCountry: "KR",
+  photoCredit:
+    "Photo: Eoming © Studio Yeon Sung, U-Spectrum, Ulsan, 25 October 2025",
+  venue: "Taehwa River,",
+  city: "Ulsan, KR",
+  time: "14:00-16:00",
+  distance: "10km",
+  weather: [
+    "19°C",
+    "Light Wind, W8 mph",
+    "Humidity: 63%",
+    "Air quality: Good",
+  ],
+  cyclists: {
+    heading: "6 Cyclists",
+    count: "",
+    nameLines: [
+      "Ahae Kim · Jinhee Yang · Jihyeon Kim · Sian Kim · Woosoo Lee · Yerin Lee",
+    ],
+  },
+  story: [
+    "The fifth edition of BYOB — its first in South Korea — took place along the Taehwa River in Ulsan, a river that once reeked with industrial waste through decades of rapid industrialization, since restored into one of the city's most popular cycling routes.",
+    "Riding together with local citizens and artists, participants followed the river from its green, recovered present back through the infrastructure built to manage its past — a sewage treatment plant, floodgates, pollution monitoring stations — before arriving at a stretch where the path runs directly alongside Hyundai Motor's active factory complex.",
+    "For a few kilometers, the ride moved through two Ulsans at once: the river that healed, and the industry that never stopped.",
+  ],
+  credits: [
+    { title: "Program Assistance", name: "Eunji Kwak · Ahae Kim" },
+    { title: "Presented at", name: "U-Spectrum" },
+    { title: "Photography", name: "Eoming" },
+    { title: "Videography", name: "Shinyoung Kim" },
+    { title: "Thanks", name: "CLoFA" },
+  ],
+};
+
+const ride05DetailTextEn = {
+  title: "Edition 01",
+  subtitle: "The Weather Began It",
+  subtitleItalic: true,
+  date: "23 March 2024",
+  previewDate: "23 Mar 2024",
+  previewVenue: "Hembrugterrein→Westpoort",
+  previewCountry: "NL",
+  photoCredit:
+    "Photo: Bora Sekerci © Studio Yeon Sung, Sonic Acts Festival, Amsterdam, 23 March 2024",
+  venue: "Hembrugterrein → Westpoort,",
+  city: "Amsterdam, NL",
+  timeHtml: "12:00-13:00<br>14:00-15:00",
+  distance: "8km",
+  weather: [
+    "9°C",
+    "Strong Wind, W20 mph",
+    "Humidity: 77%",
+    "Air quality: Good",
+  ],
+  cyclists: {
+    heading: "3 Cyclists",
+    count: "",
+    nameLines: [
+      "Fileona Dkhar · Katya Borisova · Minari Lee",
+    ],
+  },
+  story: [
+    "The first edition of BYOB rode straight into a storm. Of seven people registered, only three showed up, and the wind was strong enough that weathering stopped being a concept and became the literal condition of the ride. Some of us could barely keep the pedals turning, but it was, in its own way, the perfect day to begin a project built around the practice of weathering.",
+    "The route began at the Hembrugterrein in Zaandam, a former munitions factory that stayed sealed behind fences for generations before it opened up to artists and the public, and crossed the North Sea Canal on the Hempont, the free ferry that still carries cyclists between Zaandam and Amsterdam's port district. It let us off directly inside Westpoort, Amsterdam's working harbor, where the storm did most of the talking from there. Wind turbines built straight into the skyline of the port groaned overhead, generating power for the harbor itself, while a scrap metal terminal held mountains of crushed steel waiting for ships bound for Turkey, and oil terminals lined the water in what's marketed as the largest gasoline port in the world.",
+    "The three of us leaning hard into the wind past all of it weren't simulating exposure to anything. We were just riding through what the weather actually gave us that day.",
+  ],
+  credits: [
+    {
+      title: "Presented at",
+      name: "Sonic Acts Festival 2024 as part of Program Sediments",
+    },
+    { title: "Photography", name: "Bora Sekerci" },
+  ],
+};
+
+const ride02DetailTextEn = {
+  title: "Edition 04",
+  subtitle: "Catching Its Breath",
+  subtitleItalic: true,
+  date: "26 July 2025",
+  previewDate: "26 Jul 2025",
+  previewVenue: "Vlaardingen→Botlek",
+  previewCountry: "NL",
+  photoCredit:
+    "Photo: Silvia Arenas © Studio Yeon Sung, Wasteland Festival, Rotterdam, 26 July 2025",
+  venue: "Vlaardingen → Botlek,",
+  cityHtml:
+    "Rotterdam, NL<br>As part of Wasteland Festival: Out of Sight",
+  time: "11:00-15:00",
+  distance: "30km",
+  weather: [
+    "24°C",
+    "Light Showers, WSW9 mph",
+    "Humidity: 68%",
+    "Air quality: Good",
+  ],
+  cyclists: {
+    heading: "9 Cyclists",
+    count: "",
+    nameLines: [
+      "Floris De Haan · Jorge Simelio · Katya Borisova · Nicilien Wolf · Nik · Phone Myant Khant · Raziel Miranda · Silvia Arena",
+    ],
+  },
+  story: [
+    "The fourth edition of BYOB, held by invitation of Wasteland Festival, was the longest ride to date: nine cyclists crossed the Port of Rotterdam from Oeverbos in Vlaardingen, a forest planted over remediated harbour sediment, into Botlek, one of Europe's densest petrochemical clusters.",
+    "A ferry carried the group into the strange calm of Rozenburg village, gardens and quiet streets wedged inside the largest industrial zone in Europe, before AVR's incinerator stacks announced the industry ahead.",
+    "The ride paused for a picnic in the shadow of Air Products' HyCO4 plant, its steam venting continuously into the sky, a hydrogen facility marketed as the port's clean-energy future. Nine cyclists resting in front of a plant that never rests: it was hard not to read the scene both ways at once.",
+    "The technology changes, grey hydrogen to blue, emissions captured instead of released, but the steam and the steel stay exactly the same. What looked like transition, seen this close, looked mostly like the same industry learning to hide its exhaust underground.",
+  ],
+  credits: [
+    { title: "Curator & Program Assistance", name: "Katya Borisova" },
+    { title: "Presented at", name: "Wasteland Festival 2025" },
+    { title: "Photography", name: "Silvia Arenas" },
+  ],
+};
+
+const ride03DetailTextEn = {
+  title: "Edition 03",
+  subtitle: "Along the Working River",
+  subtitleItalic: true,
+  date: "25 September 2024",
+  previewDate: "25 Sep 2024",
+  previewVenue: "Westhafen",
+  previewCountry: "DE",
+  photoCredit:
+    "Photo: Zuzana-Markéta Macková © Studio Yeon Sung, ZK/U, Berlin, 25 September 2024",
+  venue: "Westhafen, Berlin, DE",
+  city: "",
+  time: "17:00-19:00",
+  distance: "6km",
+  weather: [
+    "17°C",
+    "Light Rain, N10 mph",
+    "Humidity: 85%",
+    "Air quality: Moderate",
+  ],
+  cyclists: {
+    heading: "10 Cyclists",
+    count: "",
+    nameLines: [
+      "Anita Rind · Claude Pailliot · Gaëtan Collet · Grigoris Bourdalas · Heejung Kim · Kyoko Kagata · Simona Binko · Tuçe Erel",
+    ],
+  },
+  story: [
+    "The third edition of BYOB followed the Westhafen, Berlin's largest inland port, together with ZK/U's resident artists and local cyclists, closing out the CYCLE UP! residency.",
+    "We rode along the Spree where it wraps around Moabit, an island that made this the easiest place in the city, a century ago, to move coal by barge straight to where it would be burned. Kraftwerk Moabit was still burning as we passed, less than four kilometers from the Brandenburg Gate. It reads at first like a planning failure, but the closeness is the design, not a mistake: heat loses energy fast over distance, so a plant like this only works sitting inside the city it warms.",
+    "Steel tanks and silos held sand and construction waste, rows of shipping containers waited for the next freight train to Hamburg, and barges moved the same bulk cargo they've moved for a hundred years, with a few new hydrogen tanks now standing among the old coal berths. Riding along the water, past a hundred years of infrastructure still doing exactly what it was built to do, it was hard to tell which century's industry we were actually looking at.",
+  ],
+  credits: [
+    {
+      title: "Presented at",
+      name: "ZK/U, as part of the Cycle Up! Residency",
+    },
+    { title: "Program Assistance", name: "Heejung Kim" },
+    { title: "Photography", name: "Zuzana-Markéta Macková" },
+    { title: "Implemented by", name: "Cycle Up! project" },
+    {
+      title: "Co-financed by",
+      name: "The Creative Europe Programme of the European Union",
+    },
+  ],
+};
+
+const ride04DetailTextEn = {
+  title: "Edition 02",
+  subtitle: "Disappear Into Scale",
+  subtitleItalic: true,
+  date: "Saturday 8 June 2024",
+  previewDate: "8 Jun 2024",
+  previewVenue: "Waalhaven→Pernis",
+  previewCountry: "NL",
+  photoCredit:
+    "Photo © Studio Yeon Sung, Varia, Rotterdam, 8 June 2024",
+  venue: "Waalhaven → Pernis,",
+  cityHtml: "Rotterdam, NL",
+  time: "10:30 - 15:00",
+  distance: "12km",
+  weather: [
+    "19°C",
+    "Fresh Breeze, WSW14 mph",
+    "Humidity: 77%",
+    "Air quality: Good",
+  ],
+  cyclists: {
+    heading: "8 Cyclists",
+    count: "",
+    nameLines: [
+      "Amy Pickles · Czarina Calinawagan · Dafni Melidou",
+    ],
+  },
+  story: [
+    "The ride cut through Waalhaven, one stretch in the sprawl of docks and terminals that make up the Port of Rotterdam. Cranes and stacks of identical containers rose several stories on either side of the road, indistinguishable from each other and from the water beneath them.",
+    "The road narrowed as it left the terminals, and the group crossed from the anonymity of the boxes into Pernis, a village of fewer than five thousand people whose streets and gardens and church spire have somehow held their shape while Shell's refinery, the largest in Europe, grew up around them on every side. Riding from one edge of the village to the other took a few minutes. Getting used to the shift, containers to houses, scale to name, took longer.",
+    "Riding alongside Czarina, whose own work traces her father's letters home from years spent working on container ships, sharpened something about the ride itself. Both, in their own way, try to register what infrastructure is built to erase, hers on paper after the fact, this one on a bike in real time. Riding past the containers with that in mind, it was hard not to read them differently, less like cargo, more like a system built to make people disappear into scale.",
+  ],
+  credits: [
+    {
+      title: "Presented at",
+      name: "Varia, as part of Colonial Infrastructures: on Containerisation",
+    },
+    {
+      title: "Collaborating with",
+      name: "Amy Pickles · Czarina Calinawagan",
+    },
   ],
 };
 
@@ -190,35 +465,35 @@ const rides = [
     gallery: rideGallery("01", 9),
     number: "01",
     alt: "Bring Your Own Bike ride 01",
-    ...rideDetailText,
+    ...(getSiteLang() === "en" ? ride01DetailTextEn : rideDetailText),
   },
   {
     image: rideCover("02"),
     gallery: rideGallery("02", 13),
     number: "02",
     alt: "Bring Your Own Bike ride 02",
-    ...rideDetailText,
+    ...(getSiteLang() === "en" ? ride02DetailTextEn : rideDetailText),
   },
   {
     image: rideCover("03"),
     gallery: rideGallery("03", 10),
     number: "03",
     alt: "Bring Your Own Bike ride 03",
-    ...rideDetailText,
+    ...(getSiteLang() === "en" ? ride03DetailTextEn : rideDetailText),
   },
   {
     image: rideCover("04"),
     gallery: rideGallery("04", 5),
     number: "04",
     alt: "Bring Your Own Bike ride 04",
-    ...rideDetailText,
+    ...(getSiteLang() === "en" ? ride04DetailTextEn : rideDetailText),
   },
   {
     image: rideCover("05"),
     gallery: rideGallery("05", 3),
     number: "05",
     alt: "Bring Your Own Bike ride 05",
-    ...rideDetailText,
+    ...(getSiteLang() === "en" ? ride05DetailTextEn : rideDetailText),
   },
 ];
 
@@ -509,6 +784,32 @@ function getDetailImage(ride) {
   return ride?.image || "";
 }
 
+function renderRideCredits(credits) {
+  if (!ridesCreditsContainer || !credits?.length) return;
+
+  ridesCreditsContainer.innerHTML = '<hr class="rides-rule" />';
+
+  credits.forEach((credit) => {
+    const article = document.createElement("article");
+    article.className = "wheel-about-credit";
+
+    const copy = document.createElement("div");
+    copy.className = "wheel-about-credit-copy";
+
+    const title = document.createElement("p");
+    title.className = "wheel-about-credit-title";
+    title.textContent = credit.title;
+
+    const name = document.createElement("p");
+    name.className = "wheel-about-credit-name";
+    name.textContent = credit.name;
+
+    copy.append(title, name);
+    article.appendChild(copy);
+    ridesCreditsContainer.appendChild(article);
+  });
+}
+
 function renderRide(index) {
   const ride = rides[index];
   if (!ride) return;
@@ -519,7 +820,7 @@ function renderRide(index) {
   }
 
   if (ridesPreviewNumber) ridesPreviewNumber.textContent = ride.number;
-  if (ridesPreviewDate) ridesPreviewDate.textContent = ride.date || "";
+  if (ridesPreviewDate) ridesPreviewDate.textContent = ride.previewDate || ride.date || "";
   if (ridesPreviewVenue) {
     ridesPreviewVenue.textContent = ride.previewVenue || ride.venue?.replace(/,\s*$/, "") || "";
   }
@@ -541,13 +842,30 @@ function renderRide(index) {
 
   if (ridesDetailDate) ridesDetailDate.textContent = ride.date || "";
   if (ridesDetailVenue) ridesDetailVenue.textContent = ride.venue || "";
-  if (ridesDetailCity) ridesDetailCity.textContent = ride.city || "";
+  if (ridesDetailCity) {
+    if (ride.cityHtml) {
+      ridesDetailCity.innerHTML = ride.cityHtml;
+      ridesDetailCity.classList.remove("is-hidden");
+    } else {
+      ridesDetailCity.textContent = ride.city || "";
+      ridesDetailCity.classList.toggle("is-hidden", !ride.city);
+    }
+  }
   if (ridesDetailTitle) ridesDetailTitle.textContent = ride.title || "";
-  if (ridesDetailSubtitle) ridesDetailSubtitle.textContent = ride.subtitle || "";
+  if (ridesDetailSubtitle) {
+    ridesDetailSubtitle.textContent = ride.subtitle || "";
+    ridesDetailSubtitle.classList.toggle("is-italic", Boolean(ride.subtitleItalic));
+  }
   if (ridesTitleBlock) {
     ridesTitleBlock.classList.toggle("is-hidden", !ride.title && !ride.subtitle);
   }
-  if (ridesDetailTime) ridesDetailTime.textContent = ride.time || "";
+  if (ridesDetailTime) {
+    if (ride.timeHtml) {
+      ridesDetailTime.innerHTML = ride.timeHtml;
+    } else {
+      ridesDetailTime.textContent = ride.time || "";
+    }
+  }
   if (ridesDetailDistance) ridesDetailDistance.textContent = ride.distance || "";
 
   ridesWeatherLines.forEach((node, weatherIndex) => {
@@ -564,6 +882,7 @@ function renderRide(index) {
       }
       if (ridesParticipantsCount) {
         ridesParticipantsCount.textContent = cyclists.count || "";
+        ridesParticipantsCount.classList.toggle("is-hidden", !cyclists.count);
       }
       ridesNameLines.forEach((node, nameIndex) => {
         node.textContent = cyclists.nameLines?.[nameIndex] || "";
@@ -580,6 +899,8 @@ function renderRide(index) {
       node.classList.toggle("is-hidden", !story?.[storyIndex]);
     });
   }
+
+  renderRideCredits(ride.credits);
 
   if (ridesPreviewHit) {
     ridesPreviewHit.setAttribute("aria-label", `Open ride ${ride.number} details`);
@@ -1082,7 +1403,9 @@ function syncHomeWheelRotationFromScroll() {
 }
 
 function getVisualViewportHeight() {
-  return window.visualViewport?.height ?? window.innerHeight;
+  const visualHeight = window.visualViewport?.height ?? 0;
+  const layoutHeight = window.innerHeight ?? 0;
+  return Math.max(visualHeight, layoutHeight);
 }
 
 function isHomeChromeExpanded() {
@@ -1101,7 +1424,7 @@ function captureHomeViewportHeights() {
     homeExpandedViewportHeight =
       homeExpandedViewportHeight === null
         ? viewportHeight
-        : Math.min(homeExpandedViewportHeight, viewportHeight);
+        : Math.max(homeExpandedViewportHeight, viewportHeight);
     return;
   }
 
@@ -1126,9 +1449,11 @@ function syncMobileHomeViewportHeight() {
 
   captureHomeViewportHeights();
 
-  const height = isHomeChromeExpanded()
-    ? (homeExpandedViewportHeight ?? getVisualViewportHeight())
-    : (homeCollapsedViewportHeight ?? getVisualViewportHeight());
+  const liveHeight = getVisualViewportHeight();
+  const cachedHeight = isHomeChromeExpanded()
+    ? homeExpandedViewportHeight
+    : homeCollapsedViewportHeight;
+  const height = Math.max(cachedHeight ?? 0, liveHeight);
 
   homeIndex.style.setProperty("--home-mobile-vh", `${height}px`);
   document.documentElement.style.setProperty("--home-mobile-vh", `${height}px`);
