@@ -421,37 +421,221 @@ const ride04DetailTextEn = {
   ],
 };
 
-const rideDetailTextKo = {
-  title: "Rides Title is here",
-  subtitle: "U-Spectrum Program",
-  date: "15 May 2025",
-  previewVenue: "Hemburgterrain",
-  previewCountry: "NL",
+const ride01DetailTextKo = {
+  title: "에디션 05",
+  subtitle: "여전히 흐른다",
+  subtitleItalic: true,
+  date: "2025년 10월 25일, 토요일",
+  previewDate: "2025년 10월 25일",
+  previewVenue: "Taehwa River",
+  previewCountry: "한국",
   photoCredit:
-    "Photo: Eoming © Studio Yeon Sung, U-Spectrum, Ulsan, 15 May 2025",
-  venue: "Hemburgterrain,",
-  city: "Zaandam, NL",
-  time: "13:00-16:00",
-  distance: "3km",
+    "Photo: Eoming © Studio Yeon Sung, U-Spectrum, Ulsan, 25 October 2025",
+  venue: "Taehwa River,",
+  city: "울산, 한국",
+  time: "14:00-16:00",
+  distance: "10km",
   weather: [
-    "29°C",
-    "Light Wind, NW10 mph",
-    "Humidity: 74%",
-    "Air quality: Fair",
+    "19°C",
+    "약한 바람, W8 mph",
+    "습도: 63%",
+    "대기질: 좋음",
   ],
   cyclists: {
-    heading: "Cyclists",
-    count: "10 Participants",
+    heading: "6명의 사이클리스트",
+    count: "",
     nameLines: [
-      "Minjun Kim · Seoyeon Lee · Jiho Park · Yujin Choi · Daeun Jung",
-      "Seungwoo Han · Chaewon Oh · Taeyang Shin · Haneul Im · Soyul Yoon",
+      "Ahae Kim · Jinhee Yang · Jihyeon Kim · Sian Kim · Woosoo Lee · Yerin Lee",
     ],
   },
   story: [
-    "On a rainy March afternoon, ten cyclists gathered at De Ceuvel — a former shipyard turned cultural hub on the waterfront of Amsterdam Noord. Under light rain and a northwest wind, participants rode 6km through the post-industrial landscape, their bodies absorbing the damp air and the quiet hum of the city.",
-    "The ride lasted three hours, moving slowly enough to sense the weather as material — not obstacle, but medium. With fair air quality and limited visibility, the group navigated the landscape together, each body becoming a sensor, each breath a small act of collective weathering.",
+    "BYOB의 다섯 번째 에디션이자 한국에서의 첫 라이딩은 울산의 Taehwa River를 따라 진행되었다. 급속한 산업화의 수십 년 동안 산업 폐수로 악취를 풍기던 이 강은, 이후 도시의 가장 인기 있는 자전거 길 중 하나로 복원되었다.",
+    "지역 시민과 예술가들과 함께, 참가자들은 푸르게 회복된 현재의 강에서 출발해 그 과거를 관리하기 위해 세워진 인프라 — 하수 처리장, 수문, 오염 관측소 — 를 거슬러 올라갔고, 마침내 경로가 Hyundai Motor의 가동 중인 공장 단지와 나란히 이어지는 구간에 도착했다.",
+    "몇 킬로미터 동안, 라이딩은 두 개의 울산을 동시에 통과했다. 치유된 강, 그리고 멈추지 않은 산업.",
+  ],
+  credits: [
+    { title: "프로그램 지원", name: "Eunji Kwak · Ahae Kim" },
+    { title: "발표 장소", name: "U-Spectrum" },
+    { title: "사진", name: "Eoming" },
+    { title: "영상", name: "Shinyoung Kim" },
+    { title: "감사", name: "CLoFA" },
   ],
 };
+
+const ride02DetailTextKo = {
+  title: "에디션 04",
+  subtitle: "숨을 고르며",
+  subtitleItalic: true,
+  date: "2025년 7월 26일",
+  previewDate: "2025년 7월 26일",
+  previewVenue: "Vlaardingen→Botlek",
+  previewCountry: "네덜란드",
+  photoCredit:
+    "Photo: Silvia Arenas © Studio Yeon Sung, Wasteland Festival, Rotterdam, 26 July 2025",
+  venue: "Vlaardingen → Botlek,",
+  cityHtml:
+    "로테르담, 네덜란드<br>Wasteland Festival: Out of Sight의 일환으로",
+  time: "11:00-15:00",
+  distance: "30km",
+  weather: [
+    "24°C",
+    "약한 소나기, WSW9 mph",
+    "습도: 68%",
+    "대기질: 좋음",
+  ],
+  cyclists: {
+    heading: "9명의 사이클리스트",
+    count: "",
+    nameLines: [
+      "Floris De Haan · Jorge Simelio · Katya Borisova · Nicilien Wolf · Nik · Phone Myant Khant · Raziel Miranda · Silvia Arena",
+    ],
+  },
+  story: [
+    "Wasteland Festival의 초청으로 열린 BYOB 네 번째 에디션은 지금까지 가장 긴 라이딩이었다. 아홉 명의 사이클리스트가 정화된 항만 퇴적물 위에 조성된 숲 Oeverbos in Vlaardingen에서 출발해, 유럽에서 가장 밀집된 석유화학 단지 중 하나인 Botlek까지 Port of Rotterdam을 가로질렀다.",
+    "페리가 그룹을 유럽 최대 산업 지대 안에 끼어 있는 Rozenburg 마을의 이상한 고요함 — 정원과 조용한 거리들 — 속으로 데려갔고, 이내 AVR의 소각장 굴뚝이 앞에 놓인 산업을 알렸다.",
+    "라이딩은 Air Products의 HyCO4 플랜트 그늘에서 피크닉을 위해 잠시 멈췄다. 하늘로 끊임없이 증기를 내뿜는 그곳은 항구의 청정 에너지 미래로 홍보되는 수소 시설이었다. 결코 쉬지 않는 플랜트 앞에서 쉬는 아홉 명의 사이클리스트. 그 장면을 한 가지 방식으로만 읽기는 어려웠다.",
+    "기술은 바뀐다. 그레이 수소에서 블루 수소로, 배출은 방출 대신 포집된다. 그러나 증기와 강철은 정확히 그대로다. 가까이에서 본 전환은, 대개 같은 산업이 배기가스를 땅속으로 숨기는 법을 배우는 모습에 가까웠다.",
+  ],
+  credits: [
+    { title: "큐레이터 & 프로그램 지원", name: "Katya Borisova" },
+    { title: "발표 장소", name: "Wasteland Festival 2025" },
+    { title: "사진", name: "Silvia Arenas" },
+  ],
+};
+
+const ride03DetailTextKo = {
+  title: "에디션 03",
+  subtitle: "일하는 강을 따라",
+  subtitleItalic: true,
+  date: "2024년 9월 25일",
+  previewDate: "2024년 9월 25일",
+  previewVenue: "Westhafen",
+  previewCountry: "독일",
+  photoCredit:
+    "Photo: Zuzana-Markéta Macková © Studio Yeon Sung, ZK/U, Berlin, 25 September 2024",
+  venue: "Westhafen, 베를린, 독일",
+  city: "",
+  time: "17:00-19:00",
+  distance: "6km",
+  weather: [
+    "17°C",
+    "약한 비, N10 mph",
+    "습도: 85%",
+    "대기질: 보통",
+  ],
+  cyclists: {
+    heading: "10명의 사이클리스트",
+    count: "",
+    nameLines: [
+      "Anita Rind · Claude Pailliot · Gaëtan Collet · Grigoris Bourdalas · Heejung Kim · Kyoko Kagata · Simona Binko · Tuçe Erel",
+    ],
+  },
+  story: [
+    "BYOB 세 번째 에디션은 베를린 최대의 내륙 항구 Westhafen을 따라, ZK/U의 레지던시 예술가들과 지역 사이클리스트들과 함께 달렸고, CYCLE UP! 레지던시를 마무리했다.",
+    "우리는 Moabit을 감싸 도는 Spree를 따라 달렸다. 한 세기 전, 석탄을 바지선으로 태울 곳까지 곧장 옮기기 가장 쉬운 자리였던 그 섬. Kraftwerk Moabit은 우리가 지나갈 때도 여전히 타고 있었고, Brandenburg Gate에서 채 사 킬로미터도 떨어지지 않은 곳이었다. 처음에는 계획의 실패처럼 보이지만, 그 가까움은 실수가 아니라 설계다. 열은 거리를 지나면 빠르게 에너지를 잃기 때문에, 이런 발전소는 자신이 데우는 도시 안에 앉아 있을 때만 작동한다.",
+    "강철 탱크와 사일로에는 모래와 건설 폐기물이 담겨 있었고, 컨테이너 행렬은 Hamburg로 향할 다음 화물열차를 기다렸으며, 바지선은 백 년 동안 옮겨 온 것과 같은 벌크 화물을 실어 날랐다. 옛 석탄 선착장 사이에는 새 수소 탱크 몇 기가 서 있었다. 물을 따라 달리며, 지어진 그대로의 일을 여전히 하는 백 년의 인프라를 지나다 보면, 우리가 실제로 보고 있는 것이 어느 세기의 산업인지 말하기 어려웠다.",
+  ],
+  credits: [
+    {
+      title: "발표 장소",
+      name: "ZK/U, Cycle Up! Residency의 일환으로",
+    },
+    { title: "프로그램 지원", name: "Heejung Kim" },
+    { title: "사진", name: "Zuzana-Markéta Macková" },
+    { title: "시행", name: "Cycle Up! project" },
+    {
+      title: "공동 재정 지원",
+      name: "The Creative Europe Programme of the European Union",
+    },
+  ],
+};
+
+const ride04DetailTextKo = {
+  title: "에디션 02",
+  subtitle: "스케일 속으로 사라지다",
+  subtitleItalic: true,
+  date: "2024년 6월 8일, 토요일",
+  previewDate: "2024년 6월 8일",
+  previewVenue: "Waalhaven→Pernis",
+  previewCountry: "네덜란드",
+  photoCredit:
+    "Photo © Studio Yeon Sung, Varia, Rotterdam, 8 June 2024",
+  venue: "Waalhaven → Pernis,",
+  cityHtml: "로테르담, 네덜란드",
+  time: "10:30 - 15:00",
+  distance: "12km",
+  weather: [
+    "19°C",
+    "다소 강한 바람, WSW14 mph",
+    "습도: 77%",
+    "대기질: 좋음",
+  ],
+  cyclists: {
+    heading: "8명의 사이클리스트",
+    count: "",
+    nameLines: [
+      "Amy Pickles · Czarina Calinawagan · Dafni Melidou",
+    ],
+  },
+  story: [
+    "라이딩은 Port of Rotterdam을 이루는 부두와 터미널의 확산 속 한 구간, Waalhaven을 가로질렀다. 크레인과 동일한 컨테이너의 더미가 도로 양옆으로 여러 층 높이 솟아 있었고, 서로도, 그 아래 물과도 구분이 되지 않았다.",
+    "터미널을 벗어나자 도로가 좁아졌고, 그룹은 상자들의 익명성에서 인구 오천도 채 되지 않는 마을 Pernis로 넘어갔다. 그곳의 거리와 정원과 교회 첨탑은, 유럽 최대의 Shell 정유 공장이 사방에서 자라나는 동안에도 어떻게든 형태를 지켜 왔다. 마을 한쪽 끝에서 다른 쪽 끝까지 달리는 데는 몇 분이면 충분했다. 컨테이너에서 집으로, 스케일에서 이름으로의 전환에 익숙해지는 데는 더 오래 걸렸다.",
+    "컨테이너선에서 일하던 세월 동안 아버지가 집으로 보낸 편지를 추적하는 작업을 해 온 Czarina와 나란히 달리며, 라이딩 자체에 대한 어떤 감각이 날카로워졌다. 둘 다, 각자의 방식으로, 인프라가 지우도록 설계된 것을 기록하려 한다. 그녀는 사후에 종이 위에서, 이 라이딩은 실시간으로 자전거 위에서. 그 생각을 품고 컨테이너 옆을 지나자, 그것들을 화물로 읽기보다 사람을 스케일 속으로 사라지게 만들도록 지어진 시스템으로 읽지 않기가 어려웠다.",
+  ],
+  credits: [
+    {
+      title: "발표 장소",
+      name: "Varia, Colonial Infrastructures: on Containerisation의 일환으로",
+    },
+    {
+      title: "협업",
+      name: "Amy Pickles · Czarina Calinawagan",
+    },
+  ],
+};
+
+const ride05DetailTextKo = {
+  title: "에디션 01",
+  subtitle: "날씨가 시작했다",
+  subtitleItalic: true,
+  date: "2024년 3월 23일",
+  previewDate: "2024년 3월 23일",
+  previewVenue: "Hembrugterrein→Westpoort",
+  previewCountry: "네덜란드",
+  photoCredit:
+    "Photo: Bora Sekerci © Studio Yeon Sung, Sonic Acts Festival, Amsterdam, 23 March 2024",
+  venue: "Hembrugterrein → Westpoort,",
+  city: "암스테르담, 네덜란드",
+  timeHtml: "12:00-13:00<br>14:00-15:00",
+  distance: "8km",
+  weather: [
+    "9°C",
+    "강한 바람, W20 mph",
+    "습도: 77%",
+    "대기질: 좋음",
+  ],
+  cyclists: {
+    heading: "3명의 사이클리스트",
+    count: "",
+    nameLines: [
+      "Fileona Dkhar · Katya Borisova · Minari Lee",
+    ],
+  },
+  story: [
+    "BYOB의 첫 에디션은 곧장 폭풍 속으로 달렸다. 등록한 일곱 명 중 나타난 사람은 셋뿐이었고, 바람은 weathering이 개념이기를 멈추고 라이딩의 문자 그대로의 조건이 될 만큼 강했다. 페달을 돌리기조차 버거운 순간도 있었지만, weathering의 실천을 중심으로 한 프로젝트를 시작하기에는, 그 나름으로 완벽한 날이었다.",
+    "경로는 Zaandam의 Hembrugterrein에서 시작되었다. 세대에 걸쳐 울타리 뒤에 봉인되어 있다가 예술가와 대중에게 열린 옛 군수 공장이다. 그룹은 Zaandam과 암스테르담 항구 지구 사이를 여전히 자전거를 실어 나르는 무료 페리 Hempont으로 North Sea Canal을 건넜고, 암스테르담의 가동 중인 항구 Westpoort 한가운데에 곧장 내려졌다. 그다음부터는 폭풍이 대부분의 말을 했다. 항구 스카이라인에 곧게 세워진 풍력 터빈이 머리 위에서 신음하며 항구 자체를 위한 전력을 만들었고, 고철 터미널에는 Turkey로 향할 배를 기다리는 짓이겨진 강철의 산이 쌓여 있었으며, 세계 최대의 가솔린 항구로 홍보되는 수변을 따라 석유 터미널이 줄지어 있었다.",
+    "그 모든 것을 지나며 바람에 몸을 기울인 우리 셋은, 무엇에 대한 노출을 시뮬레이션하고 있지 않았다. 그날 날씨가 실제로 준 것을 지나고 있을 뿐이었다.",
+  ],
+  credits: [
+    {
+      title: "발표 장소",
+      name: "Sonic Acts Festival 2024, Program Sediments의 일환으로",
+    },
+    { title: "사진", name: "Bora Sekerci" },
+  ],
+};
+
+const rideDetailTextKo = ride01DetailTextKo;
 
 function getRideDetailText() {
   return getSiteLang() === "ko" ? rideDetailTextKo : rideDetailTextEn;
@@ -465,35 +649,35 @@ const rides = [
     gallery: rideGallery("01", 9),
     number: "01",
     alt: "Bring Your Own Bike ride 01",
-    ...(getSiteLang() === "en" ? ride01DetailTextEn : rideDetailText),
+    ...(getSiteLang() === "en" ? ride01DetailTextEn : ride01DetailTextKo),
   },
   {
     image: rideCover("02"),
     gallery: rideGallery("02", 13),
     number: "02",
     alt: "Bring Your Own Bike ride 02",
-    ...(getSiteLang() === "en" ? ride02DetailTextEn : rideDetailText),
+    ...(getSiteLang() === "en" ? ride02DetailTextEn : ride02DetailTextKo),
   },
   {
     image: rideCover("03"),
     gallery: rideGallery("03", 10),
     number: "03",
     alt: "Bring Your Own Bike ride 03",
-    ...(getSiteLang() === "en" ? ride03DetailTextEn : rideDetailText),
+    ...(getSiteLang() === "en" ? ride03DetailTextEn : ride03DetailTextKo),
   },
   {
     image: rideCover("04"),
     gallery: rideGallery("04", 5),
     number: "04",
     alt: "Bring Your Own Bike ride 04",
-    ...(getSiteLang() === "en" ? ride04DetailTextEn : rideDetailText),
+    ...(getSiteLang() === "en" ? ride04DetailTextEn : ride04DetailTextKo),
   },
   {
     image: rideCover("05"),
     gallery: rideGallery("05", 3),
     number: "05",
     alt: "Bring Your Own Bike ride 05",
-    ...(getSiteLang() === "en" ? ride05DetailTextEn : rideDetailText),
+    ...(getSiteLang() === "en" ? ride05DetailTextEn : ride05DetailTextKo),
   },
 ];
 
@@ -602,6 +786,7 @@ function syncRidesHistory(view, index = rideIndex) {
       "",
       getRideDetailUrl(index)
     );
+    syncLanguageLinks();
     return;
   }
 
@@ -610,6 +795,7 @@ function syncRidesHistory(view, index = rideIndex) {
     "",
     getRidesListUrl()
   );
+  syncLanguageLinks();
 }
 
 function syncRidesHeaderMode({ animate = true, direction = "out" } = {}) {
@@ -955,6 +1141,7 @@ function openRideDetail({ pushHistory = true, animateHeader = true, immediate = 
       "",
       getRideDetailUrl(rideIndex)
     );
+    syncLanguageLinks();
   }
 
   syncRidesAutoAdvance();
@@ -1208,6 +1395,7 @@ window.addEventListener("popstate", (event) => {
     if (!ridesDetailOpen) {
       openRideDetail({ pushHistory: false });
     }
+    syncLanguageLinks();
     return;
   }
 
@@ -1221,6 +1409,7 @@ window.addEventListener("popstate", (event) => {
     renderRide(rideIndex);
   }
 
+  syncLanguageLinks();
   syncRidesAutoAdvance();
 });
 

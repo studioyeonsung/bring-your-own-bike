@@ -974,6 +974,35 @@ html[lang="ko"] .home--gear .wheel-about-scroll > .wheel-panel-text {
   font-style: normal;
 }
 
+html[lang="ko"] .rides-detail-title,
+html[lang="ko"] .rides-detail-subtitle,
+html[lang="ko"] .rides-detail-date,
+html[lang="ko"] .rides-detail-venue,
+html[lang="ko"] .rides-detail-city,
+html[lang="ko"] .rides-detail-time,
+html[lang="ko"] .rides-detail-distance,
+html[lang="ko"] .rides-weather,
+html[lang="ko"] .rides-detail-cyclists-heading,
+html[lang="ko"] .rides-detail-participants,
+html[lang="ko"] .rides-detail-names-line,
+html[lang="ko"] .rides-detail-paragraph {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
+}
+
+html[lang="ko"] .rides-circle--text .wheel-about-credit-title {
+  font-family: var(--font-dunkel-standard-exp);
+  font-weight: 900;
+  font-style: normal;
+}
+
+html[lang="ko"] .rides-circle--text .wheel-about-credit-name {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
+}
+
 @media (min-width: 769px) {
   .wheel-panel.wheel-gear .wheel-about-scroll > .wheel-panel-text {
     margin: auto;
@@ -1128,6 +1157,14 @@ html[lang="ko"] .home--gear .wheel-about-scroll > .wheel-panel-text {
   color: #fff;
   -webkit-text-stroke: clamp(3px, 0.55vw, 6px) #000;
   paint-order: stroke fill;
+}
+
+html[lang="ko"] .wheel-rides-date,
+html[lang="ko"] .wheel-rides-venue,
+html[lang="ko"] .wheel-rides-city {
+  font-family: var(--font-dunkel-standard);
+  font-weight: 900;
+  font-style: normal;
   letter-spacing: 0.01em;
 }
 
