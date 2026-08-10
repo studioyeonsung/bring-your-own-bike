@@ -2,6 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <script src="/geo-lang.js"></script>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content"
@@ -31,6 +32,8 @@
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"WebSite","name":"Bring Your Own Bike","alternateName":["BYOB","BRING YOUR OWN BIKE","브링 유어 온 바이크"],"url":"https://byob.bike/ko/","description":"BYOB(브링 유어 온 바이크)는 오염된 날씨를 집단적 몸의 현상으로 탐구하는 참여형 자전거 퍼포먼스 시리즈입니다.","inLanguage":["ko","en"],"publisher":{"@type":"Organization","name":"Studio Yeon Sung","alternateName":["Yeon Sung","yeon sung","연성"],"url":"https://byob.bike/"}}
     </script>
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
     <script>
       (function (d) {
         var config = {
@@ -101,11 +104,15 @@
       <a class="corner corner-bl" href="/ko/" aria-label="Home"><img src="/assets/title-O.svg" alt="" /></a>
       <a class="corner corner-br" href="/ko/" aria-label="Home"><img src="/assets/title-B.svg" alt="" /></a>
 
-      <img
+      <a
         class="illustration illustration-riding"
-        src="/assets/Riding_Yeon.gif"
-        alt=""
-      />
+        href="https://www.instagram.com/studio.yeon.sung/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Studio Yeon Sung on Instagram"
+      >
+        <img src="/assets/Riding_Yeon.gif" alt="" />
+      </a>
 
       <div class="home-deco" aria-hidden="true">
         <img class="deco deco-sun" src="/assets/home-illust-sun.svg" alt="" />
@@ -241,7 +248,41 @@
             })();
           </script>
           <div class="wheel-spokes" id="wheel">
-            <img src="/assets/wheel.svg" alt="" draggable="false" />
+            <img
+              class="wheel-spokes-frame"
+              src="/assets/wheel.svg"
+              alt=""
+              draggable="false"
+            />
+            <div class="wheel-beads" aria-hidden="true">
+              <div
+                class="wheel-bead"
+                style="--bead-angle: -96.6deg; --bead-r: 0.91; --bead-twist: -2deg"
+              >
+                <img src="/assets/beads-pink.svg" alt="" draggable="false" />
+              </div>
+              <div
+                class="wheel-bead"
+                style="--bead-angle: -38.9deg; --bead-r: 0.73; --bead-twist: 4deg"
+              >
+                <img src="/assets/beads-green.svg" alt="" draggable="false" />
+              </div>
+              <div class="wheel-bead" style="--bead-angle: 6deg; --bead-r: 0.92">
+                <img src="/assets/beads-pink.svg" alt="" draggable="false" />
+              </div>
+              <div class="wheel-bead" style="--bead-angle: 83.9deg; --bead-r: 0.87">
+                <img src="/assets/beads-yellow.svg" alt="" draggable="false" />
+              </div>
+              <div
+                class="wheel-bead"
+                style="--bead-angle: 128.9deg; --bead-r: 0.66; --bead-twist: -4deg"
+              >
+                <img src="/assets/beads-green.svg" alt="" draggable="false" />
+              </div>
+              <div class="wheel-bead" style="--bead-angle: -141.1deg; --bead-r: 0.67">
+                <img src="/assets/beads-yellow.svg" alt="" draggable="false" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -251,11 +292,6 @@
         WE WEATHER
       </p>
     </main>
-
-    <div class="home-scroll-hint" hidden aria-hidden="true">
-      <p class="home-scroll-hint__text">Swipe up</p>
-      <span class="home-scroll-hint__arrow" aria-hidden="true">↓</span>
-    </div>
 
     <div class="home-mobile-scroll-spacer" aria-hidden="true"></div>
 

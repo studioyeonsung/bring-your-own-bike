@@ -28,6 +28,7 @@
   --font-dunkel-standard: "dunkel-sans-standard", sans-serif;
   --font-dunkel-standard-exp: "dunkel-sans-standard-exp", sans-serif;
   --font-sloop-script-one: "sloop-script-one", sans-serif;
+  --font-yoon-a-meolijeongche: "yoon-a-meolijeongche", sans-serif;
 }
 
 .font-dunkel-medium {
@@ -63,6 +64,18 @@
 .font-dunkel-expanded-glatt {
   font-family: var(--font-dunkel-expanded-glatt);
   font-weight: 900;
+  font-style: normal;
+}
+
+.font-yoon-a-meolijeongche {
+  font-family: var(--font-yoon-a-meolijeongche);
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-yoon-a-meolijeongche-medium {
+  font-family: var(--font-yoon-a-meolijeongche);
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -138,6 +151,7 @@ body {
   bottom: clamp(0.5rem, 2vh, 1.5rem);
   left: clamp(0.75rem, 2.5vw, 2rem);
   width: var(--corner-bl-width);
+  z-index: 1;
 }
 
 .corner-br {
@@ -242,6 +256,7 @@ body {
   bottom: clamp(26%, 30vh, 34%);
   left: clamp(1.5%, 3.5vw, 5%);
   width: clamp(calc(4.55rem * var(--deco-scale)), calc(10.5vw * var(--deco-scale)), calc(7.35rem * var(--deco-scale)));
+  z-index: 3;
 }
 
 .deco-cloud-bl {
@@ -312,15 +327,28 @@ body {
   --off-right-far: calc(100% + var(--ride-size));
   --off-bottom: calc(-1 * var(--ride-size));
   --off-top: calc(100% + var(--ride-size));
-  z-index: 200;
+  position: fixed;
+  z-index: 10000;
   top: auto;
   right: auto;
   bottom: var(--ride-bottom);
   width: var(--ride-size);
+  pointer-events: auto;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
   animation:
     ride-loop-move 36s linear infinite,
     ride-loop-turn 36s steps(1, end) infinite,
     ride-loop-hide 36s steps(1, end) infinite;
+}
+
+.illustration-riding img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
 }
 
 @keyframes ride-loop-move {
@@ -690,7 +718,8 @@ html[lang="ko"] .menu-mr .menu-link:not(.menu-link--plain):hover::after {
 
 html[lang="ko"] .menu,
 html[lang="ko"] .home-site-menu-link,
-html[lang="ko"] .rides-site-menu-link {
+html[lang="ko"] .rides-site-menu-link,
+html[lang="ko"] .home--wheel-page .title-top {
   font-family: var(--font-dunkel-standard);
   font-weight: 900;
   font-style: normal;
@@ -738,15 +767,22 @@ html[lang="ko"] .rides-site-menu-link {
   border-width: calc(var(--wheel-ring) * 1.95);
 }
 
+.wheel-page:has(.wheel-about),
+.wheel-page:has(.wheel-contact),
+.wheel-page:has(.wheel-gear) {
+  --wheel-dash-rotation: 0deg;
+}
+
 .wheel-page:has(.wheel-about)::before,
 .wheel-page:has(.wheel-contact)::before,
 .wheel-page:has(.wheel-gear)::before {
   --wheel-dash-length: 4deg;
   --wheel-dash-gap: 2.8deg;
   --wheel-dash-ring-width: var(--wheel-ring);
+  inset: calc(-1 * var(--wheel-dash-ring-width));
   border: none;
   background: repeating-conic-gradient(
-    from -90deg,
+    from calc(-90deg + var(--wheel-dash-rotation, 0deg)),
     #000 0deg var(--wheel-dash-length),
     transparent var(--wheel-dash-length)
       calc(var(--wheel-dash-length) + var(--wheel-dash-gap))
@@ -841,6 +877,10 @@ html[lang="ko"] .rides-site-menu-link {
 .rides-circle {
   outline: var(--wheel-ring) solid #000;
   outline-offset: calc(var(--wheel-ring) / -2);
+}
+
+.rides-circle--text {
+  outline: none;
 }
 
 .wheel-panel {
@@ -943,14 +983,14 @@ html[lang="ko"] .rides-site-menu-link {
   margin-top: clamp(1rem, 2.5vh, 1.75rem);
 }
 
-html[lang="ko"] .home--about .wheel-about-scroll > .wheel-panel-text {
+html[lang="ko"] .home--about .wheel-about-scroll .wheel-panel-text {
   font-family: var(--font-dunkel-standard);
   font-weight: 900;
   font-style: normal;
 }
 
 html[lang="ko"] .home--about .wheel-about-credit-title {
-  font-family: var(--font-dunkel-standard-cond);
+  font-family: var(--font-dunkel-standard-exp);
   font-weight: 900;
   font-style: normal;
 }
@@ -968,13 +1008,12 @@ html[lang="ko"] .home--contact .wheel-contact-link {
   font-style: normal;
 }
 
-html[lang="ko"] .home--gear .wheel-about-scroll > .wheel-panel-text {
+html[lang="ko"] .home--gear .wheel-about-scroll .wheel-panel-text {
   font-family: var(--font-dunkel-standard);
   font-weight: 900;
   font-style: normal;
 }
 
-html[lang="ko"] .rides-detail-title,
 html[lang="ko"] .rides-detail-subtitle,
 html[lang="ko"] .rides-detail-date,
 html[lang="ko"] .rides-detail-venue,
@@ -989,6 +1028,13 @@ html[lang="ko"] .rides-detail-paragraph {
   font-family: var(--font-dunkel-standard);
   font-weight: 900;
   font-style: normal;
+}
+
+html[lang="ko"] .rides-detail-title {
+  font-family: "dunkel-sans-expanded", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  color: var(--page-bg);
 }
 
 html[lang="ko"] .rides-circle--text .wheel-about-credit-title {
@@ -1052,6 +1098,13 @@ html[lang="ko"] .rides-circle--text .wheel-about-credit-name {
   color: #000;
 }
 
+.rides-circle--text .wheel-about-credit-title,
+.home--about .wheel-about-credit-title {
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.22em;
+}
+
 .wheel-about-credit-name {
   margin: 0;
   font-family: var(--font-dunkel-serif-display-medium);
@@ -1061,6 +1114,17 @@ html[lang="ko"] .rides-circle--text .wheel-about-credit-name {
   line-height: 1.32;
   text-align: center;
   color: #000;
+}
+
+.wheel-about-credit-name a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.wheel-about-credit-name a:hover,
+.wheel-about-credit-name a:focus-visible {
+  color: var(--page-bg);
 }
 
 .wheel-wrap--rides {
@@ -1306,14 +1370,60 @@ html[lang="ko"] .wheel-rides-city {
   container-type: inline-size;
   container-name: rides-text;
   --rides-detail-font: clamp(0.62rem, 4.1cqi, 1.97rem);
+  --wheel-dash-rotation: 0deg;
   z-index: 1;
   background: #fff;
   margin-right: calc(var(--rides-overlap) * -1);
-  overflow: hidden;
+  overflow: visible;
+}
+
+.rides-circle--text::before {
+  content: "";
+  position: absolute;
+  --wheel-dash-length: 4deg;
+  --wheel-dash-gap: 2.8deg;
+  --wheel-dash-ring-width: var(--wheel-ring);
+  inset: calc(-1 * var(--wheel-dash-ring-width));
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 3;
+  border: none;
+  background: repeating-conic-gradient(
+    from calc(-90deg + var(--wheel-dash-rotation, 0deg)),
+    #000 0deg var(--wheel-dash-length),
+    transparent var(--wheel-dash-length)
+      calc(var(--wheel-dash-length) + var(--wheel-dash-gap))
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--wheel-dash-ring-width)),
+    #000 calc(100% - var(--wheel-dash-ring-width))
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--wheel-dash-ring-width)),
+    #000 calc(100% - var(--wheel-dash-ring-width))
+  );
+}
+
+@media (min-width: 769px) {
+  .wheel-page:has(.wheel-about)::before,
+  .wheel-page:has(.wheel-contact)::before,
+  .wheel-page:has(.wheel-gear)::before,
+  .rides-circle--text::before {
+    --wheel-dash-length: 2.21deg;
+    --wheel-dash-gap: 1.55deg;
+  }
 }
 
 .rides-circle--text .rides-circle-content {
   padding-top: var(--rides-hero-number-inset-top);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
 
 .rides-circle--photo {
@@ -1423,7 +1533,7 @@ html[lang="ko"] .wheel-rides-city {
 .rides-detail-participants,
 .rides-detail-names-line {
   margin: 0;
-  font-family: var(--font-dunkel-serif-display-medium);
+  font-family: "dunkel-serif-medium", sans-serif;
   font-size: var(--rides-detail-font);
   font-weight: 900;
   font-style: normal;
@@ -1432,7 +1542,10 @@ html[lang="ko"] .wheel-rides-city {
 }
 
 .rides-detail-title {
-  font-weight: 400;
+  font-family: "dunkel-serif-expanded", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  color: var(--page-bg);
 }
 
 .rides-rule {
@@ -1509,9 +1622,13 @@ html[lang="ko"] .wheel-rides-city {
   white-space: normal;
 }
 
+.rides-name-sep {
+  color: var(--page-bg);
+}
+
 .rides-detail-paragraph {
   margin: 0;
-  font-family: var(--font-dunkel-serif-display-medium);
+  font-family: "DunkelSerif Display Medium", "dunkel-serif-display-medium", serif;
   font-size: var(--rides-detail-font);
   font-weight: 400;
   font-style: normal;
@@ -1520,6 +1637,15 @@ html[lang="ko"] .wheel-rides-city {
   text-align: center;
   max-width: 100%;
   white-space: normal;
+}
+
+.rides-detail-place {
+  font-style: italic;
+  font-weight: inherit;
+  font-family: inherit;
+  /* Italic glyphs lean into upright neighbors; keep a little optical room. */
+  padding-left: 0.06em;
+  padding-right: 0.12em;
 }
 
 .rides-detail-block--story {
@@ -1542,7 +1668,6 @@ body.is-rides-lightbox-open .wheel-wrap--rides {
   pointer-events: none;
 }
 
-body.is-rides-lightbox-open .corner,
 body.is-rides-lightbox-open .title-top,
 body.is-rides-lightbox-open .menu {
   z-index: 150;
@@ -1724,7 +1849,7 @@ body.is-rides-lightbox-open .menu {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(1rem, 2.5vh, 1.75rem);
+  gap: clamp(2rem, 5vh, 3.5rem);
   text-align: center;
 }
 
@@ -1752,12 +1877,21 @@ body.is-rides-lightbox-open .menu {
   margin-top: clamp(0.25rem, 1vh, 0.5rem);
 }
 
+.wheel-contact-ornament {
+  margin: 0;
+  font-size: clamp(1.105rem, 2.08vw, 1.43rem);
+  line-height: 1.2;
+  color: #000;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
 .wheel-contact-links {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(0.35rem, 1vh, 0.65rem);
-  margin-top: clamp(2.5rem, 6.5vh, 4.5rem);
+  margin-top: 0;
 }
 
 .wheel-contact-link {
@@ -1771,7 +1905,7 @@ body.is-rides-lightbox-open .menu {
   color: #000;
   text-decoration: none;
   --wave-tile: 48px;
-  --wave-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='8' viewBox='0 0 48 8'%3E%3Cpath fill='%23000' d='M0 4 C12 0 12 8 24 4 C36 0 36 8 48 4 L48 8 0 8Z'/%3E%3C/svg%3E");
+  --wave-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='8' viewBox='0 0 48 8'%3E%3Cpath fill='%2348afde' d='M0 4 C12 0 12 8 24 4 C36 0 36 8 48 4 L48 8 0 8Z'/%3E%3C/svg%3E");
 }
 
 .wheel-contact-link::after {
@@ -1809,12 +1943,49 @@ body.is-rides-lightbox-open .menu {
   will-change: transform;
 }
 
-.wheel-spokes img,
-.wheel-spokes svg {
+.wheel-spokes-frame,
+.wheel-spokes > svg {
   display: block;
   width: 100%;
   height: 100%;
   pointer-events: none;
+}
+
+.wheel-beads {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  container-type: size;
+}
+
+/* Wrapper only slides on the spoke; image rotates around its visual center. */
+.wheel-bead {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(1.365rem, 6.76%, 2.405rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%)
+    translate(
+      calc(50cqmin * var(--bead-r) * cos(var(--bead-angle))),
+      calc(50cqmin * var(--bead-r) * sin(var(--bead-angle)))
+    );
+  pointer-events: none;
+  user-select: none;
+}
+
+.wheel-bead img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Shift paint centroid onto the wrapper center, then rotate around it
+     so twist/slide never pulls the hole off the spoke. */
+  transform: rotate(calc(var(--bead-angle) + 90deg + var(--bead-twist, 0deg)))
+    translate(-1.4%, -1.7%);
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
 }
 
 .copyright {
@@ -1853,6 +2024,10 @@ body.is-rides-lightbox-open .menu {
     --menu-side-offset: clamp(8%, 15vw, 18%);
   }
 
+  .title-bottom {
+    display: none !important;
+  }
+
   .home {
     padding-inline: clamp(0.5rem, 3vw, 2rem);
   }
@@ -1882,7 +2057,7 @@ body.is-rides-lightbox-open .menu {
     --rides-circle: calc(
       min(
         calc((100vw - 2.5rem) * var(--home-mobile-wheel-scale)),
-        calc(max(0px, 100dvh * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
+        calc(max(0px, var(--home-mobile-vh, 100svh) * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
         calc(100vw - 0.5rem),
         31.05rem
       ) - var(--wheel-ring)
@@ -2104,7 +2279,7 @@ body.is-rides-lightbox-open .menu {
     width: 100%;
     max-width: 100%;
     height: auto;
-    min-height: 100dvh;
+    min-height: 100svh;
   }
 
   .home--index {
@@ -2151,12 +2326,13 @@ body.is-rides-lightbox-open .menu {
 
   .home--index .illustration-riding {
     display: block;
-    z-index: 999;
+    z-index: 10000;
     opacity: 1;
+    --ride-size: clamp(6.615rem, 28.11375vw, 18.19125rem);
   }
 
   .home--index.is-menu-open .illustration-riding {
-    z-index: 1003;
+    z-index: 10000;
   }
 
   .home--index .corner {
@@ -2462,6 +2638,15 @@ body.is-rides-lightbox-open .menu {
   .home--index.home--wheel-page.home--contact .wheel::before,
   .home--index.home--wheel-page.home--gear .wheel::before {
     --wheel-dash-ring-width: calc(var(--wheel-ring) * 1.274 * 0.7);
+    inset: calc(-1 * var(--wheel-dash-ring-width));
+  }
+
+  .home--rides .rides-circle--text::before,
+  .home--index.home--rides .rides-circle--text::before {
+    --wheel-dash-ring-width: var(--wheel-ring);
+    --wheel-dash-length: 3deg;
+    --wheel-dash-gap: 1.8deg;
+    inset: calc(-1 * var(--wheel-dash-ring-width));
   }
 
   .home--index .wheel-wrap {
@@ -2472,8 +2657,8 @@ body.is-rides-lightbox-open .menu {
     justify-content: center;
     width: 100%;
     min-height: 0;
-    margin-top: clamp(0.1rem, 0.5vh, 0.3rem);
-    margin-bottom: clamp(5.5rem, 20vw, 7.5rem);
+    margin-top: clamp(1.8rem, 5.2vh, 3rem);
+    margin-bottom: clamp(3.4rem, 12vw, 5rem);
   }
 
   .home--index .wheel {
@@ -2481,7 +2666,7 @@ body.is-rides-lightbox-open .menu {
       12rem,
       min(
         calc((100vw - 2.5rem) * var(--home-mobile-wheel-scale)),
-        calc(max(0px, 100dvh * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
+        calc(max(0px, var(--home-mobile-vh, 100svh) * 0.72 - 12rem) * var(--home-mobile-wheel-scale)),
         calc(100vw - 0.5rem)
       )
     );
@@ -2544,12 +2729,19 @@ body.is-rides-lightbox-open .menu {
     pointer-events: none;
   }
 
+  .home--index.home--rides.home--rides-detail .home-lang-toggle,
+  .home--rides.home--rides-detail .home-lang-toggle,
+  .home--index.home--rides.home--rides-detail > .copyright,
+  .home--rides.home--rides-detail > .copyright,
+  body:has(.home--rides-detail) > .copyright {
+    display: none;
+  }
+
   .home--index.home--rides.home--rides-detail .wheel-wrap {
     margin-bottom: clamp(0.35rem, 1.2vh, 0.65rem);
   }
 
   .home--index .home-deco .deco-sun,
-  .home--index .home-deco .deco-thunder,
   .home--index .home-deco .deco-sunglasses,
   .home--index .home-deco .deco-water-2 {
     display: none;
@@ -2610,11 +2802,11 @@ body.is-rides-lightbox-open .menu {
   }
 
   .home--index .home-deco .deco-water-2 {
-    top: calc(var(--home-mobile-header-h) + clamp(3.35rem, 10.5vw, 4.55rem));
+    top: calc(var(--home-mobile-header-h) + clamp(3.75rem, 11.8vw, 5.1rem));
     left: clamp(67%, 73vw, 79%);
     right: auto;
     bottom: auto;
-    width: clamp(calc(1.92375rem * var(--deco-scale)), calc(8.6184vw * var(--deco-scale)), calc(2.9241rem * var(--deco-scale)));
+    width: clamp(calc(1.8276rem * var(--deco-scale)), calc(8.1875vw * var(--deco-scale)), calc(2.7779rem * var(--deco-scale)));
     display: block;
   }
 
@@ -2630,6 +2822,19 @@ body.is-rides-lightbox-open .menu {
     bottom: calc(var(--home-mobile-footer-h) + clamp(5.8rem, 21vw, 8.4rem));
     width: clamp(calc(4.4rem * var(--deco-scale)), calc(22vw * var(--deco-scale)), calc(6.5rem * var(--deco-scale)));
     animation: cloud-float 3.2s ease-in-out infinite;
+  }
+
+  .home--index .deco-thunder {
+    display: block;
+    top: auto;
+    right: auto;
+    left: clamp(8%, 14vw, 18%);
+    bottom: calc(
+      max(env(safe-area-inset-bottom, 0px), clamp(0.35rem, 1.2vh, 0.75rem)) +
+        clamp(4.35rem, 20vw, 6rem)
+    );
+    width: clamp(calc(3.564rem * var(--deco-scale)), calc(17.82vw * var(--deco-scale)), calc(5.265rem * var(--deco-scale)));
+    z-index: 3;
   }
 
   .home--index .home-deco::after {
@@ -2672,26 +2877,30 @@ body.is-rides-lightbox-open .menu {
   }
 
   html.home-mobile-scroll {
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     height: 100%;
+    height: 100svh;
+    max-height: 100svh;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    touch-action: none;
   }
 
   html.home-mobile-scroll body {
-    overflow: visible;
+    overflow: hidden;
     min-height: 100%;
-    height: auto;
+    height: 100%;
+    height: 100svh;
+    max-height: 100svh;
+    touch-action: none;
   }
 
   html.home-mobile-scroll .home--index {
     position: sticky;
     top: 0;
     width: 100%;
-    height: var(--home-mobile-vh, 100dvh);
-    min-height: var(--home-mobile-vh, 100dvh);
-    max-height: none;
+    height: var(--home-mobile-vh, 100svh);
+    min-height: var(--home-mobile-vh, 100svh);
+    max-height: var(--home-mobile-vh, 100svh);
     overflow: hidden;
     z-index: 1;
   }
@@ -2755,6 +2964,8 @@ body.is-rides-lightbox-open .menu {
   html.home-mobile-scroll .home--index.home--wheel-page .title-top {
     min-height: 0;
     display: block;
+    padding-top: clamp(0.7rem, 2dvh, 1.15rem);
+    margin-top: clamp(0.2rem, 0.6dvh, 0.4rem);
   }
 
   html.home-mobile-scroll
@@ -2789,15 +3000,32 @@ body.is-rides-lightbox-open .menu {
     .home--index.home--wheel-page.home--gear
     .wheel::before {
     --wheel-dash-ring-width: calc(var(--wheel-ring) * 1.95 * 0.7);
+    inset: calc(-1 * var(--wheel-dash-ring-width));
+  }
+
+  html.home-mobile-scroll .home--rides .rides-circle--text::before,
+  html.home-mobile-scroll .home--index.home--rides .rides-circle--text::before {
+    --wheel-dash-ring-width: var(--wheel-ring);
+    --wheel-dash-length: 3deg;
+    --wheel-dash-gap: 1.8deg;
+    inset: calc(-1 * var(--wheel-dash-ring-width));
   }
 
   @media (max-width: 390px) {
     .home--index.home--wheel-page.home--about .wheel::before,
     .home--index.home--wheel-page.home--contact .wheel::before,
     .home--index.home--wheel-page.home--gear .wheel::before {
-      inset: calc(var(--wheel-ring) * 0.637 * -0.52);
       border-width: calc(var(--wheel-ring) * 1.274 * 0.52);
       --wheel-dash-ring-width: calc(var(--wheel-ring) * 1.274 * 0.52);
+      inset: calc(-1 * var(--wheel-dash-ring-width));
+    }
+
+    .home--rides .rides-circle--text::before,
+    .home--index.home--rides .rides-circle--text::before {
+      --wheel-dash-ring-width: var(--wheel-ring);
+      --wheel-dash-length: 3deg;
+    --wheel-dash-gap: 1.8deg;
+      inset: calc(-1 * var(--wheel-dash-ring-width));
     }
 
     html.home-mobile-scroll
@@ -2809,9 +3037,17 @@ body.is-rides-lightbox-open .menu {
     html.home-mobile-scroll
       .home--index.home--wheel-page.home--gear
       .wheel::before {
-      inset: calc(var(--wheel-ring) * -0.975 * 0.52);
       border-width: calc(var(--wheel-ring) * 1.95 * 0.52);
       --wheel-dash-ring-width: calc(var(--wheel-ring) * 1.95 * 0.52);
+      inset: calc(-1 * var(--wheel-dash-ring-width));
+    }
+
+    html.home-mobile-scroll .home--rides .rides-circle--text::before,
+    html.home-mobile-scroll .home--index.home--rides .rides-circle--text::before {
+      --wheel-dash-ring-width: var(--wheel-ring);
+      --wheel-dash-length: 3deg;
+    --wheel-dash-gap: 1.8deg;
+      inset: calc(-1 * var(--wheel-dash-ring-width));
     }
 
     .home--index.home--wheel-page.home--contact .title-top {
@@ -2829,9 +3065,25 @@ body.is-rides-lightbox-open .menu {
     touch-action: none;
   }
 
+  html.home-mobile-scroll .home--index.home--about .wheel-wrap,
+  html.home-mobile-scroll .home--index.home--contact .wheel-wrap,
+  html.home-mobile-scroll .home--index.home--gear .wheel-wrap {
+    touch-action: pan-y;
+  }
+
   html.home-mobile-scroll .home--index.home--wheel-page .wheel-about-scroll {
     overflow: hidden;
     overscroll-behavior: none;
+  }
+
+  html.home-mobile-scroll .home--index.home--about .wheel-about-scroll,
+  html.home-mobile-scroll .home--index.home--contact .wheel-about-scroll,
+  html.home-mobile-scroll .home--index.home--gear .wheel-about-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
   }
 
   html.home-mobile-scroll .home--index.home--wheel-page .rides-details-scroll {
@@ -2840,11 +3092,12 @@ body.is-rides-lightbox-open .menu {
   }
 
   html.home-mobile-scroll .home--index.home--wheel-page .wheel-about-scroll-track {
-    will-change: transform;
+    will-change: auto;
+    transform: none !important;
   }
 
   html.home-mobile-scroll .home--index.is-browser-chrome-visible .wheel-wrap {
-    margin-top: clamp(0.45rem, 1.45dvh, 0.9rem);
+    margin-top: clamp(2.2rem, 6.2dvh, 3.4rem);
   }
 
   @media (max-width: 390px) {
@@ -2882,14 +3135,11 @@ body.is-rides-lightbox-open .menu {
     }
 
     html.home-mobile-scroll
-      .home--index:not(.home--wheel-page).is-browser-chrome-visible
-      .title-top,
-    html.home-mobile-scroll
-      .home--index:not(.home--wheel-page).is-browser-chrome-visible
-      .title-bottom {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      .home--index:not(.home--wheel-page)
+      .title-top {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     html.home-mobile-scroll
@@ -2897,13 +3147,6 @@ body.is-rides-lightbox-open .menu {
       .title-top {
       padding-top: clamp(0.25rem, 0.95dvh, 0.55rem);
       margin-top: clamp(-0.9rem, -2.5dvh, -0.5rem);
-    }
-
-    html.home-mobile-scroll
-      .home--index:not(.home--wheel-page):not(.is-browser-chrome-visible)
-      .title-bottom {
-      opacity: 1;
-      visibility: visible;
     }
 
     html.home-mobile-scroll
@@ -2929,7 +3172,7 @@ body.is-rides-lightbox-open .menu {
     html.home-mobile-scroll
       .home--index.is-browser-chrome-visible
       .deco-wind-bl {
-      bottom: calc(var(--home-mobile-footer-h) + clamp(4.85rem, 17vw, 6.55rem));
+      bottom: calc(var(--home-mobile-footer-h) + clamp(1.55rem, 6.5vw, 2.55rem));
     }
   }
 
@@ -2939,71 +3182,13 @@ body.is-rides-lightbox-open .menu {
   }
 
   html.home-mobile-scroll .home-mobile-scroll-spacer {
-    display: block;
-    height: var(--home-mobile-scroll-room);
+    display: none;
+    height: 0;
     pointer-events: none;
   }
 
   html.home-mobile-scroll.is-menu-scroll-locked {
     overflow: hidden;
-  }
-
-  .home-scroll-hint[hidden] {
-    display: none;
-  }
-
-  html.home-mobile-scroll .home-scroll-hint:not([hidden]) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(0.45rem, 1.6vw, 0.75rem);
-    position: fixed;
-    inset: 0;
-    z-index: 1001;
-    background: rgba(0, 0, 0, 0.46);
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.4s ease;
-  }
-
-  html.home-mobile-scroll .home-scroll-hint.is-hiding {
-    opacity: 0;
-  }
-
-  html.home-mobile-scroll .home--index.is-menu-open ~ .home-scroll-hint {
-    display: none !important;
-  }
-
-  .home-scroll-hint__text {
-    margin: 0;
-    font-family: var(--font-dunkel-medium);
-    font-size: clamp(1.64rem, 6.8vw, 1.96rem);
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #fff;
-    white-space: nowrap;
-    text-align: center;
-  }
-
-  .home-scroll-hint__arrow {
-    display: block;
-    font-size: clamp(2.3rem, 9vw, 2.9rem);
-    line-height: 1;
-    color: #fff;
-    animation: home-scroll-hint-bounce 1.6s ease-in-out infinite;
-  }
-
-  @keyframes home-scroll-hint-bounce {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(0.35rem);
-    }
   }
 }
 
@@ -3014,10 +3199,6 @@ body.is-rides-lightbox-open .menu {
   .home--index .wheel::before,
   .home-menu-backdrop {
     transition: none;
-  }
-
-  .home-scroll-hint__arrow {
-    animation: none;
   }
 }
 
@@ -3047,10 +3228,12 @@ body.is-rides-lightbox-open .menu {
       ),
       920px
     );
-    --wheel-size: min(
-      calc(88vw + (100vw - 769px) / 959px * 5vw - max(0px, (100vw - 1728px) / 832px * 8vw)),
-      calc(80vh + (100vw - 769px) / 959px * 8vh + max(0px, (100vw - 1728px) / 832px * 2vh)),
-      var(--wheel-max)
+    --wheel-size: calc(
+      min(
+        calc(88vw + (100vw - 769px) / 959px * 5vw - max(0px, (100vw - 1728px) / 832px * 8vw)),
+        calc(80vh + (100vw - 769px) / 959px * 8vh + max(0px, (100vw - 1728px) / 832px * 2vh)),
+        var(--wheel-max)
+      ) * 0.945
     );
   }
 
@@ -3320,7 +3503,7 @@ body.is-rides-lightbox-open .menu {
 
 .home--rides.home--rides-detail .rides-menu-toggle {
   position: static;
-  transform: translateY(-0.14em);
+  transform: translateY(-0.42em);
   flex-shrink: 0;
   grid-column: 1;
   justify-self: start;

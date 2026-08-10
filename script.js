@@ -1,4 +1,5 @@
 const wheel = document.getElementById("wheel");
+const pageWheel = document.querySelector(".wheel.wheel-page");
 const panel = document.querySelector(".wheel-panel");
 const aboutScroll = document.querySelector(".wheel-about-scroll");
 const ridesStage = document.querySelector(".wheel-wrap--rides");
@@ -126,6 +127,33 @@ function syncMenuLabels() {
     const key = getMenuLabelKey(window.location.pathname);
     if (key && key !== "home") titlePage.textContent = labels[key];
   }
+
+  syncDocumentTitle();
+}
+
+function syncDocumentTitle() {
+  const lang = getSiteLang();
+  const labels = MENU_LABELS[lang] || MENU_LABELS.en;
+  const path = window.location.pathname;
+  const key = getMenuLabelKey(path);
+  const brand = "BRING YOUR OWN BIKE | Studio Yeon Sung";
+
+  if (!key || key === "home") {
+    document.title = brand;
+    return;
+  }
+
+  const rideMatch = path.match(/\/rides\/(\d+)\/?$/);
+  if (rideMatch) {
+    const num = rideMatch[1];
+    document.title =
+      lang === "ko"
+        ? `${labels.rides} ${num} | ${brand}`
+        : `RIDE ${num} | ${brand}`;
+    return;
+  }
+
+  document.title = `${labels[key]} | ${brand}`;
 }
 
 function syncLanguageLinks() {
@@ -196,10 +224,10 @@ const rideDetailTextEn = {
     "The ride lasted three hours, moving slowly enough to sense the weather as material — not obstacle, but medium. With fair air quality and limited visibility, the group navigated the landscape together, each body becoming a sensor, each breath a small act of collective weathering.",
   ],
   credits: [
-    { title: "Concept & Production", name: "Yeon Sung" },
+    { title: "Concept & Production", name: "Studio Yeon Sung" },
     {
       title: "Presented at",
-      name: "Sonic Acts Festival, Varia, Cycle Up Residency, Wasteland Festival, U-Spectrum",
+      name: "Sonic Acts Festival · Varia · Cycle Up Residency · Wasteland Festival · U-Spectrum",
     },
     { title: "Illustration", name: "Heejung Kim" },
     { title: "Web Design", name: "Studio165" },
@@ -209,7 +237,7 @@ const rideDetailTextEn = {
 
 const ride01DetailTextEn = {
   title: "Edition 05",
-  subtitle: "Still Running",
+  subtitle: "Same Road,\nDifferent Reasons",
   subtitleItalic: true,
   date: "25 October 2025, Saturday",
   previewDate: "25 Oct 2025",
@@ -217,15 +245,15 @@ const ride01DetailTextEn = {
   previewCountry: "KR",
   photoCredit:
     "Photo: Eoming © Studio Yeon Sung, U-Spectrum, Ulsan, 25 October 2025",
-  venue: "Taehwa River,",
-  city: "Ulsan, KR",
+  venue: "Taehwa River",
+  cityHtml: "Seongnam Riverside<br>→ Reed Fields<br>Ulsan, KR",
   time: "14:00-16:00",
   distance: "10km",
   weather: [
-    "19°C",
-    "Light Wind, W8 mph",
-    "Humidity: 63%",
-    "Air quality: Good",
+    "22°C",
+    "Light Wind, N 5 mph",
+    "Humidity: 68%",
+    "Air quality: Moderate",
   ],
   cyclists: {
     heading: "6 Cyclists",
@@ -235,9 +263,7 @@ const ride01DetailTextEn = {
     ],
   },
   story: [
-    "The fifth edition of BYOB — its first in South Korea — took place along the Taehwa River in Ulsan, a river that once reeked with industrial waste through decades of rapid industrialization, since restored into one of the city's most popular cycling routes.",
-    "Riding together with local citizens and artists, participants followed the river from its green, recovered present back through the infrastructure built to manage its past — a sewage treatment plant, floodgates, pollution monitoring stations — before arriving at a stretch where the path runs directly alongside Hyundai Motor's active factory complex.",
-    "For a few kilometers, the ride moved through two Ulsans at once: the river that healed, and the industry that never stopped.",
+    "The fifth edition of BYOB was its first in South Korea, and it took place along the Taehwa River in Ulsan.\n\nThe river once reeked with industrial waste through decades of rapid industrialization. It's since been restored into one of the city's most popular cycling routes.\n\n˚✩☁︎︎⋆｡ˏˋ ˚\n\nRiding together with local citizens and artists, we followed the river from its green, recovered present back through the infrastructure built to manage its past: a sewage treatment plant, floodgates, pollution monitoring stations.\n\nThe path eventually ran directly alongside Hyundai Motor's active factory complex.\n\n⋆｡ﾟ☁︎｡ﾟ⋆｡ﾟ☁︎｡ﾟ⋆\n\nUnlike the Netherlands or Germany, where BYOB had ridden straight into the industrial sites themselves, access here was mostly closed off.\n\nWe watched Ulsan's industry from across the water instead, the plants sitting on the far bank while we talked about the city's ecology and its pollution from a distance we couldn't close.\n\nThat distance became its own kind of information: what a place lets you get close to says as much as what's actually inside it.\n\n˖*༄\n\nFew cities in Korea carry both the light and the dark of industrialization as visibly as this one. Ulsan poisoned this river, then spent decades bringing it back, and that recovery is real.\n\nBut the river healing doesn't mean the industry around it stopped. Riding past the factory, we passed dozens of actual workers cycling in for their shift, ordinary bikes headed into the same complex we were riding past to think about.\n\nWe were out there cycling to notice something. They were cycling to clock in.\nSame road, same motion, completely different reasons for being on it, and it was hard not to feel the distance between the two.\n\n𓆝 𓆟 𓆞 𓆝𓇢𓆸\n\nFor a few kilometers, the ride moved through two Ulsans at once: the river that healed, and the industry that never stopped.",
   ],
   credits: [
     { title: "Program Assistance", name: "Eunji Kwak · Ahae Kim" },
@@ -250,7 +276,7 @@ const ride01DetailTextEn = {
 
 const ride05DetailTextEn = {
   title: "Edition 01",
-  subtitle: "The Weather Began It",
+  subtitle: "What the Weather Gave Us",
   subtitleItalic: true,
   date: "23 March 2024",
   previewDate: "23 Mar 2024",
@@ -263,10 +289,10 @@ const ride05DetailTextEn = {
   timeHtml: "12:00-13:00<br>14:00-15:00",
   distance: "8km",
   weather: [
-    "9°C",
-    "Strong Wind, W20 mph",
-    "Humidity: 77%",
-    "Air quality: Good",
+    "7°C",
+    "Strong Wind, SW 35 mph",
+    "Humidity: 82%",
+    "Air quality: Fair",
   ],
   cyclists: {
     heading: "3 Cyclists",
@@ -276,14 +302,12 @@ const ride05DetailTextEn = {
     ],
   },
   story: [
-    "The first edition of BYOB rode straight into a storm. Of seven people registered, only three showed up, and the wind was strong enough that weathering stopped being a concept and became the literal condition of the ride. Some of us could barely keep the pedals turning, but it was, in its own way, the perfect day to begin a project built around the practice of weathering.",
-    "The route began at the Hembrugterrein in Zaandam, a former munitions factory that stayed sealed behind fences for generations before it opened up to artists and the public, and crossed the North Sea Canal on the Hempont, the free ferry that still carries cyclists between Zaandam and Amsterdam's port district. It let us off directly inside Westpoort, Amsterdam's working harbor, where the storm did most of the talking from there. Wind turbines built straight into the skyline of the port groaned overhead, generating power for the harbor itself, while a scrap metal terminal held mountains of crushed steel waiting for ships bound for Turkey, and oil terminals lined the water in what's marketed as the largest gasoline port in the world.",
-    "The three of us leaning hard into the wind past all of it weren't simulating exposure to anything. We were just riding through what the weather actually gave us that day.",
+    "The first edition of BYOB rode straight into a storm.\n\nOf the seven people registered, only three showed up, all of them already friends of Yeon's, which somehow felt right for a ride this small and this exposed.\n\nThe wind was strong enough that weathering stopped being a concept we were riding toward and became the actual condition we were riding in.\n\nSome of us could barely keep the pedals turning, but it was, in its own strange way, the right kind of day to begin a project built around the practice of weathering.\n\n☁︎ ☁︎ ☁︎ ☁︎\n\nWe started at Het Hem, inside the Hembrugterrein in Zaandam, a former munitions factory that stayed sealed behind fences for generations before it opened up to artists and the public.\n\nBefore setting off we went briefly through the site's history, enough to understand what those buildings used to keep hidden, then crossed the North Sea Canal on the Hempont, the free ferry that still carries cyclists between Zaandam and Amsterdam's port district.\n\nIt let us off directly inside Westpoort, Amsterdam's working harbor, and from there the storm did most of the talking.\n\n.𖥔 ݁ ˖⋆ ˚❆\n\nWind turbines built straight into the skyline of the port groaned overhead, generating power for the harbor itself. A scrap metal terminal held mountains of crushed steel waiting for ships bound for Turkey. Oil terminals lined the water, part of what's marketed as the largest gasoline port in the world.\n\nThe wind kept pushing back against every pedal stroke, and our breath kept getting shorter trying to keep up with it.\n\nNone of us were simulating exposure to anything.\nWe were just riding through whatever the weather actually gave us that day.",
   ],
   credits: [
     {
       title: "Presented at",
-      name: "Sonic Acts Festival 2024 as part of Program Sediments",
+      name: "Sonic Acts Festival 2024\nas part of Program Sediments",
     },
     { title: "Photography", name: "Bora Sekerci" },
   ],
@@ -306,9 +330,9 @@ const ride02DetailTextEn = {
   distance: "30km",
   weather: [
     "24°C",
-    "Light Showers, WSW9 mph",
-    "Humidity: 68%",
-    "Air quality: Good",
+    "Light Wind, SW 15 mph",
+    "Humidity: 72%",
+    "Air quality: Poor",
   ],
   cyclists: {
     heading: "9 Cyclists",
@@ -318,10 +342,7 @@ const ride02DetailTextEn = {
     ],
   },
   story: [
-    "The fourth edition of BYOB, held by invitation of Wasteland Festival, was the longest ride to date: nine cyclists crossed the Port of Rotterdam from Oeverbos in Vlaardingen, a forest planted over remediated harbour sediment, into Botlek, one of Europe's densest petrochemical clusters.",
-    "A ferry carried the group into the strange calm of Rozenburg village, gardens and quiet streets wedged inside the largest industrial zone in Europe, before AVR's incinerator stacks announced the industry ahead.",
-    "The ride paused for a picnic in the shadow of Air Products' HyCO4 plant, its steam venting continuously into the sky, a hydrogen facility marketed as the port's clean-energy future. Nine cyclists resting in front of a plant that never rests: it was hard not to read the scene both ways at once.",
-    "The technology changes, grey hydrogen to blue, emissions captured instead of released, but the steam and the steel stay exactly the same. What looked like transition, seen this close, looked mostly like the same industry learning to hide its exhaust underground.",
+    "The fourth edition of BYOB set out from Oeverbos in Vlaardingen, a young forest planted over remediated harbour sediment.\nWe rode past the landfill sites and sewage treatment plants still sitting at its edges. Then a ferry carried us across the river Het Scheur into Rozenburg.\n\n༄☁︎𝄞✧˖°⭑\n\nFor a moment the village held.\nGardens, quiet streets, wedged inside the largest industrial zone in Europe.\nThen AVR's incinerator stacks rose up ahead of us, smoke drifting over the road. Someone asked how exactly the city's own trash finds its way here.\nIt turned out to be a longer answer than expected.\n\n☁︎⋆⁺₊⋆ ☀︎ ⋆⁺₊⋆\n\nFrom there we pushed into Botlek proper, one of the core facilities of the Port of Rotterdam and among the densest petrochemical clusters in Europe. Mountains of coal passed on one side, steam-venting facilities and storage tanks on the other, containers stacked between them. It was hard to tell where one plant ended and the next began.\n\n.·:¨ ¨:·.\n\nWe stopped for a picnic in the shadow of Air Products' HyCO4 plant.\nIts steam vented continuously into the sky, a hydrogen facility marketed as the port's clean-energy future.\nNine cyclists resting in front of a plant that never rests. It was hard not to read the scene both ways at once. The technology changes, grey hydrogen to blue, emissions captured instead of released. But the steam and the steel stay exactly the same.\nWhat looked like transition, seen this close, looked mostly like the same industry learning to hide its exhaust underground.\n\n࿐༉\n\nFor this edition, the bike itself became part of the listening.\nRiding back through Botlek toward Rozenburg, it played a real-time soundscape built from its own reaction to the surrounding air.\nFor a long stretch, we rode in silence, just listening to what it picked up.\nRozenburg's calm read differently the second time, less like an accident of geography and more like a kind of held breath.",
   ],
   credits: [
     { title: "Curator & Program Assistance", name: "Katya Borisova" },
@@ -346,8 +367,8 @@ const ride03DetailTextEn = {
   distance: "6km",
   weather: [
     "17°C",
-    "Light Rain, N10 mph",
-    "Humidity: 85%",
+    "Light Wind, SW 5 mph",
+    "Humidity: 71%",
     "Air quality: Moderate",
   ],
   cyclists: {
@@ -358,16 +379,18 @@ const ride03DetailTextEn = {
     ],
   },
   story: [
-    "The third edition of BYOB followed the Westhafen, Berlin's largest inland port, together with ZK/U's resident artists and local cyclists, closing out the CYCLE UP! residency.",
-    "We rode along the Spree where it wraps around Moabit, an island that made this the easiest place in the city, a century ago, to move coal by barge straight to where it would be burned. Kraftwerk Moabit was still burning as we passed, less than four kilometers from the Brandenburg Gate. It reads at first like a planning failure, but the closeness is the design, not a mistake: heat loses energy fast over distance, so a plant like this only works sitting inside the city it warms.",
-    "Steel tanks and silos held sand and construction waste, rows of shipping containers waited for the next freight train to Hamburg, and barges moved the same bulk cargo they've moved for a hundred years, with a few new hydrogen tanks now standing among the old coal berths. Riding along the water, past a hundred years of infrastructure still doing exactly what it was built to do, it was hard to tell which century's industry we were actually looking at.",
+    "The third edition of BYOB followed the Westhafen, Berlin's largest inland port, together with ZK/U's resident artists and local cyclists, closing out the CYCLE UP! residency.\n\nWe rode out on a new version of the bike built during the residency, starting from ZK/U's own building, itself a former freight depot, before joining the Spree, the river running through the middle of Berlin, where it wraps around Moabit, an island that made this the easiest place in the city, a century ago, to move coal by barge straight to where it would be burned.\n\n⁺₊⋆ ☁︎ ☀︎ ☁︎ ⋆⁺₊\n\nThe route followed inland bike paths overlooking the port's industrial facilities, and there was time, riding through them, to think about how closely this district and its industry are actually tied together.\n\nKraftwerk Moabit was still burning as we passed, less than four kilometers from the Brandenburg Gate. It reads at first like a planning failure, but the closeness is the design, not a mistake: heat loses energy fast over distance, so a plant like this only works sitting inside the city it warms.\n\nIt was hard, after that, to keep thinking of the city and its industry as two separate things riding past each other. They looked more like one system wearing two faces.\n\n⋆｡°•☁︎\n\nSteel tanks and silos held sand and construction waste, rows of shipping containers waited for the next freight train to Hamburg, and barges moved the same bulk cargo they've moved for a hundred years, with a few new hydrogen tanks now standing among the old coal berths.\n\nRiding along the water, past a hundred years of infrastructure still doing exactly what it was built to do, it was hard to tell which century's industry we were actually looking at.",
   ],
   credits: [
     {
       title: "Presented at",
-      name: "ZK/U, as part of the Cycle Up! Residency",
+      name: "ZK/U · as part of the Cycle Up! Residency",
     },
     { title: "Program Assistance", name: "Heejung Kim" },
+    {
+      title: "Residency Coordinator",
+      name: "Anita Rinda · Natálie Černá · Simona Binko",
+    },
     { title: "Photography", name: "Zuzana-Markéta Macková" },
     { title: "Implemented by", name: "Cycle Up! project" },
     {
@@ -392,32 +415,31 @@ const ride04DetailTextEn = {
   time: "10:30 - 15:00",
   distance: "12km",
   weather: [
-    "19°C",
-    "Fresh Breeze, WSW14 mph",
-    "Humidity: 77%",
-    "Air quality: Good",
+    "18°C",
+    "Light Wind, NW10 mph",
+    "Humidity: 68%",
+    "Air quality: Fair",
   ],
   cyclists: {
     heading: "8 Cyclists",
     count: "",
     nameLines: [
-      "Amy Pickles · Czarina Calinawagan · Dafni Melidou",
+      "Amy Pickles · Cristina Cochior · Czarina Calinawagan · Dafni Melidou · 4 Varia Members",
     ],
   },
   story: [
-    "The ride cut through Waalhaven, one stretch in the sprawl of docks and terminals that make up the Port of Rotterdam. Cranes and stacks of identical containers rose several stories on either side of the road, indistinguishable from each other and from the water beneath them.",
-    "The road narrowed as it left the terminals, and the group crossed from the anonymity of the boxes into Pernis, a village of fewer than five thousand people whose streets and gardens and church spire have somehow held their shape while Shell's refinery, the largest in Europe, grew up around them on every side. Riding from one edge of the village to the other took a few minutes. Getting used to the shift, containers to houses, scale to name, took longer.",
-    "Riding alongside Czarina, whose own work traces her father's letters home from years spent working on container ships, sharpened something about the ride itself. Both, in their own way, try to register what infrastructure is built to erase, hers on paper after the fact, this one on a bike in real time. Riding past the containers with that in mind, it was hard not to read them differently, less like cargo, more like a system built to make people disappear into scale.",
+    "The second edition of BYOB set out from Varia in southern Rotterdam and cut straight through Waalhaven, one stretch in the sprawl of docks and terminals that make up the Port of Rotterdam.\n\nCranes and stacks of identical containers rose several stories on either side of the road, indistinguishable from each other and from the water beneath them.\n\nAs part of Colonial Infrastructures: on Containerisation, the ride tried to unfold what those containers actually carry, not just cargo, but the stories that move through a port built to process everything at the scale of the container and none of it at the scale of a person.\n\n⋆｡ﾟ☁︎｡⋆｡ ﾟ☾ ﾟ｡⋆\n\nThe road narrowed as it left the terminals, and the group crossed from the anonymity of the boxes into Pernis, a village of fewer than five thousand people whose streets, gardens, and church spire have somehow held their shape while Shell's refinery, the largest in Europe, grew up around them on every side.\n\nRiding from one edge of the village to the other took a few minutes. Getting used to the shift, containers to houses, scale to name, took longer.\n\n⊹ ࣪ ˖\n\nRiding alongside Czarina, whose own work traces her father's letters home from years spent working on container ships, sharpened something about the ride itself. Both, in their own way, try to register what infrastructure is built to erase, hers on paper after the fact, this one on a bike in real time.\n\nRiding past the containers with that in mind, it was hard not to read them differently, less like cargo, more like a system built to make people disappear into scale.",
   ],
   credits: [
     {
       title: "Presented at",
-      name: "Varia, as part of Colonial Infrastructures: on Containerisation",
+      name: "Varia · as part of Colonial Infrastructures: on Containerisation",
     },
     {
       title: "Collaborating with",
       name: "Amy Pickles · Czarina Calinawagan",
     },
+    { title: "Photography", name: "Various Varia Members" },
   ],
 };
 
@@ -430,7 +452,7 @@ const ride01DetailTextKo = {
   previewVenue: "Taehwa River",
   previewCountry: "한국",
   photoCredit:
-    "Photo: Eoming © Studio Yeon Sung, U-Spectrum, Ulsan, 25 October 2025",
+    "사진: 어밍 © 스튜디오 연성, U-Spectrum, 울산, 2025년 10월 25일",
   venue: "Taehwa River,",
   city: "울산, 한국",
   time: "14:00-16:00",
@@ -445,7 +467,7 @@ const ride01DetailTextKo = {
     heading: "6명의 사이클리스트",
     count: "",
     nameLines: [
-      "Ahae Kim · Jinhee Yang · Jihyeon Kim · Sian Kim · Woosoo Lee · Yerin Lee",
+      "김아해 · Jinhee Yang · Jihyeon Kim · Sian Kim · Woosoo Lee · Yerin Lee",
     ],
   },
   story: [
@@ -454,11 +476,11 @@ const ride01DetailTextKo = {
     "몇 킬로미터 동안, 라이딩은 두 개의 울산을 동시에 통과했다. 치유된 강, 그리고 멈추지 않은 산업.",
   ],
   credits: [
-    { title: "프로그램 지원", name: "Eunji Kwak · Ahae Kim" },
+    { title: "프로그램 지원", name: "곽은지 · 김아해" },
     { title: "발표 장소", name: "U-Spectrum" },
-    { title: "사진", name: "Eoming" },
-    { title: "영상", name: "Shinyoung Kim" },
-    { title: "감사", name: "CLoFA" },
+    { title: "사진", name: "어밍" },
+    { title: "영상", name: "김신영" },
+    { title: "감사", name: "클로파" },
   ],
 };
 
@@ -471,7 +493,7 @@ const ride02DetailTextKo = {
   previewVenue: "Vlaardingen→Botlek",
   previewCountry: "네덜란드",
   photoCredit:
-    "Photo: Silvia Arenas © Studio Yeon Sung, Wasteland Festival, Rotterdam, 26 July 2025",
+    "사진: Silvia Arenas © 스튜디오 연성, Wasteland Festival, 로테르담, 2025년 7월 26일",
   venue: "Vlaardingen → Botlek,",
   cityHtml:
     "로테르담, 네덜란드<br>Wasteland Festival: Out of Sight의 일환으로",
@@ -512,7 +534,7 @@ const ride03DetailTextKo = {
   previewVenue: "Westhafen",
   previewCountry: "독일",
   photoCredit:
-    "Photo: Zuzana-Markéta Macková © Studio Yeon Sung, ZK/U, Berlin, 25 September 2024",
+    "사진: Zuzana-Markéta Macková © 스튜디오 연성, ZK/U, 베를린, 2024년 9월 25일",
   venue: "Westhafen, 베를린, 독일",
   city: "",
   time: "17:00-19:00",
@@ -538,7 +560,7 @@ const ride03DetailTextKo = {
   credits: [
     {
       title: "발표 장소",
-      name: "ZK/U, Cycle Up! Residency의 일환으로",
+      name: "ZK/U · Cycle Up! Residency의 일환으로",
     },
     { title: "프로그램 지원", name: "Heejung Kim" },
     { title: "사진", name: "Zuzana-Markéta Macková" },
@@ -559,7 +581,7 @@ const ride04DetailTextKo = {
   previewVenue: "Waalhaven→Pernis",
   previewCountry: "네덜란드",
   photoCredit:
-    "Photo © Studio Yeon Sung, Varia, Rotterdam, 8 June 2024",
+    "사진 © 스튜디오 연성, Varia, 로테르담, 2024년 6월 8일",
   venue: "Waalhaven → Pernis,",
   cityHtml: "로테르담, 네덜란드",
   time: "10:30 - 15:00",
@@ -585,7 +607,7 @@ const ride04DetailTextKo = {
   credits: [
     {
       title: "발표 장소",
-      name: "Varia, Colonial Infrastructures: on Containerisation의 일환으로",
+      name: "Varia · Colonial Infrastructures: on Containerisation의 일환으로",
     },
     {
       title: "협업",
@@ -603,7 +625,7 @@ const ride05DetailTextKo = {
   previewVenue: "Hembrugterrein→Westpoort",
   previewCountry: "네덜란드",
   photoCredit:
-    "Photo: Bora Sekerci © Studio Yeon Sung, Sonic Acts Festival, Amsterdam, 23 March 2024",
+    "사진: Bora Sekerci © 스튜디오 연성, Sonic Acts Festival, 암스테르담, 2024년 3월 23일",
   venue: "Hembrugterrein → Westpoort,",
   city: "암스테르담, 네덜란드",
   timeHtml: "12:00-13:00<br>14:00-15:00",
@@ -629,7 +651,7 @@ const ride05DetailTextKo = {
   credits: [
     {
       title: "발표 장소",
-      name: "Sonic Acts Festival 2024, Program Sediments의 일환으로",
+      name: "Sonic Acts Festival 2024 · Program Sediments의 일환으로",
     },
     { title: "사진", name: "Bora Sekerci" },
   ],
@@ -682,6 +704,86 @@ const rides = [
 ];
 
 let rotation = 0;
+const wheelBeadNodes = document.querySelectorAll("#wheel .wheel-bead");
+const BEAD_R_MIN = 0.44;
+const BEAD_R_MAX = 0.92;
+const BEAD_SLIDE_SPEED = 0.025;
+let beadSlideFrame = 0;
+
+function getBeadSpokeAngle(bead) {
+  return parseFloat(bead.style.getPropertyValue("--bead-angle")) || 0;
+}
+
+function getBeadRadius(bead) {
+  const value = parseFloat(bead.style.getPropertyValue("--bead-r"));
+  return Number.isFinite(value) ? value : (BEAD_R_MIN + BEAD_R_MAX) / 2;
+}
+
+function targetBeadRadius(spokeAngleDeg) {
+  // Gravity pulls each bead to the lowest point along its spoke.
+  // When the spoke tip points down, the bead slides out; when up, it slides in.
+  const worldAngleRad = ((spokeAngleDeg + rotation) * Math.PI) / 180;
+  const t = (Math.sin(worldAngleRad) + 1) / 2;
+  return BEAD_R_MIN + t * (BEAD_R_MAX - BEAD_R_MIN);
+}
+
+function syncWheelBeads(immediate = false) {
+  if (!wheelBeadNodes.length) return false;
+
+  const snap = immediate || prefersReducedMotion.matches;
+  let stillMoving = false;
+
+  wheelBeadNodes.forEach((bead, index) => {
+    const spokeAngle = getBeadSpokeAngle(bead);
+    const target = targetBeadRadius(spokeAngle);
+    const current = getBeadRadius(bead);
+    // Slight per-bead lag so they don't all slide in lockstep.
+    const speed = snap ? 1 : BEAD_SLIDE_SPEED * (0.85 + (index % 3) * 0.12);
+    const next = snap ? target : current + (target - current) * speed;
+    bead.style.setProperty("--bead-r", next.toFixed(4));
+    if (Math.abs(target - next) > 0.002) stillMoving = true;
+  });
+
+  return stillMoving;
+}
+
+function tickWheelBeads() {
+  if (syncWheelBeads(false)) {
+    beadSlideFrame = requestAnimationFrame(tickWheelBeads);
+  } else {
+    beadSlideFrame = 0;
+  }
+}
+
+function applyWheelRotation(nextRotation, options = {}) {
+  const previousRotation = rotation;
+  rotation = nextRotation;
+  const target = wheel || document.getElementById("wheel");
+  if (target) {
+    target.style.transform = `rotate(${rotation}deg)`;
+  }
+
+  if (!wheelBeadNodes.length) return;
+
+  // Keep the art-directed starting radii until the wheel actually turns.
+  if (Math.abs(rotation) < 0.5 && Math.abs(previousRotation) < 0.5) {
+    return;
+  }
+
+  if (options.immediate) {
+    if (beadSlideFrame) {
+      cancelAnimationFrame(beadSlideFrame);
+      beadSlideFrame = 0;
+    }
+    syncWheelBeads(true);
+    return;
+  }
+
+  if (!beadSlideFrame) {
+    beadSlideFrame = requestAnimationFrame(tickWheelBeads);
+  }
+}
+
 let rideIndex = 0;
 let galleryIndex = 0;
 let rideScrollLocked = false;
@@ -938,9 +1040,14 @@ function ensureRideLightbox() {
   });
 
   ridesLightbox.addEventListener("click", (event) => {
-    if (event.target === ridesLightbox) {
-      closeRideLightbox();
+    if (
+      event.target.closest(
+        ".rides-lightbox-photo, .rides-lightbox-close, .rides-lightbox-nav"
+      )
+    ) {
+      return;
     }
+    closeRideLightbox();
   });
 }
 
@@ -970,6 +1077,378 @@ function getDetailImage(ride) {
   return ride?.image || "";
 }
 
+const CREDIT_LINK_ENTRIES = [
+  [
+    "Sonic Acts Festival 2024 as part of Program Sediments",
+    "https://2024.sonicacts.com/programme/sediments/cycling-the-unknown-byob-bring-your-own-bike.html",
+  ],
+  [
+    "Sonic Acts Festival 2024 · Program Sediments의 일환으로",
+    "https://2024.sonicacts.com/programme/sediments/cycling-the-unknown-byob-bring-your-own-bike.html",
+  ],
+  [
+    "as part of Program Sediments",
+    "https://2024.sonicacts.com/programme/sediments/cycling-the-unknown-byob-bring-your-own-bike.html",
+  ],
+  [
+    "Sonic Acts Festival 2024",
+    "https://2024.sonicacts.com/programme/sediments/cycling-the-unknown-byob-bring-your-own-bike.html",
+  ],
+  [
+    "Varia as part of Colonial Infrastructures: on Containerisation",
+    "https://varia.zone/2024/colonial-infrastructures-containerisation-24/",
+  ],
+  [
+    "Varia · as part of Colonial Infrastructures: on Containerisation",
+    "https://varia.zone/2024/colonial-infrastructures-containerisation-24/",
+  ],
+  [
+    "as part of Colonial Infrastructures: on Containerisation",
+    "https://varia.zone/2024/colonial-infrastructures-containerisation-24/",
+  ],
+  [
+    "Varia · Colonial Infrastructures: on Containerisation의 일환으로",
+    "https://varia.zone/2024/colonial-infrastructures-containerisation-24/",
+  ],
+  [
+    "ZK/U · as part of the Cycle Up! Residency",
+    "https://www.zku-berlin.org/fellows/733/",
+  ],
+  [
+    "ZK/U · Cycle Up! Residency의 일환으로",
+    "https://www.zku-berlin.org/fellows/733/",
+  ],
+  [
+    "Wasteland Festival 2025",
+    "https://www.collectivewasteland.nl/event/cycling-the-unknown-artistic-field-trip-with-yeon-sung",
+  ],
+  [
+    "Cycle Up! project",
+    "https://www.goethe.de/prj/cyc/en/rsd/024/yng.html",
+  ],
+  [
+    "Cycle Up Residency",
+    "https://www.zku-berlin.org/fellows/733/",
+  ],
+  [
+    "Sonic Acts Festival",
+    "https://sonicacts.com/",
+  ],
+  [
+    "Wasteland Festival",
+    "https://www.collectivewasteland.nl/",
+  ],
+  ["Czarina Calinawagan", "https://www.czarinacalinawagan.com/"],
+  ["Katya Borisova", "https://www.instagram.com/artagitka/"],
+  ["Silvia Arenas", "https://www.instagram.com/silvia__arenas/"],
+  ["Amy Pickles", "https://amypickles.co.uk/"],
+  ["Heejung Kim", "https://www.heejung-kim.nl/"],
+  ["Studio Yeon Sung", "https://archiveofmatters.com/"],
+  ["스튜디오 연성", "https://archiveofmatters.com/"],
+  ["Yeon Sung", "https://archiveofmatters.com/"],
+  ["Eunji Kwak", "https://www.instagram.com/keaggi/"],
+  ["Ahae Kim", "https://www.instagram.com/kim.ahae/"],
+  ["Studio165", "https://www.instagram.com/studio.165.design/"],
+  ["Varia", "https://varia.zone/"],
+  ["Eoming", "https://eoming.tumblr.com/"],
+  ["CLoFA", "https://clofa.org/"],
+  ["연성", "https://archiveofmatters.com/"],
+  ["김희정", "https://www.heejung-kim.nl/"],
+  ["곽은지", "https://www.instagram.com/keaggi/"],
+  ["김아해", "https://www.instagram.com/kim.ahae/"],
+  ["어밍", "https://eoming.tumblr.com/"],
+  ["클로파", "https://clofa.org/"],
+].sort((a, b) => b[0].length - a[0].length);
+
+function linkifyCreditTextNode(textNode) {
+  const text = textNode.nodeValue;
+  if (!text || !text.trim()) return;
+
+  let remaining = text;
+  const frag = document.createDocumentFragment();
+
+  while (remaining.length) {
+    let bestIdx = -1;
+    let bestLabel = null;
+    let bestUrl = null;
+
+    for (const [label, url] of CREDIT_LINK_ENTRIES) {
+      const idx = remaining.indexOf(label);
+      if (idx === -1) continue;
+      if (bestIdx === -1 || idx < bestIdx || (idx === bestIdx && label.length > bestLabel.length)) {
+        bestIdx = idx;
+        bestLabel = label;
+        bestUrl = url;
+      }
+    }
+
+    if (bestIdx === -1) {
+      frag.appendChild(document.createTextNode(remaining));
+      break;
+    }
+
+    if (bestIdx > 0) {
+      frag.appendChild(document.createTextNode(remaining.slice(0, bestIdx)));
+    }
+
+    const link = document.createElement("a");
+    link.href = bestUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = bestLabel;
+    frag.appendChild(link);
+
+    remaining = remaining.slice(bestIdx + bestLabel.length);
+  }
+
+  textNode.parentNode.replaceChild(frag, textNode);
+}
+
+function getCreditPlainText(el) {
+  let out = "";
+  el.childNodes.forEach((node) => {
+    if (node.nodeName === "BR") {
+      out += " ";
+      return;
+    }
+    if (node.nodeType === Node.TEXT_NODE) {
+      out += node.nodeValue || "";
+      return;
+    }
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      out += getCreditPlainText(node);
+    }
+  });
+  return out.replace(/\s+/g, " ").trim();
+}
+
+function linkifyCreditNameElement(el) {
+  if (!el || el.dataset.creditLinked === "1") return;
+
+  const normalized = getCreditPlainText(el);
+  let exactUrl = null;
+  for (const [label, url] of CREDIT_LINK_ENTRIES) {
+    if (label.replace(/\s+/g, " ").trim() === normalized) {
+      exactUrl = url;
+      break;
+    }
+  }
+
+  if (exactUrl) {
+    const link = document.createElement("a");
+    link.href = exactUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    while (el.firstChild) link.appendChild(el.firstChild);
+    el.appendChild(link);
+    el.dataset.creditLinked = "1";
+    return;
+  }
+
+  const textNodes = [];
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  textNodes.forEach(linkifyCreditTextNode);
+
+  el.dataset.creditLinked = "1";
+}
+
+function linkifyAllCreditNames() {
+  document
+    .querySelectorAll(".wheel-about-credits .wheel-about-credit-name")
+    .forEach(linkifyCreditNameElement);
+}
+
+function colorizeSeparatorsInElement(el) {
+  if (!el) return;
+
+  const textNodes = [];
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+  textNodes.forEach((textNode) => {
+    const text = textNode.nodeValue;
+    if (!text || !text.includes("·")) return;
+
+    const frag = document.createDocumentFragment();
+    text.split(/(·)/).forEach((part) => {
+      if (part === "·") {
+        const sep = document.createElement("span");
+        sep.className = "rides-name-sep";
+        sep.setAttribute("aria-hidden", "true");
+        sep.textContent = "·";
+        frag.appendChild(sep);
+      } else if (part) {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    textNode.parentNode.replaceChild(frag, textNode);
+  });
+}
+
+function colorizeCyclistNameLine(el, text) {
+  if (!el) return;
+  el.replaceChildren();
+  if (!text) return;
+
+  const parts = String(text).split(/\s*·\s*/);
+  parts.forEach((part, index) => {
+    if (index > 0) {
+      const sep = document.createElement("span");
+      sep.className = "rides-name-sep";
+      sep.setAttribute("aria-hidden", "true");
+      sep.textContent = " · ";
+      el.appendChild(sep);
+    }
+    el.appendChild(document.createTextNode(part));
+  });
+}
+
+function colorizeAllNameSeparators() {
+  document.querySelectorAll(".rides-detail-names-line").forEach((el) => {
+    const text = el.textContent || "";
+    if (!text.includes("·")) return;
+    colorizeCyclistNameLine(el, text);
+  });
+
+  document
+    .querySelectorAll(".wheel-about-credits .wheel-about-credit-name")
+    .forEach(colorizeSeparatorsInElement);
+}
+
+const RIDE_STORY_PLACE_NAMES = [
+  "Colonial Infrastructures: on Containerisation",
+  "Air Products' HyCO4",
+  "Brandenburg Gate",
+  "Kraftwerk Moabit",
+  "North Sea Canal",
+  "Port of Rotterdam",
+  "Hyundai Motor's",
+  "Amsterdam Noord",
+  "Hyundai Motor",
+  "Taehwa River",
+  "Seongnam Riverside",
+  "Reed Fields",
+  "South Korea",
+  "Netherlands",
+  "Hembrugterrein",
+  "Amsterdam's",
+  "Vlaardingen",
+  "Rozenburg",
+  "Westhafen",
+  "Westpoort",
+  "Waalhaven",
+  "Het Scheur",
+  "CYCLE UP!",
+  "Cycle Up!",
+  "Air Products",
+  "Oeverbos",
+  "De Ceuvel",
+  "Amsterdam",
+  "Rotterdam",
+  "암스테르담",
+  "Zaandam",
+  "Hempont",
+  "Berlin's",
+  "Germany",
+  "Het Hem",
+  "로테르담",
+  "Shell's",
+  "ZK/U's",
+  "Ulsan's",
+  "HyCO4",
+  "Botlek",
+  "Pernis",
+  "Moabit",
+  "Berlin",
+  "베를린",
+  "Hamburg",
+  "Ulsans",
+  "AVR's",
+  "Korea",
+  "Ulsan",
+  "Turkey",
+  "Spree",
+  "Shell",
+  "Europe",
+  "ZK/U",
+  "Varia",
+  "울산",
+  "AVR",
+].sort((a, b) => b.length - a.length);
+
+function appendTextWithItalicPlaceNames(parent, text) {
+  if (!text) return;
+
+  let remaining = text;
+  while (remaining.length) {
+    let bestIdx = -1;
+    let bestLabel = null;
+
+    for (const label of RIDE_STORY_PLACE_NAMES) {
+      const idx = remaining.indexOf(label);
+      if (idx === -1) continue;
+      if (
+        bestIdx === -1 ||
+        idx < bestIdx ||
+        (idx === bestIdx && label.length > bestLabel.length)
+      ) {
+        bestIdx = idx;
+        bestLabel = label;
+      }
+    }
+
+    if (bestIdx === -1) {
+      parent.appendChild(document.createTextNode(remaining));
+      break;
+    }
+
+    if (bestIdx > 0) {
+      parent.appendChild(document.createTextNode(remaining.slice(0, bestIdx)));
+    }
+
+    const prevChar = bestIdx > 0 ? remaining[bestIdx - 1] : "";
+    const nextChar = remaining[bestIdx + bestLabel.length] || "";
+
+    // Keep a little air when italic sits against upright letters/particles.
+    if (prevChar && /[A-Za-z0-9가-힣]/.test(prevChar)) {
+      parent.appendChild(document.createTextNode("\u2006"));
+    }
+
+    const em = document.createElement("em");
+    em.className = "rides-detail-place";
+    em.textContent = bestLabel;
+    parent.appendChild(em);
+
+    remaining = remaining.slice(bestIdx + bestLabel.length);
+
+    if (nextChar && /[A-Za-z0-9가-힣]/.test(nextChar)) {
+      parent.appendChild(document.createTextNode("\u2006"));
+    }
+  }
+}
+
+function setTextWithLineBreaks(node, text, { italicizePlaceNames = false } = {}) {
+  if (!node) return;
+  if (!text) {
+    node.textContent = "";
+    return;
+  }
+
+  node.replaceChildren();
+  String(text)
+    .split("\n")
+    .forEach((line, index) => {
+      if (index > 0) node.appendChild(document.createElement("br"));
+      if (!line) return;
+      if (italicizePlaceNames) {
+        appendTextWithItalicPlaceNames(node, line);
+      } else {
+        node.appendChild(document.createTextNode(line));
+      }
+    });
+}
+
 function renderRideCredits(credits) {
   if (!ridesCreditsContainer || !credits?.length) return;
 
@@ -988,12 +1467,15 @@ function renderRideCredits(credits) {
 
     const name = document.createElement("p");
     name.className = "wheel-about-credit-name";
-    name.textContent = credit.name;
+    setTextWithLineBreaks(name, credit.name);
 
     copy.append(title, name);
     article.appendChild(copy);
     ridesCreditsContainer.appendChild(article);
   });
+
+  linkifyAllCreditNames();
+  colorizeAllNameSeparators();
 }
 
 function renderRide(index) {
@@ -1039,7 +1521,7 @@ function renderRide(index) {
   }
   if (ridesDetailTitle) ridesDetailTitle.textContent = ride.title || "";
   if (ridesDetailSubtitle) {
-    ridesDetailSubtitle.textContent = ride.subtitle || "";
+    setTextWithLineBreaks(ridesDetailSubtitle, ride.subtitle || "");
     ridesDetailSubtitle.classList.toggle("is-italic", Boolean(ride.subtitleItalic));
   }
   if (ridesTitleBlock) {
@@ -1071,8 +1553,9 @@ function renderRide(index) {
         ridesParticipantsCount.classList.toggle("is-hidden", !cyclists.count);
       }
       ridesNameLines.forEach((node, nameIndex) => {
-        node.textContent = cyclists.nameLines?.[nameIndex] || "";
-        node.classList.toggle("is-hidden", !cyclists.nameLines?.[nameIndex]);
+        const line = cyclists.nameLines?.[nameIndex] || "";
+        colorizeCyclistNameLine(node, line);
+        node.classList.toggle("is-hidden", !line);
       });
     }
   }
@@ -1081,7 +1564,9 @@ function renderRide(index) {
     const story = ride.story;
     ridesStoryBlock.classList.toggle("is-hidden", !story?.length);
     ridesStoryParagraphs.forEach((node, storyIndex) => {
-      node.textContent = story?.[storyIndex] || "";
+      setTextWithLineBreaks(node, story?.[storyIndex] || "", {
+        italicizePlaceNames: true,
+      });
       node.classList.toggle("is-hidden", !story?.[storyIndex]);
     });
   }
@@ -1417,28 +1902,28 @@ window.addEventListener(
   "wheel",
   (event) => {
     if (
-      aboutScroll &&
-      document.documentElement.classList.contains("home-mobile-scroll") &&
-      HOME_MOBILE_MQ.matches
+      isAboutScrollMobilePage() &&
+      document.documentElement.classList.contains("home-mobile-scroll")
     ) {
       event.preventDefault();
-
-      if (isHomeChromeExpanded()) {
-        commitHomeChromeHideScroll();
-      } else {
-        applyAboutInnerScrollDelta(event.deltaY);
-      }
-
+      scrollAboutAndRotate(aboutScroll, event.deltaY);
       return;
     }
 
     let pageScroll = panel;
-    if (aboutScroll && !isAboutMobileScrollControl() && panel?.classList.contains("wheel-about")) {
+    if (aboutScroll && panel?.classList.contains("wheel-about")) {
+      pageScroll = aboutScroll;
+    }
+    if (
+      aboutScroll &&
+      (panel?.classList.contains("wheel-contact") ||
+        panel?.classList.contains("wheel-gear"))
+    ) {
       pageScroll = aboutScroll;
     }
     if (pageScroll) {
-      pageScroll.scrollTop += event.deltaY;
       event.preventDefault();
+      scrollAboutAndRotate(pageScroll, event.deltaY);
       return;
     }
 
@@ -1473,7 +1958,7 @@ window.addEventListener(
           ridesTextCircle?.contains(event.target));
 
       if (onTextArea && ridesDetailsScroll) {
-        ridesDetailsScroll.scrollTop += event.deltaY;
+        scrollRidesTextAndRotate(event.deltaY);
         return;
       }
 
@@ -1486,13 +1971,14 @@ window.addEventListener(
     if (document.documentElement.classList.contains("home-mobile-scroll")) return;
 
     event.preventDefault();
-    rotation += event.deltaY * 0.12;
-    wheel.style.transform = `rotate(${rotation}deg)`;
+    applyWheelRotation(rotation + event.deltaY * 0.12);
   },
   { passive: false }
 );
 
 syncLanguageLinks();
+linkifyAllCreditNames();
+colorizeAllNameSeparators();
 
 function initHomeHeroVideo() {
   const iframe = document.getElementById("home-vimeo");
@@ -1546,9 +2032,6 @@ const HOME_MENU_ANIM_MS = 550;
 let homeMenuAnimating = false;
 const HOME_MOBILE_MQ = window.matchMedia("(max-width: 768px)");
 const homeWheelSpokes = document.getElementById("wheel");
-const homeScrollHint = document.querySelector(".home-scroll-hint");
-const homeScrollHintText = document.querySelector(".home-scroll-hint__text");
-const HOME_CHROME_HIDE_SCROLL_Y = 100;
 const HOME_TOUCH_SKIP =
   ".home-menu-toggle, .home-site-menu, .home-site-menu-link, .home-lang-toggle, a, button";
 let homeTouchStartY = 0;
@@ -1559,8 +2042,7 @@ let homeTouchOnAboutWheel = false;
 let homeTouchOnRidesTextArea = false;
 let aboutScrollTrack = null;
 let aboutContentOffset = 0;
-let homeExpandedViewportHeight = null;
-let homeCollapsedViewportHeight = null;
+let homeLockedViewportHeight = null;
 let homeScrollSnapTimer = null;
 const isMobileHomeWheelPage = Boolean(
   homeIndex?.classList.contains("home--wheel-page")
@@ -1587,40 +2069,36 @@ function syncHomeWheelRotationFromScroll() {
   if (!homeWheelSpokes || !isMainMobileHome || !HOME_MOBILE_MQ.matches) return;
   if (homeIndex.classList.contains("is-menu-open")) return;
 
-  rotation = window.scrollY * 0.45;
-  homeWheelSpokes.style.transform = `rotate(${rotation}deg)`;
+  // Mobile home pins scroll at 0; wheel rotation is driven by touch swipes.
+  // Don't overwrite that from scrollY or the wheel snaps back on every touchend.
+  const scrollY = getPageScrollTop();
+  if (scrollY <= 0) return;
+
+  applyWheelRotation(scrollY * 0.45);
 }
 
-function getVisualViewportHeight() {
+function getStableMobileViewportHeight() {
   const visualHeight = window.visualViewport?.height ?? 0;
   const layoutHeight = window.innerHeight ?? 0;
-  return Math.max(visualHeight, layoutHeight);
-}
-
-function isHomeChromeExpanded() {
-  return getPageScrollTop() < HOME_CHROME_HIDE_SCROLL_Y * 0.5;
+  const candidates = [visualHeight, layoutHeight].filter((h) => h > 0);
+  if (!candidates.length) return 0;
+  // Prefer the smaller height (browser chrome visible) so Android Chrome
+  // collapsing the URL bar does not stretch the layout.
+  return Math.min(...candidates);
 }
 
 function resetHomeViewportHeightCache() {
-  homeExpandedViewportHeight = null;
-  homeCollapsedViewportHeight = null;
+  homeLockedViewportHeight = null;
 }
 
 function captureHomeViewportHeights() {
-  const viewportHeight = getVisualViewportHeight();
+  const viewportHeight = getStableMobileViewportHeight();
+  if (!viewportHeight) return;
 
-  if (isHomeChromeExpanded()) {
-    homeExpandedViewportHeight =
-      homeExpandedViewportHeight === null
-        ? viewportHeight
-        : Math.max(homeExpandedViewportHeight, viewportHeight);
-    return;
-  }
-
-  homeCollapsedViewportHeight =
-    homeCollapsedViewportHeight === null
+  homeLockedViewportHeight =
+    homeLockedViewportHeight === null
       ? viewportHeight
-      : Math.max(homeCollapsedViewportHeight, viewportHeight);
+      : Math.min(homeLockedViewportHeight, viewportHeight);
 }
 
 function syncMobileHomeViewportHeight() {
@@ -1638,11 +2116,8 @@ function syncMobileHomeViewportHeight() {
 
   captureHomeViewportHeights();
 
-  const liveHeight = getVisualViewportHeight();
-  const cachedHeight = isHomeChromeExpanded()
-    ? homeExpandedViewportHeight
-    : homeCollapsedViewportHeight;
-  const height = Math.max(cachedHeight ?? 0, liveHeight);
+  const height = homeLockedViewportHeight;
+  if (!height) return;
 
   homeIndex.style.setProperty("--home-mobile-vh", `${height}px`);
   document.documentElement.style.setProperty("--home-mobile-vh", `${height}px`);
@@ -1654,13 +2129,12 @@ function syncMobileHomeChromeState() {
   if (!isMobileHomeScrollPage || !HOME_MOBILE_MQ.matches) return;
   if (!document.documentElement.classList.contains("home-mobile-scroll")) return;
 
-  homeIndex.classList.toggle("is-browser-chrome-visible", isHomeChromeExpanded());
+  homeIndex.classList.add("is-browser-chrome-visible");
 }
 
 function syncHomeMobileScrollState() {
   syncMobileHomeViewportHeight();
   syncMobileHomeChromeState();
-  syncHomeScrollHint();
   syncHomeWheelRotationFromScroll();
 }
 
@@ -1668,23 +2142,10 @@ function snapHomeMobileScroll() {
   if (!document.documentElement.classList.contains("home-mobile-scroll")) return;
   if (homeIndex.classList.contains("is-menu-open")) return;
 
-  const scrollTop = getPageScrollTop();
-
-  if (scrollTop <= 1) {
-    if (scrollTop !== 0) {
-      setPageScrollTop(0);
-      syncHomeMobileScrollState();
-    }
-    return;
+  if (getPageScrollTop() !== 0) {
+    setPageScrollTop(0);
+    syncHomeMobileScrollState();
   }
-
-  const target =
-    scrollTop >= HOME_CHROME_HIDE_SCROLL_Y * 0.5 ? HOME_CHROME_HIDE_SCROLL_Y : 0;
-
-  if (Math.abs(scrollTop - target) <= 2) return;
-
-  setPageScrollTop(target);
-  window.requestAnimationFrame(syncHomeMobileScrollState);
 }
 
 function isHomeMobileScrollInteractionActive() {
@@ -1697,7 +2158,8 @@ function isHomeMobileScrollInteractionActive() {
 }
 
 function commitHomeChromeHideScroll() {
-  setPageScrollTop(HOME_CHROME_HIDE_SCROLL_Y);
+  // Browser chrome stays visible — keep page scroll pinned at top.
+  setPageScrollTop(0);
   window.requestAnimationFrame(syncHomeMobileScrollState);
 }
 
@@ -1707,83 +2169,108 @@ function commitHomeChromeOpenScroll() {
 }
 
 function isAboutMobileScrollControl() {
-  return (
-    isMobileHomeWheelPage &&
-    HOME_MOBILE_MQ.matches &&
-    document.documentElement.classList.contains("home-mobile-scroll") &&
-    aboutScrollTrack
+  return false;
+}
+
+function isWheelDashRotatePage() {
+  return Boolean(
+    pageWheel &&
+      homeIndex &&
+      (homeIndex.classList.contains("home--about") ||
+        homeIndex.classList.contains("home--contact") ||
+        homeIndex.classList.contains("home--gear"))
   );
 }
 
-function ensureAboutScrollTrack() {
-  if (!aboutScroll) return null;
+function isRidesDashRotateActive() {
+  return Boolean(ridesDetailOpen && ridesTextCircle);
+}
 
-  let track = aboutScroll.querySelector(".wheel-about-scroll-track");
-  if (!track) {
-    track = document.createElement("div");
-    track.className = "wheel-about-scroll-track";
-    while (aboutScroll.firstChild) {
-      track.appendChild(aboutScroll.firstChild);
+function getDashRotateTarget() {
+  if (isWheelDashRotatePage()) return pageWheel;
+  if (isRidesDashRotateActive()) return ridesTextCircle;
+  return null;
+}
+
+let wheelDashRotation = 0;
+
+function applyWheelDashDelta(delta) {
+  const target = getDashRotateTarget();
+  if (!target || !delta) return;
+  // Only the portion that actually moved the scroll should rotate.
+  wheelDashRotation += delta * 0.35;
+  target.style.setProperty("--wheel-dash-rotation", `${wheelDashRotation}deg`);
+}
+
+function scrollAboutAndRotate(scrollEl, delta) {
+  if (!scrollEl || !delta) return;
+  const before = scrollEl.scrollTop;
+  scrollEl.scrollTop += delta;
+  applyWheelDashDelta(scrollEl.scrollTop - before);
+}
+
+function scrollRidesTextAndRotate(delta) {
+  if (!ridesDetailsScroll || !delta) return;
+  // Rotation is applied by the scroll listener so every scroll path stays in sync.
+  ridesDetailsScroll.scrollTop += delta;
+}
+
+function syncWheelDashRotation() {
+  const target = getDashRotateTarget();
+  if (!target) return;
+  target.style.setProperty("--wheel-dash-rotation", `${wheelDashRotation}deg`);
+}
+
+function isAboutScrollMobilePage() {
+  return Boolean(
+    aboutScroll &&
+      HOME_MOBILE_MQ.matches &&
+      homeIndex &&
+      (homeIndex.classList.contains("home--about") ||
+        homeIndex.classList.contains("home--contact") ||
+        homeIndex.classList.contains("home--gear"))
+  );
+}
+
+function unwrapAboutScrollTrack() {
+  if (!aboutScroll) return;
+
+  const track = aboutScroll.querySelector(".wheel-about-scroll-track");
+  if (track) {
+    while (track.firstChild) {
+      aboutScroll.insertBefore(track.firstChild, track);
     }
-    aboutScroll.appendChild(track);
+    track.remove();
   }
 
-  aboutScrollTrack = track;
-  return track;
+  aboutScrollTrack = null;
+  aboutContentOffset = 0;
 }
 
-function syncAboutScrollTrackTransform() {
-  if (!aboutScrollTrack) return;
-  aboutScrollTrack.style.transform = `translate3d(0, ${-aboutContentOffset}px, 0)`;
+function ensureAboutScrollTrack() {
+  return null;
 }
+
+function syncAboutScrollTrackTransform() {}
 
 function getAboutContentMaxScroll() {
-  if (!aboutScroll || !aboutScrollTrack) return 0;
-  return Math.max(0, aboutScrollTrack.scrollHeight - aboutScroll.clientHeight);
+  if (!aboutScroll) return 0;
+  return Math.max(0, aboutScroll.scrollHeight - aboutScroll.clientHeight);
 }
 
 function initAboutMobileScrollControl() {
-  if (!isMobileHomeWheelPage || !aboutScroll) return;
-
-  if (!HOME_MOBILE_MQ.matches) {
-    const track = aboutScroll.querySelector(".wheel-about-scroll-track");
-    if (track) {
-      track.style.removeProperty("transform");
-    }
-    aboutScrollTrack = null;
-    aboutContentOffset = 0;
-    return;
-  }
-
-  ensureAboutScrollTrack();
-  aboutScroll.scrollTop = 0;
-  aboutContentOffset = Math.min(aboutContentOffset, getAboutContentMaxScroll());
-  syncAboutScrollTrackTransform();
+  if (!aboutScroll) return;
+  unwrapAboutScrollTrack();
 }
 
 function applyAboutInnerScrollDelta(delta) {
-  if (!delta || !aboutScroll || !isAboutMobileScrollControl()) return;
-
-  if (delta > 0) {
-    const innerRoom = Math.max(0, getAboutContentMaxScroll() - aboutContentOffset);
-    aboutContentOffset += Math.min(delta, innerRoom);
-  } else {
-    aboutContentOffset = Math.max(0, aboutContentOffset + delta);
-  }
-
-  syncAboutScrollTrackTransform();
+  if (!delta || !aboutScroll) return;
+  scrollAboutAndRotate(aboutScroll, delta);
 }
 
 function applyAboutScrollWheelDelta(delta, syncState = false) {
   if (!delta || !aboutScroll) return;
-
-  if (isAboutMobileScrollControl()) {
-    applyAboutInnerScrollDelta(delta);
-    if (syncState) syncHomeMobileScrollState();
-    return;
-  }
-
-  aboutScroll.scrollTop += delta;
+  scrollAboutAndRotate(aboutScroll, delta);
   if (syncState) syncHomeMobileScrollState();
 }
 
@@ -1805,9 +2292,7 @@ function isRidesTextAreaTouch(event) {
 
 function applyRidesInnerScrollDelta(delta) {
   if (!delta || !ridesDetailsScroll || !isRidesMobileScrollControl()) return;
-
-  const maxScroll = Math.max(0, ridesDetailsScroll.scrollHeight - ridesDetailsScroll.clientHeight);
-  ridesDetailsScroll.scrollTop = Math.max(0, Math.min(maxScroll, ridesDetailsScroll.scrollTop + delta));
+  scrollRidesTextAndRotate(delta);
 }
 
 function shouldSkipHomeMobileTouch(event) {
@@ -1858,16 +2343,25 @@ function onHomeMobileTouchMove(event) {
 
   homeTouchAccum += delta;
 
+  // ABOUT/CONTACT/GEAR: any page swipe moves the text via native scrollTop.
+  if (isAboutScrollMobilePage() && aboutScroll) {
+    event.preventDefault();
+    scrollAboutAndRotate(aboutScroll, delta);
+    return;
+  }
+
   if (homeTouchOnAboutWheel) {
     event.preventDefault();
 
-    if (!isHomeChromeExpanded()) {
-      if (isAboutMobileScrollControl()) {
-        applyAboutInnerScrollDelta(delta);
-      } else if (isRidesMobileScrollControl() && homeTouchOnRidesTextArea) {
-        applyRidesInnerScrollDelta(delta);
-      }
+    if (isRidesMobileScrollControl() && homeTouchOnRidesTextArea) {
+      applyRidesInnerScrollDelta(delta);
     }
+    return;
+  }
+
+  if (isMainMobileHome && homeWheelSpokes) {
+    event.preventDefault();
+    applyWheelRotation(rotation + delta * 0.45);
   }
 }
 
@@ -1875,104 +2369,12 @@ function onHomeMobileTouchEnd(event) {
   if (!homeTouchActive) return;
   homeTouchActive = false;
 
-  const accum = homeTouchAccum;
   homeTouchAccum = 0;
-  const fromAboutWheel = homeTouchOnAboutWheel;
-  const fromRidesTextArea = homeTouchOnRidesTextArea;
   homeTouchOnAboutWheel = false;
   homeTouchOnRidesTextArea = false;
 
-  if (accum > 18) {
-    commitHomeChromeHideScroll();
-
-    if (fromAboutWheel && isAboutMobileScrollControl()) {
-      const innerExtra = Math.max(0, accum - HOME_CHROME_HIDE_SCROLL_Y);
-      if (innerExtra > 0) {
-        applyAboutInnerScrollDelta(innerExtra);
-      }
-    } else if (fromAboutWheel && isRidesMobileScrollControl() && fromRidesTextArea) {
-      const innerExtra = Math.max(0, accum - HOME_CHROME_HIDE_SCROLL_Y);
-      if (innerExtra > 0) {
-        applyRidesInnerScrollDelta(innerExtra);
-      }
-    }
-  } else if (accum < -18) {
-    if (fromAboutWheel && isAboutMobileScrollControl() && aboutContentOffset > 0) {
-      applyAboutInnerScrollDelta(accum);
-    } else if (
-      fromAboutWheel &&
-      isRidesMobileScrollControl() &&
-      fromRidesTextArea &&
-      ridesDetailsScroll.scrollTop > 0
-    ) {
-      applyRidesInnerScrollDelta(accum);
-    } else {
-      commitHomeChromeOpenScroll();
-    }
-  } else {
-    snapHomeMobileScroll();
-  }
-
+  setPageScrollTop(0);
   syncHomeMobileScrollState();
-}
-
-function hideHomeScrollHintImmediately() {
-  if (!homeScrollHint) return;
-
-  homeScrollHint.classList.remove("is-hiding");
-  homeScrollHint.hidden = true;
-  homeScrollHint.setAttribute("aria-hidden", "true");
-}
-
-function dismissHomeScrollHint() {
-  if (!homeScrollHint || homeScrollHint.hidden) return;
-
-  homeScrollHint.classList.add("is-hiding");
-
-  window.setTimeout(() => {
-    homeScrollHint.hidden = true;
-    homeScrollHint.setAttribute("aria-hidden", "true");
-    homeScrollHint.classList.remove("is-hiding");
-  }, 380);
-}
-
-function syncHomeScrollHint() {
-  if (!homeScrollHint || !isMainMobileHome || !HOME_MOBILE_MQ.matches) {
-    if (homeScrollHint) {
-      homeScrollHint.hidden = true;
-      homeScrollHint.setAttribute("aria-hidden", "true");
-    }
-    return;
-  }
-
-  if (!document.documentElement.classList.contains("home-mobile-scroll")) {
-    homeScrollHint.hidden = true;
-    homeScrollHint.setAttribute("aria-hidden", "true");
-    return;
-  }
-
-  if (homeScrollHintText) {
-    homeScrollHintText.textContent =
-      getSiteLang() === "ko" ? "위로 스와이프" : "Swipe up";
-  }
-
-  if (homeIndex.classList.contains("is-menu-open")) {
-    hideHomeScrollHintImmediately();
-    return;
-  }
-
-  const shouldShow = window.scrollY <= 1;
-
-  if (shouldShow) {
-    homeScrollHint.classList.remove("is-hiding");
-    homeScrollHint.hidden = false;
-    homeScrollHint.setAttribute("aria-hidden", "false");
-    return;
-  }
-
-  if (!homeScrollHint.hidden) {
-    dismissHomeScrollHint();
-  }
 }
 
 function getMobileCopyrightAnchor() {
@@ -2007,7 +2409,6 @@ function syncMobileHomeScrollMode() {
     root.classList.remove("is-menu-scroll-locked");
     initAboutMobileScrollControl();
     syncMobileHomeViewportHeight();
-    syncHomeScrollHint();
     syncMobileCopyrightPlacement();
     return;
   }
@@ -2016,6 +2417,7 @@ function syncMobileHomeScrollMode() {
     history.scrollRestoration = "manual";
   }
 
+  setPageScrollTop(0);
   initAboutMobileScrollControl();
   syncHomeMobileScrollState();
   syncMobileCopyrightPlacement();
@@ -2081,6 +2483,35 @@ if (isMobileHomeWheelPage && aboutScroll) {
   window.addEventListener("resize", initAboutMobileScrollControl);
 }
 
+if (isWheelDashRotatePage() && aboutScroll) {
+  aboutScroll.addEventListener(
+    "scroll",
+    () => {
+      syncWheelDashRotation();
+    },
+    { passive: true }
+  );
+  syncWheelDashRotation();
+}
+
+if (ridesDetailsScroll) {
+  let ridesTextLastScrollTop = ridesDetailsScroll.scrollTop;
+  ridesDetailsScroll.addEventListener(
+    "scroll",
+    () => {
+      if (!isRidesDashRotateActive()) {
+        ridesTextLastScrollTop = ridesDetailsScroll.scrollTop;
+        return;
+      }
+      const top = ridesDetailsScroll.scrollTop;
+      const delta = top - ridesTextLastScrollTop;
+      ridesTextLastScrollTop = top;
+      if (delta) applyWheelDashDelta(delta);
+    },
+    { passive: true }
+  );
+}
+
 function setHomeMenuOpen(open) {
   if (!homeIndex || homeMenuAnimating) return;
   if (open === homeIndex.classList.contains("is-menu-open")) return;
@@ -2091,8 +2522,6 @@ function setHomeMenuOpen(open) {
   }
 
   if (open) {
-    hideHomeScrollHintImmediately();
-
     if (homeSiteMenu) homeSiteMenu.hidden = false;
     if (homeMenuBackdrop) {
       homeMenuBackdrop.hidden = false;
@@ -2104,7 +2533,6 @@ function setHomeMenuOpen(open) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         homeIndex.classList.add("is-menu-open");
-        syncHomeScrollHint();
       });
     });
     return;
@@ -2112,7 +2540,6 @@ function setHomeMenuOpen(open) {
 
   homeIndex.classList.remove("is-menu-open");
   syncMobileHomeScrollLock();
-  syncHomeScrollHint();
   homeMenuAnimating = true;
 
   window.setTimeout(() => {
