@@ -2077,10 +2077,29 @@ function syncHomeWheelRotationFromScroll() {
   applyWheelRotation(scrollY * 0.45);
 }
 
+let cachedSvhHeight = null;
+
+function getSvhHeight() {
+  if (cachedSvhHeight) return cachedSvhHeight;
+  try {
+    const el = document.createElement("div");
+    el.style.cssText =
+      "position:fixed;top:0;left:0;height:100svh;width:0;visibility:hidden;pointer-events:none";
+    document.documentElement.appendChild(el);
+    cachedSvhHeight = el.getBoundingClientRect().height || 0;
+    el.remove();
+  } catch {
+    cachedSvhHeight = 0;
+  }
+  return cachedSvhHeight;
+}
+
 function getStableMobileViewportHeight() {
   const visualHeight = window.visualViewport?.height ?? 0;
   const layoutHeight = window.innerHeight ?? 0;
-  const candidates = [visualHeight, layoutHeight].filter((h) => h > 0);
+  const candidates = [visualHeight, layoutHeight, getSvhHeight()].filter(
+    (h) => h > 0
+  );
   if (!candidates.length) return 0;
   // Prefer the smaller height (browser chrome visible) so Android Chrome
   // collapsing the URL bar does not stretch the layout.
@@ -2089,6 +2108,7 @@ function getStableMobileViewportHeight() {
 
 function resetHomeViewportHeightCache() {
   homeLockedViewportHeight = null;
+  cachedSvhHeight = null;
 }
 
 function captureHomeViewportHeights() {
