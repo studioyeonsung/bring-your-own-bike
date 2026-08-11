@@ -920,6 +920,82 @@ html[lang="ko"] .home--wheel-page .title-top {
   color: #000;
 }
 
+.wheel-panel-text.is-italic {
+  font-family: "DunkelSerif Display Medium", "dunkel-serif-display-medium", serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--page-bg);
+}
+
+.about-footnote {
+  --fn-dash: clamp(0.28em, 0.55vw + 0.12em, 0.72em);
+  --fn-gap: clamp(0.16em, 0.32vw + 0.08em, 0.42em);
+  --fn-thick: clamp(2px, 0.14em + 0.08vw, 5px);
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  padding-bottom: calc(var(--fn-thick) + 0.08em);
+  border-bottom: none;
+  text-decoration: none;
+}
+
+.about-footnote::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--fn-thick);
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to right,
+    var(--page-bg) 0,
+    var(--page-bg) var(--fn-dash),
+    transparent var(--fn-dash),
+    transparent calc(var(--fn-dash) + var(--fn-gap))
+  );
+}
+
+.about-footnote-tip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10050;
+  /* Keep tip compact enough to sit inside the wheel on 16" (~1728px) screens. */
+  width: clamp(12rem, 18vw, 18rem);
+  padding: clamp(0.5rem, 0.55vw, 0.66rem) clamp(0.55rem, 0.65vw, 0.78rem);
+  background: var(--page-bg);
+  color: #000;
+  font-family: var(--font-dunkel-standard);
+  font-size: clamp(0.75rem, 0.9vw, 1.02rem);
+  font-weight: 900;
+  font-style: normal;
+  line-height: 1.28;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+  transform: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+.about-footnote-tip.is-open,
+.about-footnote-tip.is-measuring {
+  opacity: 1;
+  visibility: visible;
+}
+
+.about-footnote-tip.is-measuring {
+  opacity: 0;
+}
+
 .wheel-panel.wheel-about {
   container-type: inline-size;
   container-name: wheel-about;
@@ -2048,7 +2124,7 @@ body.is-rides-lightbox-open .menu {
   }
 
   .rides-duo {
-    --rides-overlap: calc(var(--rides-circle) * 0.14);
+    --rides-overlap: calc(var(--rides-circle) * 0.1);
     flex-direction: column-reverse;
     width: var(--rides-circle);
     height: calc(var(--rides-circle) * 2 - var(--rides-overlap));
@@ -2084,6 +2160,7 @@ body.is-rides-lightbox-open .menu {
   }
 
   .wheel-wrap--rides.is-detail .rides-circle--text .rides-number--text {
+    font-size: calc(var(--rides-hero-number-size) * 0.9);
     margin-bottom: clamp(0.35rem, 1.1vh, 0.65rem);
     transform: none;
   }
@@ -2539,9 +2616,25 @@ body.is-rides-lightbox-open .menu {
     max-width: none;
   }
 
+  .home--index.home--contact .wheel-contact-body {
+    gap: clamp(0.55rem, 1.8vh, 1rem);
+  }
+
+  .home--index.home--contact .wheel-contact-lead {
+    margin-top: 0;
+  }
+
+  .home--index.home--contact .wheel-contact-links {
+    gap: clamp(0.2rem, 0.7vh, 0.4rem);
+  }
+
   .home--index.home--about .wheel-about-scroll > .wheel-panel-text,
   .home--index.home--about .wheel-about-scroll .wheel-about-logo {
     margin-inline: auto;
+  }
+
+  .home--index.home--about .wheel-about-scroll > .wheel-panel-text {
+    font-size: calc(clamp(1.24rem, 2.56vw, 1.84rem) * 0.9);
   }
 
   .home--index.home--wheel-page .wheel-about-scroll {
@@ -2837,6 +2930,12 @@ body.is-rides-lightbox-open .menu {
     );
     width: clamp(calc(3.564rem * var(--deco-scale)), calc(17.82vw * var(--deco-scale)), calc(5.265rem * var(--deco-scale)));
     z-index: 3;
+  }
+
+  /* Hide thunder illustration on all mobile ride detail views. */
+  .home--rides.home--rides-detail .deco-thunder,
+  .home--rides:has(.wheel-wrap--rides.is-detail) .deco-thunder {
+    display: none !important;
   }
 
   .home--index .home-deco::after {
