@@ -1,6 +1,6 @@
 (function () {
   var PREF_KEY = "byob-lang-pref";
-  var GEO_KEY = "byob-lang-geo";
+  var GEO_KEY = "byob-lang-geo-v2";
   var path = window.location.pathname || "/";
   var isKoPath = /^\/ko(?=\/|$)/.test(path);
   var currentLang = isKoPath ? "ko" : "en";
@@ -46,11 +46,6 @@
     }
   }
 
-  function applyLang(lang, persistPref) {
-    if (persistPref) writeStorage(window.localStorage, PREF_KEY, lang);
-    redirectTo(lang);
-  }
-
   // Remember explicit language switches (header ENG/KO + mobile toggle).
   document.addEventListener(
     "click",
@@ -69,6 +64,7 @@
     true
   );
 
+  // Manual preference always wins.
   var pref = readStorage(window.localStorage, PREF_KEY);
   if (pref === "ko" || pref === "en") {
     redirectTo(pref);
@@ -76,8 +72,13 @@
   }
 
   var cachedGeo = readStorage(window.sessionStorage, GEO_KEY);
-  if (cachedGeo === "ko" || cachedGeo === "en") {
-    redirectTo(cachedGeo);
+  if (cachedGeo === currentLang) return;
+
+  // Only trust cached "en" to leave Korean URLs. Never trust cached "ko" to
+  // pull English URLs — that was causing NL visitors with Korean browser
+  // settings to get stuck on /ko/.
+  if (isKoPath && cachedGeo === "en") {
+    redirectTo("en");
     return;
   }
 
@@ -90,24 +91,16 @@
     redirectTo(lang);
   }
 
-  var timer = window.setTimeout(function () {
-    var navLang = String(navigator.language || navigator.userLanguage || "").toLowerCase();
-    finish(navLang.indexOf("ko") === 0 ? "ko" : "en");
-  }, 1600);
-
   fetch("https://api.country.is/", { credentials: "omit", cache: "no-store" })
     .then(function (response) {
       if (!response.ok) throw new Error("geo failed");
       return response.json();
     })
     .then(function (data) {
-      window.clearTimeout(timer);
       var country = String((data && data.country) || "").toUpperCase();
       finish(country === "KR" ? "ko" : "en");
     })
     .catch(function () {
-      window.clearTimeout(timer);
-      var navLang = String(navigator.language || navigator.userLanguage || "").toLowerCase();
-      finish(navLang.indexOf("ko") === 0 ? "ko" : "en");
+      finish("en");
     });
 })();
