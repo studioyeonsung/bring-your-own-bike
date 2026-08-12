@@ -78,6 +78,15 @@
     return;
   }
 
+  function getOverride() {
+    try {
+      var v = window.sessionStorage.getItem(PREF_KEY);
+      return v === "ko" || v === "en" ? v : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   fetch("https://api.country.is/", { credentials: "omit", cache: "no-store" })
     .then(function (response) {
       if (!response.ok) throw new Error("geo failed");
@@ -85,6 +94,8 @@
     })
     .then(function (data) {
       var country = String((data && data.country) || "").toUpperCase();
+      var picked = getOverride();
+      if (picked) return redirectTo(picked);
       redirectTo(country === "KR" ? "ko" : "en");
     })
     .catch(function () {
