@@ -272,7 +272,7 @@ const ride01DetailTextEn = {
     { title: "In collaboration with", name: "CLoFA" },
     { title: "Presented at", name: "U-Spectrum" },
     { title: "Photography", name: "Eoming" },
-    { title: "Videography", name: "Shinyoung Kim" },
+    { title: "Videography", name: "Shinyoung Lee" },
   ],
 };
 
@@ -481,7 +481,7 @@ const ride01DetailTextKo = {
     { title: "협력", name: "CLoFA" },
     { title: "발표 장소", name: "U-Spectrum" },
     { title: "사진", name: "어밍" },
-    { title: "영상", name: "김신영" },
+    { title: "영상", name: "이신영" },
   ],
 };
 
