@@ -468,7 +468,7 @@ const ride01DetailTextKo = {
     heading: "6명의 사이클리스트",
     count: "",
     nameLines: [
-      "김아해 · Jinhee Yang · Jihyeon Kim · Sian Kim · Woosoo Lee · Yerin Lee",
+      "김아해 · 양진희 · 김지현 · 김시안 · 이우수 · 이예린",
     ],
   },
   story: [
